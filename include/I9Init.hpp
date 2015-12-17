@@ -14,8 +14,8 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef REVGEOINIT_HPP
-#define REVGEORUN_HPP
+#ifndef I9INIT_HPP
+#define I9INIT_HPP
 
 #include "interface/IApp.hpp"
 
@@ -34,6 +34,49 @@ namespace Sascar {
 	\param config A pointer to the config file.
 	*/
 	void SetApp(IApp *app, int argc, char **argv, const char *config = "app.config");
+
+	/// Displays a output message by using IGameApp::WriteOut implementation.
+	/**
+	This method is a channeling point to all output messages that Seed will use. If you do not override IGameApp::WriteOut, it
+	will use the default stdout output pipe.
+
+	\param msg Pointer to a string to be displayed.
+	*/
+	void WriteOut(const char *msg);
+
+	/// Displays a error message by using IApp::WriteErr implementation.
+	/**
+	This method is a channeling point to all error messages that I9 will use. If you do not override IApp::WriteErr, it
+	will use the default stderr output pipe.
+	*/
+	void WriteErr(const char *msg);
+
+	/// Initialize I9
+	/**
+	This will initialize all I9 states and subsystems and must be called before anything and after Sascar::SetApp.
+	*/
+	bool Initialize();
+
+	/// Update I9
+	/**
+	Will update all I9 states and subsystems and will be called once per tick until a shutdown or error happens.
+	*/
+	void Update();
+
+	/// Shutdown I9
+	/**
+	Will reset all Seed states and shutdown all subsystems. Nothing more from I9 can be used until a new Initialize happens.
+	*/
+	void Shutdown();
+
+	/// Get the version of the linked I9 lib
+	/**
+	Get the linked library version number, you can pass null to ignore any parameter.
+	*/
+	void GetVersion(u32 *major, u32 *middle, u32 *minor);
+
+	int CommandLineParameter(char **argv, int pos);
+	void CommandLineParse(int argc, char **argv);
 
 	/// Private states that are maintained, must not be accessed directly.
 	namespace Private
@@ -61,4 +104,4 @@ namespace Sascar {
 
 } // extern C
 
-#endif // REVGEOINIT_HPP
+#endif // I9INIT_HPP

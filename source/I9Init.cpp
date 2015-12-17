@@ -14,7 +14,7 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "RevGeoInit.hpp"
+#include "I9Init.hpp"
 
 extern "C" {
 

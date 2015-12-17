@@ -33,12 +33,12 @@
 	#endif
 #endif
 
-#define REVGEO_TAG					"[RevGeo] "
+#define REVGEO_TAG					"[LibI9] "
 #define REVGEO_VERSION_MINOR		0			// Developer version (features, fixes)
 #define REVGEO_VERSION_MIDDLE		0			// Client version
 #define REVGEO_VERSION_MAJOR		1			// Release version (final trunk)
 #define REVGEO_VERSION_STRING		"%d.%d.%d"	//"1.1.1"
-#define REVGEO_NAME					"RevGeo"
+#define REVGEO_NAME					"LibI9"
 #define REVGEO_COPYRIGHT			"Copyright (c) 2000-2015 Sascar"
 
 #define REVGEO_PLATFORM_NAME		"Cloud - C/C++"
