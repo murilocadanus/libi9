@@ -3,6 +3,8 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
+INCLUDEPATH += include/
+
 unix {
 	DEFINES	+= DEBUG
 	#LIBS	+= -lcurl
