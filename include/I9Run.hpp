@@ -7,8 +7,14 @@ template <class T>
 int I9Run(int argc, char **argv, const char*config = "app.config")
 {
 	T app;
-	Sascar::SetApp(&app, argc, argv, config)
-	if(Sascar::)
+	Sascar::SetApp(&app, argc, argv, config);
+	if(Sascar::Initialize())
+	{
+
+	}
+	Sascar::Shutdown();
+
+	return EXIT_SUCCESS;
 }
 
 #endif // I9RUN_HPP

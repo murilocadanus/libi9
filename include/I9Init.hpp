@@ -19,6 +19,16 @@
 
 #include "interface/IApp.hpp"
 
+typedef unsigned long long int 	u64;
+typedef unsigned int 			u32;
+typedef unsigned short int 		u16;
+typedef unsigned char 			u8;
+typedef signed long long int	s64;
+typedef signed int 				s32;
+typedef signed short int 		s16;
+typedef signed char 			s8;
+typedef float 					f32;
+
 extern "C" {
 
 namespace Sascar {
@@ -93,7 +103,6 @@ namespace Sascar {
 		/// Command line command string.
 		extern char		**pcArgv;
 
-		extern bool		bDisableSound;
 		extern bool		bDisableThread;
 		extern bool		bDisableResourceLoader;
 		extern String	sConfigFile;

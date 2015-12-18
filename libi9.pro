@@ -1,4 +1,4 @@
-SOURCES +=	source/main.cpp \
+SOURCES +=	\
 			source/I9Init.cpp \
 			source/util/Resolver.cpp \
 			source/util/Log.cpp \
