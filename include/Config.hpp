@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015, Sascar
+* Copyright (c) 2016, Sascar
 * All rights reserved.
 *
 * THIS SOFTWARE IS PROVIDED BY SASCAR ''AS IS'' AND ANY
@@ -39,7 +39,7 @@
 #define I9_VERSION_MAJOR		1			// Release version (final trunk)
 #define I9_VERSION_STRING		"%d.%d.%d"	//"1.1.1"
 #define I9_NAME					"LibI9"
-#define I9_COPYRIGHT			"Copyright (c) 2000-2015 Sascar"
+#define I9_COPYRIGHT			"Copyright (c) 2000-2016 Sascar"
 
 #define I9_PLATFORM_NAME		"Cloud - C/C++"
 

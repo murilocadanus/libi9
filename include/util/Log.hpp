@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015, Sascar
+* Copyright (c) 2016, Sascar
 * All rights reserved.
 *
 * THIS SOFTWARE IS PROVIDED BY SASCAR ''AS IS'' AND ANY
