@@ -10,4 +10,6 @@ unix {
 	DEFINES	+= DEBUG
 	CONFIG += staticlib
 	#LIBS	+= -lcurl
+	target.path = ./build
+	INSTALLS += target
 }

@@ -171,7 +171,7 @@ bool Initialize()
 //	ResourceManager::Register(ISound::GetTypeId(), SoundResourceLoader);
 //	ResourceManager::Register(IMusic::GetTypeId(), MusicResourceLoader);
 
-//	Private::bInitialized = true;
+	Private::bInitialized = true;
 
 //	ret = ret && pManager->Add(Private::pApplication);
 //	pManager->Print();

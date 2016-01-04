@@ -42,19 +42,19 @@ bool IApp::Shutdown()
 void IApp::WriteOut(const char *msg)
 {
 	fprintf(stdout, "%s\n", msg);
-	Log(msg);
+	//Log(msg);
 }
 
 void IApp::WriteErr(const char *msg)
 {
 	fprintf(stderr, "%s\n", msg);
-	Error(msg);
+	//Error(msg);
 }
 
 void IApp::WriteDbg(const char *msg)
 {
 	fprintf(stdout, "%s\n", msg);
-	Dbg(msg);
+	//Dbg(msg);
 }
 
 /*ResourceManager *IApp::GetResourceManager()

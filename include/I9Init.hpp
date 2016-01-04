@@ -45,9 +45,9 @@ namespace Sascar {
 	*/
 	void SetApp(IApp *app, int argc, char **argv, const char *config = "app.config");
 
-	/// Displays a output message by using IGameApp::WriteOut implementation.
+	/// Displays a output message by using IApp::WriteOut implementation.
 	/**
-	This method is a channeling point to all output messages that Seed will use. If you do not override IGameApp::WriteOut, it
+	This method is a channeling point to all output messages that Seed will use. If you do not override IApp::WriteOut, it
 	will use the default stdout output pipe.
 
 	\param msg Pointer to a string to be displayed.
@@ -91,7 +91,7 @@ namespace Sascar {
 	/// Private states that are maintained, must not be accessed directly.
 	namespace Private
 	{
-		/// A pointer to the IGameApp implementation.
+		/// A pointer to the IApp implementation.
 		extern IApp		*pApplication;
 
 		/// Flag indicating that Seed is Initialized or not.
