@@ -51,8 +51,6 @@ class System : public ISystem
 		virtual bool IsHomeRunning() const override;
 		virtual bool InitializeHome() override;
 
-		virtual void EnableDefaultCursor(bool b) override;
-
 		virtual const char *GetUsername() const override;
 		virtual const char *GetHomeFolder() const override;
 		virtual const char *GetApplicationDataFolder() const override;

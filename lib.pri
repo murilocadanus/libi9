@@ -10,6 +10,6 @@ unix {
 	DEFINES	+= DEBUG BUILD_CONSOLE
 	CONFIG += staticlib
 	LIBS	+= -lmongoclient -lcurl
-	target.path = ./build
+	target.path = ./lib
 	INSTALLS += target
 }
