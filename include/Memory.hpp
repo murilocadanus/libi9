@@ -39,23 +39,23 @@ enum class eAllocationTag
 #if defined(DEBUG)
 
 #if !defined(_MSC_VER)
-#define SEED_THROW
-#define SEED_NOEXCEPT	noexcept(true)
+#define I9_THROW
+#define I9_NOEXCEPT	noexcept(true)
 #elif __LINUX__
-#define SEED_THROW		_GLIBCXX_THROW (std::bad_alloc)
-#define SEED_NOEXCEPT	_GLIBCXX_NOEXCEPT
+#define I9_THROW		_GLIBCXX_THROW (std::bad_alloc)
+#define I9_NOEXCEPT	_GLIBCXX_NOEXCEPT
 #else
-#define SEED_THROW
-#define SEED_NOEXCEPT
+#define I9_THROW
+#define I9_NOEXCEPT
 #endif
 
 void *operator new(std::size_t size, eAllocationTag tag, const char *stmt, const char *func, const char *file = __FILE__, int line = __LINE__);
-void *operator new(std::size_t size) SEED_THROW;
-void operator delete(void *p) SEED_NOEXCEPT;
+void *operator new(std::size_t size) I9_THROW;
+void operator delete(void *p) I9_NOEXCEPT;
 void operator delete(void *p, eAllocationTag, const char *, const char *, const char *, int);
 void *operator new[](std::size_t size, eAllocationTag tag, const char *stmt, const char *func, const char *file = __FILE__, int line = __LINE__);
-void *operator new[](std::size_t size) SEED_THROW;
-void operator delete[](void *p) SEED_NOEXCEPT;
+void *operator new[](std::size_t size) I9_THROW;
+void operator delete[](void *p) I9_NOEXCEPT;
 void operator delete[](void *p, eAllocationTag, const char *, const char *, const char *, int);
 
 #include "Defines.hpp"
@@ -70,7 +70,7 @@ void operator delete[](void *p, eAllocationTag, const char *, const char *, cons
 
 namespace Sascar {
 
-SEED_COMPILE_TIME_ASSERT(Milliseconds, sizeof(Milliseconds) == 8);
+I9_COMPILE_TIME_ASSERT(Milliseconds, sizeof(Milliseconds) == 8);
 
 struct AllocationInfo
 {
@@ -103,7 +103,7 @@ class Allocator
 			UNUSED(file)
 			UNUSED(line)
 			UNUSED(func)
-			SEED_ASSERT_FMT(size, "allocing 0 bytes at %s:%d: %s.", file, line, func);
+			I9_ASSERT_FMT(size, "allocing 0 bytes at %s:%d: %s.", file, line, func);
 
 			auto addr = malloc(size);
 
@@ -129,7 +129,7 @@ class Allocator
 
 		static void Free(void *p, bool track = true)
 		{
-			SEED_ASSERT_MSG(p, "freeing null pointer.");
+			I9_ASSERT_MSG(p, "freeing null pointer.");
 
 			if (track)
 			{
@@ -173,7 +173,7 @@ class Allocator
 
 #endif // DEBUG
 
-#define SEED_DECLARE_NEW_AND_DELETE_OPERATORS													\
+#define I9_DECLARE_NEW_AND_DELETE_OPERATORS													\
 		inline void *operator new(size_t size, eAllocationTag tag, const char *stmt, const char *func, const char *file = __FILE__, int line = __LINE__) \
 		{																						\
 			return Allocator::Alloc(size, tag, stmt, func, file, line);							\

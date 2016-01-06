@@ -23,7 +23,7 @@
 #include <map>
 #include <stack>
 
-#define SEED_DECLARE_CONTAINER_HELPER(N, C) \
+#define I9_DECLARE_CONTAINER_HELPER(N, C) \
 											\
 											template <typename T> \
 											class N : public C<T> \
@@ -31,13 +31,13 @@
 												public: \
 													void operator+=(const T& element) \
 													{ \
-														SEED_ASSERT(element); \
+														I9_ASSERT(element); \
 														this->push_back(element); \
 													} \
 													\
 													void operator-=(const T& element) \
 													{ \
-														SEED_ASSERT(element); \
+														I9_ASSERT(element); \
 														this->erase(std::remove(this->begin(), this->end(), element), this->end()); \
 													} \
 													\
@@ -56,16 +56,16 @@
 
 namespace Sascar
 {
-	SEED_DECLARE_CONTAINER_HELPER(Vector, std::vector)
+	I9_DECLARE_CONTAINER_HELPER(Vector, std::vector)
 }
 
 #define Stack std::stack
 #define Map std::map
-#define SEED_DECLARE_CONTAINER(cont, type)	typedef cont<type *> type##cont;									\
+#define I9_DECLARE_CONTAINER(cont, type)	typedef cont<type *> type##cont;									\
 											typedef type##cont::iterator type##cont##Iterator;					\
 											typedef type##cont::const_iterator Const##type##cont##Iterator;
 
-#define SEED_IMPLEMENT_VAR_HELPERS(cont, type, var)																	\
+#define I9_IMPLEMENT_VAR_HELPERS(cont, type, var)																	\
 											public:																	\
 												type##cont::iterator begin() { return var.begin(); }				\
 												type##cont::iterator end()   { return var.end();   }				\

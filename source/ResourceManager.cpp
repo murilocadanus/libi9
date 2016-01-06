@@ -6,7 +6,7 @@
 
 #define TAG		"[ResourceManager] "
 
-#if defined(SEED_LOG_RESOURCEMANAGER)
+#if defined(I9_LOG_RESOURCEMANAGER)
 	#define LOG		Log
 #else
 	#define LOG		_hid_rmlog
@@ -223,7 +223,7 @@ u32 ResourceManager::GetTotalUsedMemory()
 
 void ResourceManager::Print()
 {
-#if defined(DEBUG) && defined(SEED_LOG_RESOURCEMANAGER)
+#if defined(DEBUG) && defined(I9_LOG_RESOURCEMANAGER)
 	u32 cnt = 0;
 	Log(TAG "Listing %d loaded resources in '%s':", mapResources.size(), sName.c_str());
 

@@ -22,7 +22,6 @@
 bool create_directory(const char *path);
 const char *get_user_name();
 const char *get_user_appdata_folder();
-const char *get_user_savegame_folder();
 const char *get_user_home_folder();
 void get_current_directory(char *buff, int size);
 bool change_directory(const char *to);

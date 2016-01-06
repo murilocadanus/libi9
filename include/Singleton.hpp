@@ -17,7 +17,7 @@
 #ifndef SINGLETON_HPP
 #define SINGLETON_HPP
 
-#define SEED_SINGLETON_HEAP_DECLARE(type)		\
+#define I9_SINGLETON_HEAP_DECLARE(type)		\
 											protected: \
 												type(); \
 											public: \
@@ -37,10 +37,10 @@
 													type::Instance = nullptr; \
 												}
 
-#define SEED_SINGLETON_HEAP_DEFINE(type)		type *type::Instance = nullptr;
+#define I9_SINGLETON_HEAP_DEFINE(type)		type *type::Instance = nullptr;
 												//type *const p##type = type::GetInstance();
 
-#define SEED_SINGLETON_STACK_DECLARE(type)	\
+#define I9_SINGLETON_STACK_DECLARE(type)	\
 											public: \
 												type(); \
 												virtual ~type(); \
@@ -55,23 +55,23 @@
 												{ \
 												}
 
-#define SEED_SINGLETON_STACK_DEFINE(type)		type type::instance;
+#define I9_SINGLETON_STACK_DEFINE(type)		type type::instance;
 												//type *type::Instance = &type::instance;
 												//type *const p##type = type::GetInstance();
 
 
-#if SEED_SINGLETON_HEAP == 1
+#if I9_SINGLETON_HEAP == 1
 
-#define SEED_DECLARE_SINGLETON					SEED_SINGLETON_HEAP_DECLARE
-#define SEED_SINGLETON_DEFINE					SEED_SINGLETON_HEAP_DEFINE
+#define I9_DECLARE_SINGLETON					I9_SINGLETON_HEAP_DECLARE
+#define I9_SINGLETON_DEFINE					I9_SINGLETON_HEAP_DEFINE
 
 #else
 
-#define SEED_DECLARE_SINGLETON					SEED_SINGLETON_STACK_DECLARE
-#define SEED_SINGLETON_DEFINE					SEED_SINGLETON_STACK_DEFINE
+#define I9_DECLARE_SINGLETON					I9_SINGLETON_STACK_DECLARE
+#define I9_SINGLETON_DEFINE					I9_SINGLETON_STACK_DEFINE
 
 #endif
 
-//#define SEED_SINGLETON_EXTERNALIZE(type)		extern type *const p##type = &type::instance;
+//#define I9_SINGLETON_EXTERNALIZE(type)		extern type *const p##type = &type::instance;
 
 #endif // SIGNLETON_HPP

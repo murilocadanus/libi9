@@ -12,7 +12,7 @@
 
 namespace Sascar {
 
-SEED_SINGLETON_DEFINE(FileSystem)
+I9_SINGLETON_DEFINE(FileSystem)
 
 FileSystem::FileSystem()
 {

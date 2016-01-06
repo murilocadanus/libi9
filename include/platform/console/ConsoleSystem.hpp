@@ -29,7 +29,7 @@ namespace Sascar { namespace Console {
 /// SDL System Module
 class System : public ISystem
 {
-	SEED_DECLARE_SINGLETON(System)
+	I9_DECLARE_SINGLETON(System)
 	I9_DECLARE_MANAGER(System)
 
 	public:
@@ -54,7 +54,6 @@ class System : public ISystem
 		virtual const char *GetUsername() const override;
 		virtual const char *GetHomeFolder() const override;
 		virtual const char *GetApplicationDataFolder() const override;
-		virtual const char *GetSaveGameFolder() const override;
 
 		// IModule
 		virtual bool Initialize() override;

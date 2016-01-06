@@ -20,13 +20,7 @@
 
 #define TAG	"[Platform] "
 
-#if defined(BUILD_IOS)
-#include "platform/ios/iosView.h"
-#elif defined(__APPLE_CC__)
-static char pcBundle[2048];
-#endif
-
-#if SEED_PATH_WIDE == 1
+#if I9_PATH_WIDE == 1
 std::wstring widen(const std::string &str)
 {
 	using namespace std;
@@ -126,11 +120,6 @@ const char *get_user_name()
 	return name;
 }
 
-const char *get_user_savegame_folder()
-{
-	return get_user_home_folder();
-}
-
 const char *get_user_appdata_folder()
 {
 	return get_user_home_folder();
@@ -152,9 +141,9 @@ void get_current_directory(char *buff, int size)
 	memset(buff, '\0', size);
 	memcpy(buff, iosGetRootPath(), size);
 #elif defined(__APPLE_CC__)
-	Seed::Private::iArgc = 1;
-	int len = (int)strlen(Seed::Private::pcArgv[0]);
-	memcpy(pcBundle, Seed::Private::pcArgv[0], len);
+	Sascar::Private::iArgc = 1;
+	int len = (int)strlen(Sascar::Private::pcArgv[0]);
+	memcpy(pcBundle, Sascar::Private::pcArgv[0], len);
 	while (pcBundle[len] != '/') len--;
 	len -= (u32)strlen("MacOS");
 	memset(&pcBundle[len], '\0', sizeof(pcBundle) - len);

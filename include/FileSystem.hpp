@@ -26,7 +26,7 @@ namespace Sascar {
 /// FileSystem Manager
 class  FileSystem : public IManager
 {
-	SEED_DECLARE_SINGLETON(FileSystem)
+	I9_DECLARE_SINGLETON(FileSystem)
 	I9_DECLARE_MANAGER(FileSystem)
 
 	public:

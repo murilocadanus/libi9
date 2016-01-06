@@ -17,7 +17,7 @@
 #ifndef THREADMANAGER_HPP
 #define THREADMANAGER_HPP
 
-#if (SEED_USE_THREAD == 0)
+#if (I9_USE_THREAD == 0)
 
 #include "interface/IManager.hpp"
 #include "interface/IUpdatable.hpp"
@@ -31,9 +31,9 @@ class Thread;
 /// Thread Manager is used when no threads are enabled to run threads in serial
 class ThreadManager : public IManager, public IUpdatable
 {
-	SEED_DECLARE_SINGLETON(ThreadManager)
+	I9_DECLARE_SINGLETON(ThreadManager)
 	I9_DECLARE_MANAGER(ThreadManager)
-	SEED_DECLARE_CONTAINER(Vector, Thread)
+	I9_DECLARE_CONTAINER(Vector, Thread)
 
 	public:
 		void Add(Thread *thread);
@@ -59,6 +59,6 @@ class ThreadManager : public IManager, public IUpdatable
 
 } // namespace
 
-#endif // SEED_USE_THREAD
+#endif // I9_USE_THREAD
 
 #endif // THREADMANAGER_HPP

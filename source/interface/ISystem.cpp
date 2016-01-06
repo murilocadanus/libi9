@@ -54,25 +54,19 @@ const char *ISystem::GetLanguageString() const
 
 const char *ISystem::GetUsername() const
 {
-	SEED_ABSTRACT_METHOD;
+	I9_ABSTRACT_METHOD;
 	return nullptr;
 }
 
 const char *ISystem::GetHomeFolder() const
 {
-	SEED_ABSTRACT_METHOD;
+	I9_ABSTRACT_METHOD;
 	return nullptr;
 }
 
 const char *ISystem::GetApplicationDataFolder() const
 {
-	SEED_ABSTRACT_METHOD;
-	return nullptr;
-}
-
-const char *ISystem::GetSaveGameFolder() const
-{
-	SEED_ABSTRACT_METHOD;
+	I9_ABSTRACT_METHOD;
 	return nullptr;
 }
 

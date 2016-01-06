@@ -25,7 +25,7 @@ namespace Sascar {
 /// System Event
 class EventSystem : public IEvent
 {
-	SEED_DECLARE_RTTI(EventSystem, IEvent)
+	I9_DECLARE_RTTI(EventSystem, IEvent)
 
 	public:
 		EventSystem();

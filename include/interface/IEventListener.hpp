@@ -21,8 +21,8 @@
 
 namespace Sascar {
 
-#define SEED_PURE_VIRTUAL_EVENT				{ UNUSED(ev); SEED_ABSTRACT_METHOD; }
-#define SEED_PURE_VIRTUAL_EVENT_QUIET		{ UNUSED(ev); }
+#define I9_PURE_VIRTUAL_EVENT				{ UNUSED(ev); I9_ABSTRACT_METHOD; }
+#define I9_PURE_VIRTUAL_EVENT_QUIET		{ UNUSED(ev); }
 
 /// Base Event Listener
 class IEventListener

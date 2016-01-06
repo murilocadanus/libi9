@@ -15,7 +15,7 @@
 
 namespace Sascar { namespace Console {
 
-SEED_SINGLETON_DEFINE(System)
+I9_SINGLETON_DEFINE(System)
 
 System::System()
 	: iLastFrameTime(0)
@@ -161,11 +161,6 @@ const char *System::GetHomeFolder() const
 const char *System::GetApplicationDataFolder() const
 {
 	return PHYSFS_getBaseDir();
-}
-
-const char *System::GetSaveGameFolder() const
-{
-	return PHYSFS_getUserDir();
 }
 
 void System::GoToMenu()

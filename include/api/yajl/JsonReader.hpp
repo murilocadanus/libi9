@@ -71,6 +71,6 @@ class JsonReader : public IReader
 
 } // namespace
 
-#endif // SEED_USE_JSON
+#endif // I9_USE_JSON
 
 #endif // JSONREADER_HPP

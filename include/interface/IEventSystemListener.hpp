@@ -31,13 +31,13 @@ class  IEventSystemListener : public IEventListener
 		IEventSystemListener() = default;
 		virtual ~IEventSystemListener() {}
 
-		virtual void OnSystemReset(const EventSystem *ev)				SEED_PURE_VIRTUAL_EVENT
-		virtual void OnSystemShutdown(const EventSystem *ev)			SEED_PURE_VIRTUAL_EVENT
-		virtual void OnSystemMenuCalled(const EventSystem *ev)			SEED_PURE_VIRTUAL_EVENT
-		virtual void OnSystemDataManagerCalled(const EventSystem *ev)	SEED_PURE_VIRTUAL_EVENT
-		virtual void OnSystemHomeEnded(const EventSystem *ev)			SEED_PURE_VIRTUAL_EVENT
-		virtual void OnSystemSleep(const EventSystem *ev)				SEED_PURE_VIRTUAL_EVENT
-		virtual void OnSystemLanguageChanged(const EventSystem *ev)		SEED_PURE_VIRTUAL_EVENT
+		virtual void OnSystemReset(const EventSystem *ev)				I9_PURE_VIRTUAL_EVENT
+		virtual void OnSystemShutdown(const EventSystem *ev)			I9_PURE_VIRTUAL_EVENT
+		virtual void OnSystemMenuCalled(const EventSystem *ev)			I9_PURE_VIRTUAL_EVENT
+		virtual void OnSystemDataManagerCalled(const EventSystem *ev)	I9_PURE_VIRTUAL_EVENT
+		virtual void OnSystemHomeEnded(const EventSystem *ev)			I9_PURE_VIRTUAL_EVENT
+		virtual void OnSystemSleep(const EventSystem *ev)				I9_PURE_VIRTUAL_EVENT
+		virtual void OnSystemLanguageChanged(const EventSystem *ev)		I9_PURE_VIRTUAL_EVENT
 };
 
 } // namespace
