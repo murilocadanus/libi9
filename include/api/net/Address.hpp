@@ -14,17 +14,35 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef ADDRESS_HPP
+#define ADDRESS_HPP
 
-#include "Defines.hpp"
-#include "Enum.hpp"
+namespace Sascar { namespace Net
+{
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
+class Address
+{
+	public:
+		Address();
+		Address(u32 a, u32 b, u32 c, u32 d, u32 port);
+		Address(u32 address, u32 port);
+		Address(const Address &) = default;
 
-namespace Sascar {}
+		u32 GetAddress() const;
+		u32 GetA() const;
+		u32 GetB() const;
+		u32 GetC() const;
+		u32 GetD() const;
+		u32 GetPort() const;
 
-#endif // I9_HPP
+		bool operator==(const Address &other) const;
+		bool operator!=(const Address &other) const;
+
+	private:
+		u32 iAddress;
+		u32 iPort;
+};
+
+}} // namespace
+
+#endif // ADDRESS_HPP

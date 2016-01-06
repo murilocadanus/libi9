@@ -14,17 +14,24 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef IEVENT_LISTENER_HPP
+#define IEVENT_LISTENER_HPP
 
 #include "Defines.hpp"
-#include "Enum.hpp"
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
+namespace Sascar {
 
-namespace Sascar {}
+#define SEED_PURE_VIRTUAL_EVENT				{ UNUSED(ev); SEED_ABSTRACT_METHOD; }
+#define SEED_PURE_VIRTUAL_EVENT_QUIET		{ UNUSED(ev); }
 
-#endif // I9_HPP
+/// Base Event Listener
+class IEventListener
+{
+	public:
+		IEventListener() = default;
+		virtual ~IEventListener() {}
+};
+
+} // namespace
+
+#endif // IEVENT_LISTENER_HPP

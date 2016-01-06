@@ -14,17 +14,34 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef __FILESYSTEM_H__
+#define __FILESYSTEM_H__
 
 #include "Defines.hpp"
-#include "Enum.hpp"
+#include "interface/IManager.hpp"
+#include "Singleton.hpp"
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
+namespace Sascar {
 
-namespace Sascar {}
+/// FileSystem Manager
+class  FileSystem : public IManager
+{
+	SEED_DECLARE_SINGLETON(FileSystem)
+	I9_DECLARE_MANAGER(FileSystem)
 
-#endif // I9_HPP
+	public:
+		void Prepare() const;
+		const char *GetWorkDirectory() const;
+		const char *GetWriteableDirectory() const;
+
+		// IManager
+		virtual bool Initialize() override;
+		virtual bool Shutdown() override;
+		virtual bool IsRequired() const override;
+};
+
+#define pFileSystem FileSystem::GetInstance()
+
+} // namespace
+
+#endif // __FILESYSTEM_H__

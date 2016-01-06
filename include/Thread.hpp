@@ -14,17 +14,40 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef THREAD_HPP
+#define THREAD_HPP
 
 #include "Defines.hpp"
-#include "Enum.hpp"
+#include <thread>
+#include <mutex>
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
+typedef std::mutex Mutex;
+typedef std::lock_guard<Mutex> ScopedMutexLock;
+typedef std::unique_lock<Mutex> UniqueMutexLock;
 
-namespace Sascar {}
+namespace Sascar {
 
-#endif // I9_HPP
+class Thread
+{
+	public:
+		Thread();
+		virtual ~Thread();
+
+		virtual void Create();
+		virtual void Destroy();
+
+		virtual bool Run() = 0;
+
+		bool IsRunning() const
+		{
+			return bRunning;
+		}
+
+	private:
+		std::thread cThread;
+		bool bRunning : 1;
+};
+
+} // namespace
+
+#endif // THREAD_HPP

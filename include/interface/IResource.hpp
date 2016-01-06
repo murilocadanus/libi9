@@ -14,43 +14,51 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef IAPP_HPP
-#define IAPP_HPP
+#ifndef IRESOURCE_HPP
+#define IRESOURCE_HPP
 
-#include "interface/IManager.hpp"
-#include "interface/IUpdatable.hpp"
-//#include "ResourceManager.h"
+#include "Defines.hpp"
+#include "IObject.hpp"
+
+#define sdAcquire(p)		p->Acquire()
+#define sdRelease(p)		{ if (p) p->Release(); p = nullptr; }
 
 namespace Sascar {
 
-class IApp : public IManager, public IUpdatable
+class ResourceManager;
+
+/// Resource interface
+class IResource : public IObject
 {
-	I9_DECLARE_MANAGER(IApp)
+	friend class ResourceManager;
+	SEED_DECLARE_RTTI(IResource, IObject)
 
 	public:
-		IApp();
-		virtual ~IApp();
+		IResource();
+		virtual ~IResource();
 
-		/// Print output level string
-		virtual void WriteOut(const char *msg);
+		virtual bool Load(const String &filename, ResourceManager *res) = 0;
+		virtual bool Unload() = 0;
 
-		/// Print error level string
-		virtual void WriteErr(const char *msg);
+		virtual u32 GetUsedMemory() const;
+		const String &GetFilename() const;
 
-		/// Print debug level string
-		virtual void WriteDbg(const char *msg);
-
-		/// Get user resource manager
-		//ResourceManager *GetResourceManager();
-
-		// IManager
-		virtual bool Shutdown() override;
+		void Release();
+		void Acquire();
 
 	protected:
-		//ResourceManager	cResourceManager;
+		void IncrementReference();
+		void DecrementReference();
 
+		u32 GetReferenceCount() const;
+
+	protected:
+		ResourceManager *pRes;
+		String			sFilename;
+		u32				iRefCount;
+		bool			bLoaded : 1;
 };
 
 } // namespace
 
-#endif // IAPP_HPP
+#endif // IRESOURCE_HPP

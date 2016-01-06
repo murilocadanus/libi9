@@ -14,17 +14,40 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef IUPDATABLE_HPP
+#define IUPDATABLE_HPP
 
 #include "Defines.hpp"
-#include "Enum.hpp"
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
+#define UNUSED(var)				(void)var;
 
-namespace Sascar {}
+namespace Sascar {
 
-#endif // I9_HPP
+typedef float Seconds; // same here
+
+//! Updatable interface
+/**
+Interface for objects that need be updated each frame.
+*/
+class IUpdatable
+{
+	public:
+		IUpdatable() = default;
+		virtual ~IUpdatable() {}
+
+		//! Method to be called each frame.
+		/*!
+			\return If update was sucessful
+		 */
+		virtual bool Update(Seconds dt);
+};
+
+inline bool IUpdatable::Update(Seconds dt)
+{
+	UNUSED(dt);
+	return true;
+}
+
+} // namespace
+
+#endif // IUPDATABLE_HPP

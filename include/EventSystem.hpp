@@ -14,17 +14,36 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef EVENTSYSTEM_HPP
+#define EVENTSYSTEM_HPP
 
-#include "Defines.hpp"
+#include "interface/IEvent.hpp"
 #include "Enum.hpp"
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
+namespace Sascar {
 
-namespace Sascar {}
+/// System Event
+class EventSystem : public IEvent
+{
+	SEED_DECLARE_RTTI(EventSystem, IEvent)
 
-#endif // I9_HPP
+	public:
+		EventSystem();
+		EventSystem(eLanguage curLang, eLanguage newLang);
+		EventSystem(eShutdownReason reason);
+
+		virtual ~EventSystem();
+
+		virtual eLanguage GetLanguageCurrent() const;
+		virtual eLanguage GetLanguageNew() const;
+		virtual eShutdownReason GetShutdownReason() const;
+
+	private:
+		eLanguage nCurrentLang;
+		eLanguage nNewLang;
+		eShutdownReason nReason;
+};
+
+} // namespace
+
+#endif // EVENTSYSTEM_HPP

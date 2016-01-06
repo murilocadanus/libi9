@@ -7,9 +7,9 @@ CONFIG -= qt
 INCLUDEPATH += include/
 
 unix {
-	DEFINES	+= DEBUG
+	DEFINES	+= DEBUG BUILD_CONSOLE
 	CONFIG += staticlib
-	#LIBS	+= -lcurl
+	LIBS	+= -lmongoclient -lcurl
 	target.path = ./build
 	INSTALLS += target
 }

@@ -16,6 +16,8 @@
 
 #include "I9Init.hpp"
 #include "Defines.hpp"
+#include "Manager.hpp"
+#include "FileSystem.hpp"
 
 extern "C" {
 
@@ -124,7 +126,7 @@ bool Initialize()
 
 	bool ret = true;
 
-//	ret = ret && pManager->Add(pFileSystem);
+	ret = ret && pManager->Add(pFileSystem);
 //	pConfiguration->Load(Private::sConfigFile);
 //	if (Private::sWorkDir != "")
 //		pConfiguration->SetWorkingDirectory(Private::sWorkDir); // cli has priority
@@ -181,6 +183,8 @@ bool Initialize()
 
 void Update()
 {
+	if (!Private::bInitialized)
+		return;
 }
 
 void Shutdown()

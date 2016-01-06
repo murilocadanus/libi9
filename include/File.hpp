@@ -14,43 +14,57 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ENUM_HPP
-#define ENUM_HPP
+#ifndef __FILE_H__
+#define __FILE_H__
+
+#include "Defines.hpp"
+#include "interface/IObject.hpp"
+#include <physfs.h>
+#include "Job.hpp"
 
 namespace Sascar {
 
-enum class eReaderType
+/// File
+class File : public IObject
 {
-	Default,
-	Json = Default
+	SEED_DECLARE_RTTI(File, IObject)
+
+	public:
+		File();
+		File(const String &filename);
+		virtual ~File();
+
+		void Close();
+		u32 GetSize() const;
+		u8 *GetData() const;
+		const String &GetName() const;
+
+		bool Load(const String &filename);
+		bool Unload();
+
+	protected:
+		bool Check() const;
+		bool Open();
+
+	private:
+		PHYSFS_file		*pHandle;
+		mutable u8		*pData;
+		String			sFilename;
+		u32				iSize;
 };
 
-enum class eJobState
+class FileLoader : public Job
 {
-	Stopped,
-	Running,
-	Aborted,
-	Completed
-};
+	public:
+		FileLoader(const String &filename, JobCallback fun);
+		virtual ~FileLoader();
 
-enum class eLanguage
-{
-	en_US,
-	pt_BR,
-	es_ES,
-	de_DE,
-	ja_JP,
-	fr_FR,
-	cn_CN,
-	Maximum
-};
+		virtual bool Run() override;
 
-enum class eShutdownReason
-{
-	None,
-	CloseRequested
+		const String sFilename;
+		File *pFile;
 };
 
 } // namespace
 
-#endif // ENUM_HPP
+#endif // __FILE_H__

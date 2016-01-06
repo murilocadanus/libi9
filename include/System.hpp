@@ -14,17 +14,13 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef SYSTEM_HPP
+#define SYSTEM_HPP
 
-#include "Defines.hpp"
-#include "Enum.hpp"
+#if defined(BUILD_CONSOLE)
+	#include "platform/console/ConsoleSystem.hpp"
+#elif defined(BUILD_QT)
+	#include "platform/qt/qtSystem.h"
+#endif // platform
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
-
-namespace Sascar {}
-
-#endif // I9_HPP
+#endif // SYSTEM_HPP

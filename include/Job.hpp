@@ -14,17 +14,44 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef JOB_HPP
+#define JOB_HPP
 
 #include "Defines.hpp"
+#include "Thread.hpp"
 #include "Enum.hpp"
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
+#include <functional>
+#include <mutex>
 
-namespace Sascar {}
+namespace Sascar {
 
-#endif // I9_HPP
+class Job : public Thread
+{
+	friend class JobManager;
+
+	public:
+		typedef std::function<void(Job *)> JobCallback;
+
+		Job(JobCallback fun);
+		virtual ~Job();
+
+		void Abort();
+		eJobState GetState() const;
+
+	protected:
+		virtual void OnFinished();
+
+		// Thread
+		virtual bool Run() override;
+		virtual void Create() override;
+
+	protected:
+		JobCallback fnCallback;
+		Mutex cMutex;
+		eJobState nState = eJobState::Stopped;
+};
+
+} // namespace
+
+#endif // JOB_HPP

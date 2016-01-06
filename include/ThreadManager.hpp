@@ -14,43 +14,51 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef IAPP_HPP
-#define IAPP_HPP
+#ifndef THREADMANAGER_HPP
+#define THREADMANAGER_HPP
+
+#if (SEED_USE_THREAD == 0)
 
 #include "interface/IManager.hpp"
 #include "interface/IUpdatable.hpp"
-//#include "ResourceManager.h"
+#include "Singleton.hpp"
+#include "Container.hpp"
 
 namespace Sascar {
 
-class IApp : public IManager, public IUpdatable
+class Thread;
+
+/// Thread Manager is used when no threads are enabled to run threads in serial
+class ThreadManager : public IManager, public IUpdatable
 {
-	I9_DECLARE_MANAGER(IApp)
+	SEED_DECLARE_SINGLETON(ThreadManager)
+	I9_DECLARE_MANAGER(ThreadManager)
+	SEED_DECLARE_CONTAINER(Vector, Thread)
 
 	public:
-		IApp();
-		virtual ~IApp();
-
-		/// Print output level string
-		virtual void WriteOut(const char *msg);
-
-		/// Print error level string
-		virtual void WriteErr(const char *msg);
-
-		/// Print debug level string
-		virtual void WriteDbg(const char *msg);
-
-		/// Get user resource manager
-		//ResourceManager *GetResourceManager();
+		void Add(Thread *thread);
+		void Remove(Thread *thread);
 
 		// IManager
+		virtual bool Initialize() override;
+		virtual bool Reset() override;
 		virtual bool Shutdown() override;
 
-	protected:
-		//ResourceManager	cResourceManager;
+		virtual void Disable() override;
+		virtual void Enable() override;
 
+		// IUpdatable
+		virtual bool Update(Seconds dt) override;
+
+	private:
+		ThreadVector vThread;
+		bool bEnabled : 1;
 };
+
+#define pThreadManager ThreadManager::GetInstance()
 
 } // namespace
 
-#endif // IAPP_HPP
+#endif // SEED_USE_THREAD
+
+#endif // THREADMANAGER_HPP

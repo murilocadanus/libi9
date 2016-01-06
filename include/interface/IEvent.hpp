@@ -14,17 +14,24 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef I9_HPP
-#define I9_HPP
+#ifndef IEVENT_HPP
+#define IEVENT_HPP
 
 #include "Defines.hpp"
-#include "Enum.hpp"
+#include "IObject.hpp"
 
-#include "util/Log.hpp"
-#include "util/String.hpp"
-#include "I9Init.hpp"
-#include "I9Run.hpp"
+namespace Sascar {
 
-namespace Sascar {}
+/// Base Event
+class IEvent : public IObject
+{
+	SEED_DECLARE_RTTI(IEvent, IObject)
 
-#endif // I9_HPP
+	public:
+		IEvent() = default;
+		virtual ~IEvent() {}
+};
+
+} // namespace
+
+#endif // IEVENT_HPP
