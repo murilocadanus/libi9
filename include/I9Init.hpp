@@ -106,6 +106,7 @@ namespace Sascar {
 		extern bool		bDisableThread;
 		extern bool		bDisableResourceLoader;
 		extern String	sConfigFile;
+		extern String	sWorkDir;
 
 	} // namespace
 

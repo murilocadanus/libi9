@@ -14,43 +14,26 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef IAPP_HPP
-#define IAPP_HPP
+#ifndef IEVENTRESOURCELOADERLISTENER_HPP
+#define IEVENTRESOURCELOADERLISTENER_HPP
 
-#include "interface/IManager.hpp"
-#include "interface/IUpdatable.hpp"
-#include "ResourceManager.hpp"
+#include "interface/IEventListener.hpp"
 
 namespace Sascar {
 
-class IApp : public IManager, public IUpdatable
+class EventResourceLoader;
+
+/// Resource loader event listener
+class IEventResourceLoaderListener : public IEventListener
 {
-	I9_DECLARE_MANAGER(IApp)
-
 	public:
-		IApp();
-		virtual ~IApp();
+		IEventResourceLoaderListener() = default;
+		~IEventResourceLoaderListener() {}
 
-		/// Print output level string
-		virtual void WriteOut(const char *msg);
-
-		/// Print error level string
-		virtual void WriteErr(const char *msg);
-
-		/// Print debug level string
-		virtual void WriteDbg(const char *msg);
-
-		/// Get user resource manager
-		ResourceManager *GetResourceManager();
-
-		// IManager
-		virtual bool Shutdown() override;
-
-	protected:
-		ResourceManager	cResourceManager;
-
+		virtual void OnGroupLoaded(const EventResourceLoader *ev)	I9_PURE_VIRTUAL_EVENT
+		virtual void OnQueueEmpty(const EventResourceLoader *ev)	I9_PURE_VIRTUAL_EVENT
 };
 
 } // namespace
 
-#endif // IAPP_HPP
+#endif // IEVENTRESOURCELOADERLISTENER_HPP

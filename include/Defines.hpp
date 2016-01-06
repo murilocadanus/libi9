@@ -98,6 +98,11 @@ I9_COMPILE_TIME_ASSERT(s64, sizeof(s64) == 8);
 typedef enum { I9_ENUM_ASSERT_VALUE } I9_ENUM_ASSERT;
 I9_COMPILE_TIME_ASSERT(enum, sizeof(I9_ENUM_ASSERT) == sizeof(u32));
 
+extern "C" { namespace Sascar {
+	class ResourceManager;
+	extern ResourceManager *pResourceManager;
+}}
+
 namespace Sascar {
 	typedef std::chrono::high_resolution_clock Clock;
 	typedef long long Milliseconds; // we use the raw numbers directly internally, no conversions needed.

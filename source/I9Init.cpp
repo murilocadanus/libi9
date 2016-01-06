@@ -18,6 +18,12 @@
 #include "Defines.hpp"
 #include "Manager.hpp"
 #include "FileSystem.hpp"
+#include "Configuration.hpp"
+#include "System.hpp"
+#include "ResourceLoader.hpp"
+#include "JobManager.hpp"
+#include "Updater.hpp"
+#include "ResourceManager.hpp"
 
 extern "C" {
 
@@ -32,9 +38,10 @@ namespace Private
 	bool	bDisableThread;
 	bool	bDisableResourceLoader;
 	String	sConfigFile;
+	String	sWorkDir;
 }
 
-//ResourceManager *pResourceManager = nullptr;
+ResourceManager *pResourceManager = nullptr;
 
 int CommandLineParameter(char **argv, int pos)
 {
@@ -52,6 +59,11 @@ int CommandLineParameter(char **argv, int pos)
 	else if (!StringUtil::Equals(param, "--config"))
 	{
 		Private::sConfigFile = argv[pos + 1];
+		consume++;
+	}
+	else if (!StringUtil::Equals(param, "--workdir"))
+	{
+		Private::sWorkDir = argv[pos + 1];
 		consume++;
 	}
 
@@ -77,7 +89,7 @@ void SetApp(IApp *app, int argc, char **argv, const char *config)
 	Private::bDisableThread = false;
 	Private::bDisableResourceLoader = false;
 
-	//pResourceManager = app->GetResourceManager();
+	pResourceManager = app->GetResourceManager();
 
 	Sascar::CommandLineParse(argc, argv);
 }
@@ -127,17 +139,17 @@ bool Initialize()
 	bool ret = true;
 
 	ret = ret && pManager->Add(pFileSystem);
-//	pConfiguration->Load(Private::sConfigFile);
-//	if (Private::sWorkDir != "")
-//		pConfiguration->SetWorkingDirectory(Private::sWorkDir); // cli has priority
-//	pFileSystem->Prepare();
+	pConfiguration->Load(Private::sConfigFile);
+	if (Private::sWorkDir != "")
+		pConfiguration->SetWorkingDirectory(Private::sWorkDir); // cli has priority
+	pFileSystem->Prepare();
 //	pScreen->EnableCursor(pConfiguration->IsCursorEnabled());
 
-//	Info(I9_TAG "Options: ");
-//	Info(I9_TAG "\tThread: %s", Private::bDisableThread ? "No" : "Yes");
-//	Info(I9_TAG "\tResourceLoader: %s", Private::bDisableResourceLoader ? "No" : "Yes");
+	Info(I9_TAG "Options: ");
+	Info(I9_TAG "\tThread: %s", Private::bDisableThread ? "No" : "Yes");
+	Info(I9_TAG "\tResourceLoader: %s", Private::bDisableResourceLoader ? "No" : "Yes");
 
-//	ret = ret && pManager->Add(pSystem);
+	ret = ret && pManager->Add(pSystem);
 //	ret = ret && pManager->Add(pCartridge);
 //	ret = ret && pManager->Add(pScreen);
 //	ret = ret && pManager->Add(pRendererDevice);
@@ -145,29 +157,29 @@ bool Initialize()
 //	ret = ret && pManager->Add(pRendererManager);
 
 
-//#if (I9_USE_THREAD == 1)
-//	if (!Private::bDisableThread || !Private::bDisableResourceLoader)
-//		ret = ret && pManager->Add(pResourceLoader);
-//#else
-//	ret = ret && pManager->Add(pThreadManager);
-//#endif
+#if (I9_USE_THREAD == 1)
+	if (!Private::bDisableThread || !Private::bDisableResourceLoader)
+		ret = ret && pManager->Add(pResourceLoader);
+#else
+	ret = ret && pManager->Add(pThreadManager);
+#endif
 
-//	ret = ret && pManager->Add(pJobManager);
+	ret = ret && pManager->Add(pJobManager);
 
-//	pUpdater->Add(Private::pApplication);
+	pUpdater->Add(Private::pApplication);
 
-//#if (I9_USE_THREAD == 1)
-//	if (!Private::bDisableThread || !Private::bDisableResourceLoader)
-//		pUpdater->Add(pResourceLoader);
-//#else
-//	pUpdater->Add(pThreadManager);
-//#endif
+#if (I9_USE_THREAD == 1)
+	if (!Private::bDisableThread || !Private::bDisableResourceLoader)
+		pUpdater->Add(pResourceLoader);
+#else
+	pUpdater->Add(pThreadManager);
+#endif
 
 //	if (!Private::bDisableSound)
 //		pUpdater->Add(pSoundSystem);
 
-//	pUpdater->Add(pSystem);
-//	pUpdater->Add(pJobManager);
+	pUpdater->Add(pSystem);
+	pUpdater->Add(pJobManager);
 
 //	ResourceManager::Register(ITexture::GetTypeId(), TextureResourceLoader);
 //	ResourceManager::Register(ISound::GetTypeId(), SoundResourceLoader);
@@ -175,8 +187,8 @@ bool Initialize()
 
 	Private::bInitialized = true;
 
-//	ret = ret && pManager->Add(Private::pApplication);
-//	pManager->Print();
+	ret = ret && pManager->Add(Private::pApplication);
+	pManager->Print();
 
 	return ret;
 }
@@ -198,6 +210,5 @@ void Shutdown()
 }
 
 }
-
 }
 

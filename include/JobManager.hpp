@@ -13,44 +13,56 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
-#ifndef IAPP_HPP
-#define IAPP_HPP
+#ifndef JOBMANAGER_HPP
+#define JOBMANAGER_HPP
 
 #include "interface/IManager.hpp"
 #include "interface/IUpdatable.hpp"
-#include "ResourceManager.hpp"
+#include "Singleton.hpp"
+#include "Container.hpp"
+#include "Thread.hpp"
+
+#include <queue>
 
 namespace Sascar {
 
-class IApp : public IManager, public IUpdatable
+class Job;
+
+/// Job Manager
+class JobManager : public IManager, public IUpdatable
 {
-	I9_DECLARE_MANAGER(IApp)
+	I9_DECLARE_SINGLETON(JobManager)
+	I9_DECLARE_MANAGER(JobManager)
+	I9_DECLARE_CONTAINER(Vector, Job)
 
 	public:
-		IApp();
-		virtual ~IApp();
-
-		/// Print output level string
-		virtual void WriteOut(const char *msg);
-
-		/// Print error level string
-		virtual void WriteErr(const char *msg);
-
-		/// Print debug level string
-		virtual void WriteDbg(const char *msg);
-
-		/// Get user resource manager
-		ResourceManager *GetResourceManager();
+		Job *Add(Job *job);
 
 		// IManager
+		virtual bool Reset() override;
 		virtual bool Shutdown() override;
 
-	protected:
-		ResourceManager	cResourceManager;
+		virtual void Disable() override;
+		virtual void Enable() override;
 
+		// IUpdatable
+		virtual bool Update(Seconds dt) override;
+
+	protected:
+		void StartThreads();
+
+	private:
+		Mutex cMutex;
+
+		std::queue<Job *> vQueue;
+		JobVector vRunning;
+
+		u32 iMaxThreads = 8;
+		bool bEnabled = true;
 };
+
+#define pJobManager JobManager::GetInstance()
 
 } // namespace
 
-#endif // IAPP_HPP
+#endif // JOBMANAGER_HPP

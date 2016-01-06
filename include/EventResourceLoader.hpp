@@ -14,43 +14,32 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef IAPP_HPP
-#define IAPP_HPP
+#ifndef EVENTRESOURCE_LOADER_HPP
+#define EVENTRESOURCE_LOADER_HPP
 
-#include "interface/IManager.hpp"
-#include "interface/IUpdatable.hpp"
-#include "ResourceManager.hpp"
+#include "Defines.hpp"
+#include "interface/IEvent.hpp"
 
 namespace Sascar {
 
-class IApp : public IManager, public IUpdatable
+class ResourceGroup;
+
+/// Resource Loader Event
+class EventResourceLoader : public IEvent
 {
-	I9_DECLARE_MANAGER(IApp)
+	I9_DECLARE_RTTI(EventResourceLoader, IEvent)
 
 	public:
-		IApp();
-		virtual ~IApp();
+		EventResourceLoader();
+		virtual ~EventResourceLoader();
 
-		/// Print output level string
-		virtual void WriteOut(const char *msg);
-
-		/// Print error level string
-		virtual void WriteErr(const char *msg);
-
-		/// Print debug level string
-		virtual void WriteDbg(const char *msg);
-
-		/// Get user resource manager
-		ResourceManager *GetResourceManager();
-
-		// IManager
-		virtual bool Shutdown() override;
+		void SetGroup(ResourceGroup *pGroup);
+		ResourceGroup *GetGroup() const;
 
 	protected:
-		ResourceManager	cResourceManager;
-
+		ResourceGroup *pGroup;
 };
 
 } // namespace
 
-#endif // IAPP_HPP
+#endif // EVENTRESOURCE_LOADER_HPP

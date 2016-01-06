@@ -14,43 +14,34 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef IAPP_HPP
-#define IAPP_HPP
+#ifndef UPDATER_HPP
+#define UPDATER_HPP
 
-#include "interface/IManager.hpp"
-#include "interface/IUpdatable.hpp"
-#include "ResourceManager.hpp"
+#include "Defines.hpp"
+#include "Singleton.hpp"
+#include "Container.hpp"
 
 namespace Sascar {
 
-class IApp : public IManager, public IUpdatable
+class IUpdatable;
+
+/// Updater Runner
+class Updater
 {
-	I9_DECLARE_MANAGER(IApp)
+	I9_DECLARE_SINGLETON(Updater)
+	I9_DECLARE_CONTAINER(Vector, IUpdatable)
 
 	public:
-		IApp();
-		virtual ~IApp();
+		void Run(Seconds dt);
+		void Add(IUpdatable *obj);
+		void Remove(IUpdatable *obj);
 
-		/// Print output level string
-		virtual void WriteOut(const char *msg);
-
-		/// Print error level string
-		virtual void WriteErr(const char *msg);
-
-		/// Print debug level string
-		virtual void WriteDbg(const char *msg);
-
-		/// Get user resource manager
-		ResourceManager *GetResourceManager();
-
-		// IManager
-		virtual bool Shutdown() override;
-
-	protected:
-		ResourceManager	cResourceManager;
-
+	private:
+		IUpdatableVector vUpdatable;
 };
+
+#define pUpdater Updater::GetInstance()
 
 } // namespace
 
-#endif // IAPP_HPP
+#endif // UPDATER_HPP
