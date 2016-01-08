@@ -24,6 +24,7 @@
 #include "JobManager.hpp"
 #include "Updater.hpp"
 #include "ResourceManager.hpp"
+#include "ThreadManager.hpp"
 
 extern "C" {
 

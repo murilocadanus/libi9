@@ -2,20 +2,21 @@
 #define I9RUN_HPP
 
 #include "I9Init.hpp"
+#include "System.hpp"
 
 template <class T>
 int I9Run(int argc, char **argv, const char*config = "app.config")
 {
 	T app;
-	Sascar::SetApp(&app, argc, argv, config);
-	if(Sascar::Initialize())
+	//Sascar::SetApp(&app, argc, argv, config);
+	/*if(Sascar::Initialize())
 	{
-		while (true/*!pSystem->IsShuttingDown()*/)
+		while (!pSystem->IsShuttingDown())
 		{
 			Sascar::Update();
 		}
 	}
-	Sascar::Shutdown();
+	Sascar::Shutdown();*/
 
 	return EXIT_SUCCESS;
 }
