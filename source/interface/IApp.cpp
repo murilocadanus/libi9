@@ -29,9 +29,10 @@ IApp::~IApp()
 {
 }
 
-void IApp::Process()
+bool IApp::Process()
 {
 	Log(TAG "Processing...");
+	return true;
 }
 
 bool IApp::Shutdown()

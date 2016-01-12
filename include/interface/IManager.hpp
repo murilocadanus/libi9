@@ -33,6 +33,9 @@ class IManager
 		/// Reset all module attributes as a newly created object.
 		virtual bool Reset();
 
+		/// Process module of a newly created object.
+		virtual bool Process();
+
 		/// Terminate everything and deinitialize all dependency. Reset to before initialization state.
 		virtual bool Shutdown();
 

@@ -12,7 +12,7 @@ int I9Run(int argc, char **argv, const char*config = "app.config")
 	Sascar::Initialize();
 
 	app.Initialize();
-	//app.Process();
+	app.Process();
 	app.Shutdown();
 
 	Sascar::Shutdown();
