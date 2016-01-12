@@ -10,12 +10,6 @@ SOURCES +=	\
 			source/Memory.cpp \
 			source/Reader.cpp \
 			source/EventSystem.cpp \
-			source/ResourceLoader.cpp \
-			source/ResourceGroup.cpp \
-			source/EventResourceLoader.cpp \
-			source/JobManager.cpp \
-			source/Updater.cpp \
-			source/Profiler.cpp \
 			source/util/Log.cpp \
 			source/ResourceManager.cpp \
 			source/api/net/Address.cpp \
@@ -26,7 +20,6 @@ SOURCES +=	\
 			source/interface/IManager.cpp \
 			source/interface/IReader.cpp \
 			source/interface/ISystem.cpp \
-			source/interface/IResource.cpp \
 			source/location/libGeoWeb.cpp \
 			source/platform/console/ConsoleSystem.cpp \
 			source/platform/console/I9Posix.cpp
@@ -51,12 +44,6 @@ HEADERS +=	include/Config.hpp \
 			include/Reader.hpp \
 			include/ResourceManager.hpp \
 			include/EventSystem.hpp \
-			include/ResourceLoader.hpp \
-			include/ResourceGroup.hpp \
-			include/EventResourceLoader.hpp \
-			include/JobManager.hpp \
-			include/Updater.hpp \
-			include/Profiler.hpp \
 			include/util/String.hpp \
 			include/util/Log.hpp \
 			include/api/net/Address.hpp \
@@ -73,8 +60,6 @@ HEADERS +=	include/Config.hpp \
 			include/interface/IEventListener.hpp \
 			include/interface/IEventSystemListener.hpp \
 			include/interface/IEvent.hpp \
-			include/interface/IResource.hpp \
-			include/interface/IEventResourceLoaderListener.hpp \
 			include/location/libGeoWeb.hpp \
 			include/location/revgeo.hpp \
 			include/platform/console/ConsoleSystem.hpp \

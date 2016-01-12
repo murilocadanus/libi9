@@ -19,7 +19,7 @@
 
 #include "interface/IManager.hpp"
 #include "interface/IUpdatable.hpp"
-#include "ResourceManager.hpp"
+//#include "ResourceManager.h"
 
 namespace Sascar {
 
@@ -41,13 +41,13 @@ class IApp : public IManager, public IUpdatable
 		virtual void WriteDbg(const char *msg);
 
 		/// Get user resource manager
-		ResourceManager *GetResourceManager();
+		//ResourceManager *GetResourceManager();
 
 		// IManager
 		virtual bool Shutdown() override;
 
 	protected:
-		ResourceManager	cResourceManager;
+		//ResourceManager	cResourceManager;
 
 };
 

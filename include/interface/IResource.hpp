@@ -23,16 +23,6 @@
 #define sdAcquire(p)		p->Acquire()
 #define sdRelease(p)		{ if (p) p->Release(); p = nullptr; }
 
-typedef unsigned long long int 	u64;
-typedef unsigned int 			u32;
-typedef unsigned short int 		u16;
-typedef unsigned char 			u8;
-typedef signed long long int	s64;
-typedef signed int 				s32;
-typedef signed short int 		s16;
-typedef signed char 			s8;
-typedef float 					f32;
-
 namespace Sascar {
 
 class ResourceManager;
@@ -71,4 +61,4 @@ class IResource : public IObject
 
 } // namespace
 
-#endif // __IRESOURCE_H__
+#endif // IRESOURCE_HPP
