@@ -27,7 +27,7 @@ SOURCES +=	\
 			source/interface/IReader.cpp \
 			source/interface/ISystem.cpp \
 			source/interface/IResource.cpp \
-			#source/location/libGeoWeb.cpp \
+			source/location/libGeoWeb.cpp \
 			source/platform/console/ConsoleSystem.cpp \
 			source/platform/console/I9Posix.cpp
 
@@ -75,8 +75,8 @@ HEADERS +=	include/Config.hpp \
 			include/interface/IEvent.hpp \
 			include/interface/IResource.hpp \
 			include/interface/IEventResourceLoaderListener.hpp \
-			#include/location/libGeoWeb.hpp \
-			#include/location/revgeo.hpp \
+			include/location/libGeoWeb.hpp \
+			include/location/revgeo.hpp \
 			include/platform/console/ConsoleSystem.hpp \
 			include/platform/console/Platform.hpp \
 			include/I9Run.hpp \

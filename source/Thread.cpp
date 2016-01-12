@@ -1,6 +1,5 @@
 
 #include "Thread.hpp"
-#include "ThreadManager.hpp"
 
 #define TAG 	"[Thread] "
 
