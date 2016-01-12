@@ -18,7 +18,6 @@
 #define IAPP_HPP
 
 #include "interface/IManager.hpp"
-//#include "ResourceManager.h"
 
 namespace Sascar {
 
@@ -43,10 +42,6 @@ class IApp : public IManager
 		// IManager
 		virtual bool Process() override;
 		virtual bool Shutdown() override;
-
-	protected:
-		//ResourceManager	cResourceManager;
-
 };
 
 } // namespace

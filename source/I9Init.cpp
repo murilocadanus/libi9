@@ -16,6 +16,7 @@
 
 #include "I9Init.hpp"
 #include "Defines.hpp"
+#include "Configuration.hpp"
 
 extern "C" {
 
@@ -123,6 +124,8 @@ bool Initialize()
 	Info(I9_TAG "Initializing...");
 
 	bool ret = true;
+
+	pConfiguration->Load(Private::sConfigFile);
 
 //	ret = ret && pManager->Add(pFileSystem);
 //	pConfiguration->Load(Private::sConfigFile);

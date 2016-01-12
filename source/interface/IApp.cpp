@@ -21,7 +21,6 @@
 namespace Sascar {
 
 IApp::IApp()
-	//: cResourceManager("IApp")
 {
 }
 
@@ -38,9 +37,6 @@ bool IApp::Process()
 bool IApp::Shutdown()
 {
 	Log(TAG "Shutting down...");
-
-	//cResourceManager.Print();
-	//cResourceManager.Reset();
 
 	return true;
 }
@@ -62,11 +58,6 @@ void IApp::WriteDbg(const char *msg)
 	fprintf(stdout, "%s\n", msg);
 	//Dbg(msg);
 }
-
-/*ResourceManager *IApp::GetResourceManager()
-{
-	return &cResourceManager;
-}*/
 
 } // namespace
 

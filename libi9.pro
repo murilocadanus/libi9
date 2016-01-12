@@ -3,7 +3,8 @@ SOURCES +=	source/location/libGeoWeb.cpp \
 			source/util/Resolver.cpp \
 			source/util/Log.cpp \
 			source/interface/IApp.cpp \
-			source/interface/IManager.cpp
+			source/interface/IManager.cpp \
+			source/Configuration.cpp
 
 HEADERS +=	include/location/libGeoWeb.hpp \
 			include/location/revgeo.hpp \
@@ -17,7 +18,8 @@ HEADERS +=	include/location/libGeoWeb.hpp \
 			include/interface/IApp.hpp \
 			include/interface/IManager.hpp \
 			include/I9Run.hpp \
-			include/I9.hpp
+			include/I9.hpp \
+			include/Configuration.hpp
 
 include("lib.pri")
 include("compiler.pri")
