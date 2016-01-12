@@ -31,7 +31,7 @@ class ResourceManager;
 class IResource : public IObject
 {
 	friend class ResourceManager;
-	I9_DECLARE_RTTI(IResource, IObject)
+	SEED_DECLARE_RTTI(IResource, IObject)
 
 	public:
 		IResource();

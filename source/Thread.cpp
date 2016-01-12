@@ -18,7 +18,7 @@ Thread::~Thread()
 
 void Thread::Create()
 {
-	I9_ASSERT_MSG(bRunning != true, TAG "Already created.");
+	SEED_ASSERT_MSG(bRunning != true, TAG "Already created.");
 
 #if (I9_USE_THREAD == 1)
 	cThread = std::thread([&](){
@@ -27,7 +27,7 @@ void Thread::Create()
 
 	std::thread::id defaultId;
 	UNUSED(defaultId)
-	I9_ASSERT_MSG(defaultId != cThread.get_id(), TAG "Failed to create thread.");
+	SEED_ASSERT_MSG(defaultId != cThread.get_id(), TAG "Failed to create thread.");
 #else
 	pThreadManager->Add(this);
 #endif

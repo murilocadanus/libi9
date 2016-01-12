@@ -68,7 +68,7 @@ JsonReader &JsonReader::operator=(const JsonReader &other)
 
 bool JsonReader::Load(const void *data)
 {
-	I9_ASSERT(data);
+	SEED_ASSERT(data);
 	bool ret = false;
 	char err[1024];
 
@@ -281,4 +281,4 @@ void JsonReader::UnselectNode()
 
 }
 
-#endif // I9_USE_JSON
+#endif // SEED_USE_JSON

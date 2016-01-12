@@ -30,7 +30,7 @@ Interface for basic object
 
 typedef ptrdiff_t TypeId;
 
-#define I9_DECLARE_RTTI(type, base)	protected:														\
+#define SEED_DECLARE_RTTI(type, base)	protected:														\
 											virtual bool IsKindOf_Internal(TypeId t) const override		\
 											{															\
 												if (GetTypeId() == t)									\

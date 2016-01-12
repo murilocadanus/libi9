@@ -159,6 +159,13 @@ class ISystem : public IManager, public IUpdatable
 		*/
 		virtual const char *GetApplicationDataFolder() const;
 
+		//! Get save game folder
+		/*!
+			Where the save game must be written
+			\returns a string containing the save game path.
+		*/
+		virtual const char *GetSaveGameFolder() const;
+
 		//! Enable/Disable default system cursor.
 		/*!
 			Enable/Disable default system cursor.

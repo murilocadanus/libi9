@@ -49,7 +49,7 @@ void Reader::Init()
 	{
 		switch (pConfiguration->GetReaderType())
 		{
-#if defined(I9_USE_JSON)
+#if defined(SEED_USE_JSON)
 			case eReaderType::Json:
 			{
 				Info(TAG "Creating reader json");
@@ -60,7 +60,7 @@ void Reader::Init()
 
 			default:
 			{
-#if defined(I9_USE_JSON)
+#if defined(SEED_USE_JSON)
 				Info(TAG "Creating reader json");
 				pOpaque = sdNew(JsonReader());
 #else

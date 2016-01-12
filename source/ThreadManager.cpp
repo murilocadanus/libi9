@@ -1,5 +1,5 @@
 
-#if (I9_USE_THREAD == 0)
+#if (SEED_USE_THREAD == 0)
 
 #include "ThreadManager.hpp"
 #include "Defines.hpp"
@@ -11,7 +11,7 @@
 
 namespace Sascar {
 
-I9_SINGLETON_DEFINE(ThreadManager)
+SEED_SINGLETON_DEFINE(ThreadManager)
 
 ThreadManager::ThreadManager()
 	: vThread()
@@ -83,4 +83,4 @@ void ThreadManager::Enable()
 
 } // namespace
 
-#endif // I9_USE_THREAD
+#endif // SEED_USE_THREAD

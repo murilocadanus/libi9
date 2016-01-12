@@ -50,12 +50,12 @@ bool  File::Unload()
 bool File::Open()
 {
 	bool ret = true;
-	I9_ASSERT_MSG(sFilename.length(), "Error: No filename was given to open file!");
+	SEED_ASSERT_MSG(sFilename.length(), "Error: No filename was given to open file!");
 	pHandle = PHYSFS_openRead(sFilename.c_str());
 	if (!pHandle)
 	{
 		Log(TAG "Error: file: %s - %s", sFilename.c_str(), PHYSFS_getLastError());
-		//I9_ASSERT_MSG(false, "Aborted, file not found.");
+		//SEED_ASSERT_MSG(false, "Aborted, file not found.");
 		return false;
 	}
 	else

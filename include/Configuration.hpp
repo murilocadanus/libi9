@@ -27,7 +27,7 @@ namespace Sascar {
 /// Run-time Configuration
 class Configuration : public IObject
 {
-	I9_DECLARE_SINGLETON(Configuration)
+	SEED_DECLARE_SINGLETON(Configuration)
 
 	public:
 		void Load(const String &file);
@@ -37,7 +37,7 @@ class Configuration : public IObject
 
 		//! Sets the application title.
 		/*!
-			Sets the application title.
+			Sets the application title, mainly used for savegame data.
 			\param title Title of the application;
 		 */
 		void SetApplicationTitle(const String &title);
@@ -51,7 +51,7 @@ class Configuration : public IObject
 
 		//! Sets the application description.
 		/*!
-			Sets the application description.
+			Sets the application description, mainly used for savegame data.
 			\param descr Description of the application ;
 		 */
 		void SetApplicationDescription(const String &desc);
@@ -65,7 +65,7 @@ class Configuration : public IObject
 
 		//! Sets the application publisher name.
 		/*!
-			Sets the application publisher name.
+			Sets the application publisher name, mainly used for savegame data.
 			\param descr Publisher of the application ;
 		 */
 		void SetPublisherName(const String desc);

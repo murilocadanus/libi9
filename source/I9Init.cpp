@@ -145,7 +145,7 @@ bool Initialize()
 //	ret = ret && pManager->Add(pRendererManager);
 
 
-//#if (I9_USE_THREAD == 1)
+//#if (SEED_USE_THREAD == 1)
 //	if (!Private::bDisableThread || !Private::bDisableResourceLoader)
 //		ret = ret && pManager->Add(pResourceLoader);
 //#else
@@ -156,7 +156,7 @@ bool Initialize()
 
 //	pUpdater->Add(Private::pApplication);
 
-//#if (I9_USE_THREAD == 1)
+//#if (SEED_USE_THREAD == 1)
 //	if (!Private::bDisableThread || !Private::bDisableResourceLoader)
 //		pUpdater->Add(pResourceLoader);
 //#else

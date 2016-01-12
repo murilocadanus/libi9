@@ -27,7 +27,7 @@ namespace Sascar {
 /// File
 class File : public IObject
 {
-	I9_DECLARE_RTTI(File, IObject)
+	SEED_DECLARE_RTTI(File, IObject)
 
 	public:
 		File();

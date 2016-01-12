@@ -47,7 +47,7 @@ namespace Sascar {
 
 	/// Displays a output message by using IApp::WriteOut implementation.
 	/**
-	This method is a channeling point to all output messages that I9 will use. If you do not override IApp::WriteOut, it
+	This method is a channeling point to all output messages that Seed will use. If you do not override IApp::WriteOut, it
 	will use the default stdout output pipe.
 
 	\param msg Pointer to a string to be displayed.
@@ -75,7 +75,7 @@ namespace Sascar {
 
 	/// Shutdown I9
 	/**
-	Will reset all I9 states and shutdown all subsystems. Nothing more from I9 can be used until a new Initialize happens.
+	Will reset all Seed states and shutdown all subsystems. Nothing more from I9 can be used until a new Initialize happens.
 	*/
 	void Shutdown();
 
@@ -94,7 +94,7 @@ namespace Sascar {
 		/// A pointer to the IApp implementation.
 		extern IApp		*pApplication;
 
-		/// Flag indicating that I9 is Initialized or not.
+		/// Flag indicating that Seed is Initialized or not.
 		extern bool		bInitialized;
 
 		/// Command line argument count.

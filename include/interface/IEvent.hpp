@@ -25,7 +25,7 @@ namespace Sascar {
 /// Base Event
 class IEvent : public IObject
 {
-	I9_DECLARE_RTTI(IEvent, IObject)
+	SEED_DECLARE_RTTI(IEvent, IObject)
 
 	public:
 		IEvent() = default;
