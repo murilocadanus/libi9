@@ -31,8 +31,6 @@ extern void Info(const char *pMessage, ...);
 	inline void Dbg(const char *, ...) {}
 #endif // DEBUG
 
-#define Err(...) Log(__VA_ARGS__)
-
 extern void Error(const char *pMessage, ...);
 
 }
