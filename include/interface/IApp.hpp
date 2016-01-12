@@ -40,6 +40,8 @@ class IApp : public IManager
 		/// Get user resource manager
 		//ResourceManager *GetResourceManager();
 
+		virtual void Process();
+
 		// IManager
 		virtual bool Shutdown() override;
 
