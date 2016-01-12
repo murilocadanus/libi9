@@ -1,11 +1,13 @@
-SOURCES +=	\
+SOURCES +=	source/location/libGeoWeb.cpp \
 			source/I9Init.cpp \
 			source/util/Resolver.cpp \
 			source/util/Log.cpp \
 			source/interface/IApp.cpp \
 			source/interface/IManager.cpp
 
-HEADERS +=	include/Config.hpp \
+HEADERS +=	include/location/libGeoWeb.hpp \
+			include/location/revgeo.hpp \
+			include/Config.hpp \
 			include/I9Init.hpp \
 			include/Enum.hpp \
 			include/Defines.hpp \
