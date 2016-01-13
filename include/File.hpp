@@ -14,26 +14,39 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LOG_HPP
-#define LOG_HPP
+#ifndef FILE_HPP
+#define FILE_HPP
 
 #include "Defines.hpp"
 
-extern "C" {
+namespace Sascar {
 
-extern void Info(const char *pMessage, ...);
+class File
+{
+	public:
+		File();
+		File(const String &filename);
+		virtual ~File();
 
-#if defined(DEBUG)
-	extern void Log(const char *pMessage, ...);
-	extern void Dbg(const char *pMessage, ...);
-#else
-	inline void Log(const char *, ...) {}
-	inline void Dbg(const char *, ...) {}
-#endif // DEBUG
+		void Close();
+		u32 GetSize() const;
+		u8 *GetData() const;
+		const String &GetName() const;
 
-extern void Error(const char *pMessage, ...);
-#define Err(...) Log(__VA_ARGS__)
+		bool Load(const String &filename);
+		bool Unload();
 
-}
+	protected:
+		bool Check() const;
+		bool Open();
 
-#endif // LOG_HPP
+	private:
+		FILE		*pHandle;
+		mutable u8		*pData;
+		String			sFilename;
+		u32				iSize;
+};
+
+} // namespace
+
+#endif // FILE_HPP

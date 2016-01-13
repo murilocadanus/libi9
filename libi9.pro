@@ -1,4 +1,5 @@
-SOURCES +=	source/location/libGeoWeb.cpp \
+SOURCES +=	source/File.cpp \
+			source/location/libGeoWeb.cpp \
 			source/I9Init.cpp \
 			source/util/Resolver.cpp \
 			source/util/Log.cpp \
@@ -6,7 +7,8 @@ SOURCES +=	source/location/libGeoWeb.cpp \
 			source/interface/IManager.cpp \
 			source/Configuration.cpp
 
-HEADERS +=	include/location/libGeoWeb.hpp \
+HEADERS +=	include/File.hpp \
+			include/location/libGeoWeb.hpp \
 			include/location/revgeo.hpp \
 			include/Config.hpp \
 			include/I9Init.hpp \

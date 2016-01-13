@@ -43,4 +43,39 @@ constexpr size_t countof(T(&)[N])
 	return N;
 }
 
+// Debugging
+#if defined(DEBUG)
+	#if defined(__GNUC__)
+		#define __FUNC__					__PRETTY_FUNCTION__
+	#else
+		#define __FUNC__					__FUNCSIG__
+	#endif
+
+	#define I9_ASSERT(x)					if (!(x)) { Err("%s:%d: " #x, __FILE__, __LINE__); HALT}
+	#define I9_ASSERT_MSG(x, msg)			if (!(x)) { Err("%s:%d: (" #x "): " #msg, __FILE__, __LINE__); HALT}
+	#define I9_ASSERT_FMT(x, msg, ...)	if (!(x)) { Err("%s:%d: (" #x "): " #msg, __FILE__, __LINE__, __VA_ARGS__); HALT}
+	#define I9_WARNING(x, msg, ...)		if (x)    { Wrn("%s:%d: WARNING: (" #x "): " #msg, __FILE__, __LINE__, __VA_ARGS__); }
+	#define I9_CHECK_RETURN(x, ret, msg, ...)	if (!(x)) { Err("%s:%d: ERROR: (" #x "): " #msg, __FILE__, __LINE__); return ret; }
+	#define I9_ABSTRACT_METHOD			Dbg(I9_TAG "WARNING: Calling an 'abstract' method: [%s] (%s:%d).", __FUNC__, __FILE__, __LINE__);
+	#define I9_DEPRECATED_METHOD			Dbg(I9_TAG "WARNING: Calling a deprected method, please fix it: [%s] (%s:%d)", __FUNC__, __FILE__, __LINE__);
+#else
+	#define I9_CHECK_RETURN(x, ret, msg, ...)	if (!(x)) { Err("ERROR: " #msg); return ret; }
+
+	#define I9_ABSTRACT_METHOD
+	#define I9_DEPRECATED_METHOD
+
+	#if defined(__GNUC__)
+		#define I9_ASSERT(...)
+		#define I9_ASSERT_MSG(...)
+		#define I9_ASSERT_FMT(...)
+		#define I9_WARNING(...)
+	#else
+		#define I9_ASSERT
+		#define I9_ASSERT_MSG
+		#define I9_ASSERT_FMT
+		#define I9_WARNING
+	#endif // __GNUC__
+
+#endif // DEBUG
+
 #endif // DEFINES_HPP
