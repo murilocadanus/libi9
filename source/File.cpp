@@ -53,12 +53,11 @@ bool File::Open()
 	if (!pHandle)
 	{
 		Log(TAG "Error: file: %s", sFilename.c_str());
-		//I9_ASSERT_MSG(false, "Aborted, file not found.");
+		I9_ASSERT_MSG(false, "Aborted, file not found.");
 		return false;
 	}
 	else
 	{
-		//iSize = static_cast<u32>(PHYSFS_fileLength(pHandle));
 		fseek(pHandle, 0L, SEEK_END);
 		iSize = static_cast<u32>(ftell(pHandle));
 		rewind(pHandle);
@@ -101,7 +100,7 @@ u8 *File::GetData() const
 	{
 		pData = (u8 *)malloc(iSize + 1);
 		pData[iSize] = 0;
-		//if (PHYSFS_read(pHandle, pData, iSize, 1) != -1)
+
 		if(fread(pData, iSize, 1, pHandle) != -1)
 			return pData;
 	}
