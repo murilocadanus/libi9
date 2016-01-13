@@ -41,7 +41,7 @@ class File
 		bool Open();
 
 	private:
-		FILE		*pHandle;
+		FILE			*pHandle;
 		mutable u8		*pData;
 		String			sFilename;
 		u32				iSize;

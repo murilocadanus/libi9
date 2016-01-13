@@ -3,6 +3,9 @@
 #include "util/Log.hpp"
 #include "Enum.hpp"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define TAG		"[File] "
 
 namespace Sascar {
@@ -46,7 +49,7 @@ bool File::Open()
 {
 	bool ret = true;
 	I9_ASSERT_MSG(sFilename.length(), "Error: No filename was given to open file!");
-	pHandle = fopen(sFilename.c_str(), "r");
+	pHandle = fopen(sFilename.c_str(), "rb");
 	if (!pHandle)
 	{
 		Log(TAG "Error: file: %s", sFilename.c_str());
@@ -54,7 +57,12 @@ bool File::Open()
 		return false;
 	}
 	else
-		iSize = static_cast<u32>(PHYSFS_fileLength(pHandle));
+	{
+		//iSize = static_cast<u32>(PHYSFS_fileLength(pHandle));
+		fseek(pHandle, 0L, SEEK_END);
+		iSize = static_cast<u32>(ftell(pHandle));
+		rewind(pHandle);
+	}
 
 	return ret;
 }
@@ -93,7 +101,8 @@ u8 *File::GetData() const
 	{
 		pData = (u8 *)malloc(iSize + 1);
 		pData[iSize] = 0;
-		if (PHYSFS_read(pHandle, pData, iSize, 1) != -1)
+		//if (PHYSFS_read(pHandle, pData, iSize, 1) != -1)
+		if(fread(pData, iSize, 1, pHandle) != -1)
 			return pData;
 	}
 

@@ -18,6 +18,7 @@
 #define DEFINES_HPP
 
 #include <string>
+#include <cstring>
 #include <stdarg.h>
 #include <stdint.h>
 #include "Config.hpp"
@@ -42,6 +43,8 @@ constexpr size_t countof(T(&)[N])
 {
 	return N;
 }
+
+#define UNUSED(var)						(void)var;
 
 // Debugging
 #if defined(DEBUG)

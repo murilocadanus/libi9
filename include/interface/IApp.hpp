@@ -42,6 +42,9 @@ class IApp : public IManager
 		// IManager
 		virtual bool Process() override;
 		virtual bool Shutdown() override;
+
+	public:
+		bool bIsFinished;
 };
 
 } // namespace

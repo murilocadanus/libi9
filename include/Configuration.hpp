@@ -18,6 +18,7 @@
 #define CONFIGURATION_HPP
 
 #include <string>
+#include "Enum.hpp"
 
 using namespace std;
 
@@ -45,10 +46,13 @@ class Configuration
 
 		inline void SetMongoDBCollection(const string mongoDBCollection){ sMongoDBCollection = mongoDBCollection; }
 		inline const string &GetMongoDBCollection() const { return sMongoDBCollection; }
+		inline eReaderType GetReaderType() const { return nReaderType; }
 
 	private:
 		string sMongoDBHost;
 		string sMongoDBCollection;
+
+		eReaderType nReaderType;
 };
 
 #define pConfiguration Configuration::GetInstance()
