@@ -26,11 +26,9 @@ void Configuration::Load(const string &file)
 	{
 		Reader r(f);
 
-		//sMongoDBHost = "mngdbsascloud.sasweb-fleet.net";
-		sMongoDBHost = r.ReadString("sMongoDBHost", false);
+		sMongoDBHost = r.ReadString("sMongoDBHost", "");
 
-		//sMongoDBCollection = "murilo.posicao";
-		sMongoDBCollection = r.ReadString("sMongoDBCollection", false);
+		sMongoDBCollection = r.ReadString("sMongoDBCollection", "");
 	}
 
 	if (f)

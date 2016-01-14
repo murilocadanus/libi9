@@ -73,7 +73,7 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 	//curl_easy_setopt(curlPostRevgeo, CURLOPT_POSTFIELDS, webParams);
 
 	// Cria os parametros para o request
-	sprintf(urlWithParams, "https://maps.google.com/maps/api/geocode/json?latlng=%lf,%lf&sensor=false&key=AIzaSyC-qbPlZk-Xf9qtJbV131YLOXjmjOpeG9o", latit, longit);
+	sprintf(urlWithParams, "https://maps.google.com/maps/api/geocode/json?latlng=%lf,%lf&sensor=false&key=AIzaSyCgIsGUoox-_-bD2o2d2bzrWru4SXFDZRs", latit, longit);
 	curl_easy_setopt(curlPostRevgeo, CURLOPT_URL, urlWithParams);
 
 	resultURLCode = curl_easy_perform(curlPostRevgeo);
