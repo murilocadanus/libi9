@@ -54,8 +54,8 @@
 //================================================================================
 // FEATURES CAPPING
 //================================================================================
-#define I9_USE_THREAD						1
-#define I9_USE_JSON						1
+#define I9_USE_THREAD						0
+#define I9_USE_JSON							1
 
 /*
 Toggle between instancing Singleton classes in the (0) Stack or in the (1) Heap

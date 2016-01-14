@@ -41,14 +41,19 @@ class Configuration
 
 		void Load(const string &file);
 
+		inline void SetTitle(const string title){ sTitle = title; }
+		inline const string &GetTitle() const { return sTitle; }
+
 		inline void SetMongoDBHost(const string mongoDBHost){ sMongoDBHost = mongoDBHost; }
 		inline const string &GetMongoDBHost() const { return sMongoDBHost; }
 
 		inline void SetMongoDBCollection(const string mongoDBCollection){ sMongoDBCollection = mongoDBCollection; }
 		inline const string &GetMongoDBCollection() const { return sMongoDBCollection; }
+
 		inline eReaderType GetReaderType() const { return nReaderType; }
 
 	private:
+		string sTitle;
 		string sMongoDBHost;
 		string sMongoDBCollection;
 

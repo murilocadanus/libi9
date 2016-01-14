@@ -8,7 +8,8 @@ namespace Sascar {
 Configuration Configuration::instance;
 
 Configuration::Configuration()
-	: sMongoDBHost("")
+	: sTitle("")
+	, sMongoDBHost("")
 	, sMongoDBCollection("")
 	, nReaderType(eReaderType::Default)
 {
@@ -26,8 +27,8 @@ void Configuration::Load(const string &file)
 	{
 		Reader r(f);
 
+		sTitle = r.ReadString("sTitle", "");
 		sMongoDBHost = r.ReadString("sMongoDBHost", "");
-
 		sMongoDBCollection = r.ReadString("sMongoDBCollection", "");
 	}
 
