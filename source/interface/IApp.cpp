@@ -21,6 +21,7 @@
 namespace Sascar {
 
 IApp::IApp()
+	: bIsFinished(false)
 {
 }
 
