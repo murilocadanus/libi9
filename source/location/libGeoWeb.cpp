@@ -7,6 +7,8 @@
 
 #include "location/libGeoWeb.hpp"
 
+#include "util/Log.hpp"
+
 using namespace rapidjson;
 
 /*
@@ -57,7 +59,7 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		// Configura o header para o request
 		headers = curl_slist_append(headers, "Accept: application/json");
 		headers = curl_slist_append(headers, "Content-Type: application/json");
-		headers = curl_slist_append(headers, "charsets: utf-8");
+		headers = curl_slist_append(headers, "charset: utf-8");
 
 		//Monta CURL para request
 		curlPostRevgeo = curl_easy_init();
@@ -73,7 +75,10 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 	//curl_easy_setopt(curlPostRevgeo, CURLOPT_POSTFIELDS, webParams);
 
 	// Cria os parametros para o request
-	sprintf(urlWithParams, "https://maps.google.com/maps/api/geocode/json?latlng=%lf,%lf&sensor=false&key=AIzaSyCgIsGUoox-_-bD2o2d2bzrWru4SXFDZRs", latit, longit);
+	sprintf(urlWithParams, "https://maps.google.com/maps/api/geocode/json?latlng=%lf,%lf&sensor=false&key=AIzaSyC-qbPlZk-Xf9qtJbV131YLOXjmjOpeG9o", latit, longit);
+
+	Log(urlWithParams);
+
 	curl_easy_setopt(curlPostRevgeo, CURLOPT_URL, urlWithParams);
 
 	resultURLCode = curl_easy_perform(curlPostRevgeo);
@@ -114,12 +119,8 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		if (type == "country")
 		{
 			std::string pais = addresses[i]["short_name"].GetString();
-			converteEncode( "UTF8",
-							"LATIN1",
-							(char*) pais.c_str(),
-							end->pais,
-							strlen((char *) pais.c_str()));
-			end->pais[strlen(pais.c_str())] = '\0';
+			strcpy(end->pais, pais.c_str());
+			//end->pais[strlen(pais.c_str())] = '\0';
 		}
 
 		// --- ESTADO ---
@@ -127,14 +128,10 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		if (type == "administrative_area_level_1")
 		{
 			std::string uf = addresses[i]["short_name"].GetString();
-			converteEncode( "UTF8",
-							"LATIN1",
-							(char*) uf.c_str(),
-							end->uf,
-							8);
+			strcpy(end->uf, uf.c_str());
 
 			// Limita o Uf para 2 bytes, adicionando espaco na 3 posicao
-			end->uf[8] = '\0';
+			//end->uf[8] = '\0';
 		}
 
 		// --- MUNICIPIO ---
@@ -142,12 +139,8 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		if (type == "locality")
 		{
 			std::string municipio = addresses[i]["long_name"].GetString();
-			converteEncode( "UTF8",
-							"LATIN1",
-							(char*) municipio.c_str(),
-							end->municipio,
-							strlen((char *) municipio.c_str()));
-			end->municipio[strlen(municipio.c_str())] = '\0';
+			strcpy(end->municipio, municipio.c_str());
+			//end->municipio[strlen(municipio.c_str())] = '\0';
 		}
 
 		// --- BAIRRO ---
@@ -155,12 +148,8 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		if (type == "sublocality_level_1")
 		{
 			std::string bairro = addresses[i]["long_name"].GetString();
-			converteEncode( "UTF8",
-							"LATIN1",
-							(char*) bairro.c_str(),
-							end->bairro,
-							strlen((char *) bairro.c_str()));
-			end->bairro[strlen(bairro.c_str())] = '\0';
+			strcpy(end->bairro, bairro.c_str());
+			//end->bairro[strlen(bairro.c_str())] = '\0';
 		}
 
 		// --- RUA ---
@@ -168,12 +157,8 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		if (type == "route")
 		{
 			std::string rua = addresses[i]["long_name"].GetString();
-			converteEncode( "UTF8",
-							"LATIN1",
-							(char*) rua.c_str(),
-							end->rua,
-							strlen((char *) rua.c_str()));
-			end->rua[strlen(rua.c_str())] = '\0';
+			strcpy(end->rua, rua.c_str());
+			//end->rua[strlen(rua.c_str())] = '\0';
 		}
 
 		// --- NUMERO ---
@@ -181,12 +166,8 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		if (type == "street_number")
 		{
 			std::string numero = addresses[i]["long_name"].GetString();
-			converteEncode( "UTF8",
-							"LATIN1",
-							(char*) numero.c_str(),
-							end->numero,
-							strlen((char *) numero.c_str()));
-			end->numero[strlen(numero.c_str())] = '\0';
+			strcpy(end->numero, numero.c_str());
+			//end->numero[strlen(numero.c_str())] = '\0';
 		}
 	}
 
