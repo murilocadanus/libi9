@@ -42,11 +42,28 @@ static size_t writeCurlCallback(void *contents, size_t size, size_t nmemb, void 
 	return size * nmemb;
 }
 
+void LibGeoWeb::Url(const char *message, ...)
+{
+	va_list ap;
+
+	va_start(ap, message);
+	vsnprintf(urlWithParams, 2048, message, ap);
+	va_end(ap);
+}
+
 /*
  * Faz a resolucao de endereco
  */
-int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posicao_mapa *end)
+u_int32_t LibGeoWeb::revGeoWeb(struct endereco_posicao_mapa *end, u_int32_t timeOut)
 {
+	if(!urlWithParams)
+	{
+		fprintf(stderr, "Empty URL request\n");
+		return 0;
+	}
+
+	Log(urlWithParams);
+
 	// Declara as variaveis para fazer o request da resolucao de endereco.
 	Document document;
 
@@ -67,7 +84,7 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		curl_easy_setopt(curlPostRevgeo, CURLOPT_HTTPGET, 1);
 		curl_easy_setopt(curlPostRevgeo, CURLOPT_WRITEFUNCTION, writeCurlCallback);
 		curl_easy_setopt(curlPostRevgeo, CURLOPT_WRITEDATA, &readBufferRevgeo);
-		curl_easy_setopt(curlPostRevgeo, CURLOPT_TIMEOUT, REV_GEO_TIMEOUT);
+		curl_easy_setopt(curlPostRevgeo, CURLOPT_TIMEOUT, timeOut);
 	//}
 
 	// Faz o request com curl
@@ -75,9 +92,6 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 	//curl_easy_setopt(curlPostRevgeo, CURLOPT_POSTFIELDS, webParams);
 
 	// Cria os parametros para o request
-	sprintf(urlWithParams, "https://maps.google.com/maps/api/geocode/json?latlng=%lf,%lf&sensor=false&key=AIzaSyC-qbPlZk-Xf9qtJbV131YLOXjmjOpeG9o", latit, longit);
-
-	Log(urlWithParams);
 
 	curl_easy_setopt(curlPostRevgeo, CURLOPT_URL, urlWithParams);
 
@@ -90,19 +104,22 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 	}
 
 	// Verifica se o endereco foi encontrado
-	if (readBufferRevgeo.length() == 0) {
+	if (readBufferRevgeo.length() == 0)
+	{
 		fprintf(stderr, "[R1] - Read buffer vazio - Ultimo erro: %s\n");
 		return 0;
 	}
 
 	// Faz o parse do JSON
-	if (document.Parse<0>(readBufferRevgeo.c_str()).HasParseError()) {
+	if (document.Parse<0>(readBufferRevgeo.c_str()).HasParseError())
+	{
 		fprintf(stderr, "[R2] - Nao foi possivel realizar o parser do JSON\n--JSON enviado: %s\n --Recebido: %s\n", webParams, readBufferRevgeo.c_str());
 		return 0;
 	}
 
 	// Verifica se existem dados
-	if (!document["results"].IsArray()) {
+	if (!document["results"].IsArray())
+	{
 		fprintf(stderr, "[R3] - Sem address list\n");
 		return 0;
 	}
@@ -120,7 +137,6 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		{
 			std::string pais = addresses[i]["short_name"].GetString();
 			strcpy(end->pais, pais.c_str());
-			//end->pais[strlen(pais.c_str())] = '\0';
 		}
 
 		// --- ESTADO ---
@@ -129,9 +145,6 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		{
 			std::string uf = addresses[i]["short_name"].GetString();
 			strcpy(end->uf, uf.c_str());
-
-			// Limita o Uf para 2 bytes, adicionando espaco na 3 posicao
-			//end->uf[8] = '\0';
 		}
 
 		// --- MUNICIPIO ---
@@ -140,7 +153,6 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		{
 			std::string municipio = addresses[i]["long_name"].GetString();
 			strcpy(end->municipio, municipio.c_str());
-			//end->municipio[strlen(municipio.c_str())] = '\0';
 		}
 
 		// --- BAIRRO ---
@@ -149,7 +161,6 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		{
 			std::string bairro = addresses[i]["long_name"].GetString();
 			strcpy(end->bairro, bairro.c_str());
-			//end->bairro[strlen(bairro.c_str())] = '\0';
 		}
 
 		// --- RUA ---
@@ -158,7 +169,6 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		{
 			std::string rua = addresses[i]["long_name"].GetString();
 			strcpy(end->rua, rua.c_str());
-			//end->rua[strlen(rua.c_str())] = '\0';
 		}
 
 		// --- NUMERO ---
@@ -167,7 +177,6 @@ int32_t LibGeoWeb::revGeoWeb( double latit, double longit, struct endereco_posic
 		{
 			std::string numero = addresses[i]["long_name"].GetString();
 			strcpy(end->numero, numero.c_str());
-			//end->numero[strlen(numero.c_str())] = '\0';
 		}
 	}
 
