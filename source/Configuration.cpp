@@ -34,6 +34,7 @@ void Configuration::Load(const string &file)
 		sServiceKey = r.ReadString("sServiceKey", "");
 		iServiceTimeOut = r.ReadU32("lServiceTimeOut", 5L);
 		iSleepProcessInterval = r.ReadU32("iSleepProcessInterval", 10L);
+		iQueryLimit = r.ReadU32("iQueryLimit", 500);
 	}
 
 	if (f)

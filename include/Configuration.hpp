@@ -62,6 +62,9 @@ class Configuration
 		inline void SetSleepProcessInterval(const u_int32_t sleepProcessInterval){ iSleepProcessInterval = sleepProcessInterval; }
 		inline const u_int32_t &GetSleepProcessInterval() const { return iSleepProcessInterval; }
 
+		inline void SetQueryLimit(const u_int32_t queryLimit){ iQueryLimit = queryLimit; }
+		inline const u_int32_t &GetQueryLimit() const { return iQueryLimit; }
+
 		inline eReaderType GetReaderType() const { return nReaderType; }
 
 	private:
@@ -72,6 +75,7 @@ class Configuration
 		string sServiceKey;
 		u_int32_t iServiceTimeOut;
 		u_int32_t iSleepProcessInterval;
+		u_int32_t iQueryLimit;
 
 		eReaderType nReaderType;
 };
