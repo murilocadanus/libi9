@@ -32,7 +32,8 @@ void Configuration::Load(const string &file)
 		sMongoDBCollection = r.ReadString("sMongoDBCollection", "");
 		sServiceURL = r.ReadString("sServiceURL", "");
 		sServiceKey = r.ReadString("sServiceKey", "");
-		iServiceTimeOut = r.ReadU32("lServiceTimeOut", 0L);
+		iServiceTimeOut = r.ReadU32("lServiceTimeOut", 5L);
+		iSleepProcessInterval = r.ReadU32("iSleepProcessInterval", 10L);
 	}
 
 	if (f)

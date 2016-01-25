@@ -59,6 +59,9 @@ class Configuration
 		inline void SetServiceTimeOut(const u_int32_t serviceTimeOut){ iServiceTimeOut = serviceTimeOut; }
 		inline const u_int32_t &GetServiceTimeOut() const { return iServiceTimeOut; }
 
+		inline void SetSleepProcessInterval(const u_int32_t sleepProcessInterval){ iSleepProcessInterval = sleepProcessInterval; }
+		inline const u_int32_t &GetSleepProcessInterval() const { return iSleepProcessInterval; }
+
 		inline eReaderType GetReaderType() const { return nReaderType; }
 
 	private:
@@ -68,6 +71,7 @@ class Configuration
 		string sServiceURL;
 		string sServiceKey;
 		u_int32_t iServiceTimeOut;
+		u_int32_t iSleepProcessInterval;
 
 		eReaderType nReaderType;
 };
