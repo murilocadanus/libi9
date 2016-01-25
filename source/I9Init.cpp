@@ -40,15 +40,15 @@ int CommandLineParameter(char **argv, int pos)
 	const char *param = argv[pos];
 	int consume = 1;
 
-	if (!StringUtil::Equals(param, "--no-thread"))
+	if (StringUtil::Equals(param, "--no-thread"))
 	{
 		Private::bDisableThread = true;
 	}
-	else if (!StringUtil::Equals(param, "--no-resourceloader"))
+	else if (StringUtil::Equals(param, "--no-resourceloader"))
 	{
 		Private::bDisableResourceLoader = true;
 	}
-	else if (!StringUtil::Equals(param, "--config"))
+	else if (StringUtil::Equals(param, "--config"))
 	{
 		Private::sConfigFile = argv[pos + 1];
 		consume++;
