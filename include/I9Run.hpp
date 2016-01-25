@@ -16,19 +16,20 @@ int I9Run(int argc, char **argv, const char*config = "app.config")
 	Sascar::Initialize();
 
 	// Init app
-	app.Initialize();
-
-	// Process until not is finished
-	while(true/*!app.bIsFinished*/)
+	if(app.Initialize())
 	{
-		// Verify if don't has erros to keep processing
-		//if(app.Process()) app.bIsFinished = true;
+		// Process until not is finished
+		while(!app.bIsFinished)
+		{
+			// Verify if don't has erros to keep processing
+			if(app.Process()) app.bIsFinished = true;
 
-		app.Process();
+			app.Process();
+		}
+
+		// Shutdown app
+		app.Shutdown();
 	}
-
-	// Shutdown app
-	app.Shutdown();
 
 	// Shutdown lib modules
 	Sascar::Shutdown();

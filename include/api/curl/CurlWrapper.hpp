@@ -20,6 +20,8 @@
 #include <string>
 #include <curl/curl.h>
 
+using namespace std;
+
 namespace Sascar
 {
 
@@ -40,9 +42,10 @@ class CurlWrapper
 		}
 
 		void Perform();
+		int Writer(char *data, size_t size, size_t nmemb, string *buffer);
 		bool IsOK();
 		CURLcode GetError();
-		std::string GetErrorMessage();
+		string GetErrorMessage();
 
 	private:
 		void ErrorBuffer(char* buffer);
@@ -51,6 +54,7 @@ class CurlWrapper
 		CURL *pCurl;
 		char cErrorBuffer[CURL_ERROR_SIZE + 1];
 		CURLcode cCode;
+		string sBuffer;
 };
 
 } // namespace

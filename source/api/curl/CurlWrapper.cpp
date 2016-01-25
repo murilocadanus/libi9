@@ -29,7 +29,7 @@ void CurlWrapper::Cleanup()
 void CurlWrapper::Reset()
 {
 	curl_easy_reset(pCurl);
-	std::fill(cErrorBuffer, cErrorBuffer + CURL_ERROR_SIZE + 1, 0);
+	fill(cErrorBuffer, cErrorBuffer + CURL_ERROR_SIZE + 1, 0);
 	ErrorBuffer(cErrorBuffer);
 	cCode = CURLE_OK;
 }
@@ -44,6 +44,19 @@ void CurlWrapper::Perform()
 	cCode = curl_easy_perform(pCurl);
 }
 
+int CurlWrapper::Writer(char *data, size_t size, size_t nmemb, string *buffer)
+{
+	int result = 0;
+	if (buffer != NULL)
+	{
+		buffer->append(data, size * nmemb);
+		result = size * nmemb;
+	}
+
+	return result;
+}
+
+
 bool CurlWrapper::IsOK()
 {
 	return cCode == CURLE_OK;
@@ -54,9 +67,9 @@ CURLcode CurlWrapper::GetError()
 	return cCode;
 }
 
-std::string CurlWrapper::GetErrorMessage()
+string CurlWrapper::GetErrorMessage()
 {
-	return std::string(cErrorBuffer);
+	return string(cErrorBuffer);
 }
 
 } // namespace
