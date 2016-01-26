@@ -124,12 +124,15 @@ u_int32_t LibGeoWeb::revGeoWeb(struct endereco_posicao_mapa *end, u_int32_t time
 		return 0;
 	}
 
-	const Value& addresses = document["results"][0u]["address_components"];
+	const Value& results = document["results"];
+	assert(results.IsArray());
+
+	const Value& addresses = results[0]["address_components"];
 	assert(addresses.IsArray());
 
 	for (SizeType i = 0; i < addresses.Size(); i++)
 	{
-		std::string type = addresses[i]["types"][0u].GetString();
+		std::string type = addresses[i]["types"][0].GetString();
 
 		// --- PAIS ---
 		// Faz a coversao de UTF-8 para ISO-8859-1 do pais.
