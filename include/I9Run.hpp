@@ -19,7 +19,7 @@ int I9Run(int argc, char **argv, const char*config = "app.config")
 	while(app.Initialize())
 	{
 		// Verify if don't has erros to keep processing
-		if(!app.Process())
+		if(app.Process())
 			break;
 
 		// Shutdown app
