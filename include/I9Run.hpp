@@ -18,9 +18,8 @@ int I9Run(int argc, char **argv, const char*config = "app.config")
 	// Process until not is finished
 	while(app.Initialize())
 	{
-		// Verify if don't has erros to keep processing
-		if(app.Process())
-			break;
+		// Run the process
+		app.Process();
 
 		// Shutdown app
 		app.Shutdown();
