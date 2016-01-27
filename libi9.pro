@@ -1,6 +1,5 @@
 SOURCES +=	source/File.cpp \
 			source/Reader.cpp \
-			source/location/libGeoWeb.cpp \
 			source/I9Init.cpp \
 			source/util/Resolver.cpp \
 			source/util/Log.cpp \
@@ -13,8 +12,6 @@ SOURCES +=	source/File.cpp \
 
 HEADERS +=	include/File.hpp \
 			include/Reader.hpp \
-			include/location/libGeoWeb.hpp \
-			include/location/revgeo.hpp \
 			include/Config.hpp \
 			include/I9Init.hpp \
 			include/Enum.hpp \

@@ -1,14 +1,17 @@
 #include <memory>
 #include <algorithm>
+#include <cstdarg>
 #include <curl/curl.h>
 
 #include "api/curl/CurlWrapper.hpp"
 
 namespace Sascar {
 
+string CurlWrapper::sBuffer = "";
+
 CurlWrapper::CurlWrapper()
-	: pCurl(curl_easy_init()),
-	  cCode(CURLE_OK)
+	: pCurl(curl_easy_init())
+	, cCode(CURLE_OK)
 {
 }
 
@@ -44,19 +47,6 @@ void CurlWrapper::Perform()
 	cCode = curl_easy_perform(pCurl);
 }
 
-int CurlWrapper::Writer(char *data, size_t size, size_t nmemb, string *buffer)
-{
-	int result = 0;
-	if (buffer != NULL)
-	{
-		buffer->append(data, size * nmemb);
-		result = size * nmemb;
-	}
-
-	return result;
-}
-
-
 bool CurlWrapper::IsOK()
 {
 	return cCode == CURLE_OK;
@@ -70,6 +60,15 @@ CURLcode CurlWrapper::GetError()
 string CurlWrapper::GetErrorMessage()
 {
 	return string(cErrorBuffer);
+}
+
+void CurlWrapper::UrlComposer(const char *message, ...)
+{
+	va_list ap;
+
+	va_start(ap, message);
+	vsnprintf(urlWithParams, 2048, message, ap);
+	va_end(ap);
 }
 
 } // namespace

@@ -41,20 +41,35 @@ class CurlWrapper
 			curl_easy_setopt(pCurl, option, parameter);
 		}
 
+		static string sBuffer;
+		static int Writer(char *data, size_t size, size_t nmemb, string *buffer)
+		{
+			int result = 0;
+			if (buffer != NULL)
+			{
+				buffer->append(data, size * nmemb);
+				result = size * nmemb;
+			}
+
+			return result;
+		}
+
 		void Perform();
-		int Writer(char *data, size_t size, size_t nmemb, string *buffer);
 		bool IsOK();
 		CURLcode GetError();
 		string GetErrorMessage();
+		void UrlComposer(const char *message, ...);
+
+		inline const char* GetUrlWithParams() const { return urlWithParams; }
 
 	private:
 		void ErrorBuffer(char* buffer);
 
 	private:
+		char urlWithParams[2048];
 		CURL *pCurl;
 		char cErrorBuffer[CURL_ERROR_SIZE + 1];
 		CURLcode cCode;
-		string sBuffer;
 };
 
 } // namespace
