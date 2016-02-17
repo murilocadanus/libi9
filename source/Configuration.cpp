@@ -35,6 +35,10 @@ void Configuration::Load(const string &file)
 		iServiceTimeOut = r.ReadU32("lServiceTimeOut", 5L);
 		iSleepProcessInterval = r.ReadU32("iSleepProcessInterval", 10L);
 		iQueryLimit = r.ReadU32("iQueryLimit", 500);
+		sMySQLHost = r.ReadString("sMySQLHost", "");
+		sMySQLUser = r.ReadString("sMySQLUser", "");
+		sMySQLPassword = r.ReadString("sMySQLPassword", "");
+		sAppListeningPath = r.ReadString("sAppListeningPath", "");
 	}
 
 	if (f)

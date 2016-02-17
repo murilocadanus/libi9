@@ -65,6 +65,18 @@ class Configuration
 		inline void SetQueryLimit(const u_int32_t queryLimit){ iQueryLimit = queryLimit; }
 		inline const u_int32_t &GetQueryLimit() const { return iQueryLimit; }
 
+		inline void SetMySQLHost(const string mysqlHost){ sMySQLHost = mysqlHost; }
+		inline const string &GetMySQLHost() const { return sMySQLHost; }
+
+		inline void SetMySQLUser(const string mysqlUser){ sMySQLUser = mysqlUser; }
+		inline const string &GetMySQLUser() const { return sMySQLUser; }
+
+		inline void SetMySQLPassword(const string mysqlPassword){ sMySQLPassword = mysqlPassword; }
+		inline const string &GetMySQLPassword() const { return sMySQLPassword; }
+
+		inline void SetAppListeningPath(const string appListeningPath){ sAppListeningPath = appListeningPath; }
+		inline const string &GetAppListeningPath() const { return sAppListeningPath; }
+
 		inline eReaderType GetReaderType() const { return nReaderType; }
 
 	private:
@@ -76,6 +88,10 @@ class Configuration
 		u_int32_t iServiceTimeOut;
 		u_int32_t iSleepProcessInterval;
 		u_int32_t iQueryLimit;
+		string sMySQLHost;
+		string sMySQLUser;
+		string sMySQLPassword;
+		string sAppListeningPath;
 
 		eReaderType nReaderType;
 };
