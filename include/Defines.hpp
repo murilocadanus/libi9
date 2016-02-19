@@ -21,6 +21,7 @@
 #include <cstring>
 #include <stdarg.h>
 #include <stdint.h>
+#include <chrono>
 #include "Config.hpp"
 #include "util/Log.hpp"
 #include "util/String.hpp"
@@ -80,5 +81,13 @@ constexpr size_t countof(T(&)[N])
 	#endif // __GNUC__
 
 #endif // DEBUG
+
+namespace Sascar {
+	typedef std::chrono::high_resolution_clock Clock;
+	typedef long long Milliseconds; // we use the raw numbers directly internally, no conversions needed.
+	typedef float Seconds; // same here
+	typedef std::chrono::duration<Milliseconds, std::milli> Duration;
+	typedef std::chrono::time_point<std::chrono::high_resolution_clock> TimePoint;
+}
 
 #endif // DEFINES_HPP

@@ -22,6 +22,7 @@
 #include <string>
 #include <map>
 #include <stack>
+#include "Defines.hpp"
 
 #define I9_DECLARE_CONTAINER_HELPER(N, C) \
 											\

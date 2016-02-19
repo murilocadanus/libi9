@@ -19,6 +19,12 @@
 
 #include "Defines.hpp"
 
+#define I9_DECLARE_MANAGER(name)	public:										\
+										virtual const std::string GetName() const	\
+										{										\
+											return #name;						\
+										}										\
+
 namespace Sascar {
 
 class IManager
@@ -32,9 +38,6 @@ class IManager
 
 		/// Reset all module attributes as a newly created object.
 		virtual bool Reset();
-
-		/// Process module of a newly created object.
-		virtual bool Process();
 
 		/// Terminate everything and deinitialize all dependency. Reset to before initialization state.
 		virtual bool Shutdown();
@@ -54,7 +57,7 @@ class IManager
 		/// If this module is mandatory (it is a base subsystem or critical one)
 		virtual bool IsRequired() const;
 
-		//virtual const String GetName() const = 0;
+		virtual const String GetName() const = 0;
 
 	protected:
 		bool bInitialized : 1;

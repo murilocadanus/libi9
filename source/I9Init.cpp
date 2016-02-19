@@ -17,6 +17,9 @@
 #include "I9Init.hpp"
 #include "Defines.hpp"
 #include "Configuration.hpp"
+#include "FileSystem.hpp"
+#include "Updater.hpp"
+#include "Manager.hpp"
 
 extern "C" {
 
@@ -124,6 +127,13 @@ bool Initialize()
 	bool ret = true;
 
 	pConfiguration->Load(Private::sConfigFile);
+	pFileSystem->SetPath(pConfiguration->GetAppListeningPath());
+
+	ret = ret && pManager->Add(pFileSystem);
+	ret = ret && pManager->Add(Private::pApplication);
+
+	pUpdater->Add(pFileSystem);
+	pUpdater->Add(Private::pApplication);
 
 	Private::bInitialized = true;
 
@@ -132,6 +142,12 @@ bool Initialize()
 
 void Update()
 {
+	if (!Private::bInitialized)
+		return;
+
+	Seconds dt				= 1;//Private::fCurrentTime;
+
+	pUpdater->Run(dt);
 }
 
 void Shutdown()
@@ -141,10 +157,14 @@ void Shutdown()
 
 	Info(I9_TAG "Shutting down subsystems...");
 
+	pManager->Shutdown();
+	pFileSystem->DestroyInstance();
+
 	Private::bInitialized = false;
+	Private::pApplication = nullptr;
 }
 
-}
+} // namespace
 
-}
+} // extern C
 

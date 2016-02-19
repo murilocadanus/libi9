@@ -23,7 +23,7 @@ void IEventFileSystem::RemoveFileSystemListener(IEventFileSystemListener *listen
 	vFileSystemListeners -= listener;
 }
 
-void IEventFileSystem::SendEventFileSystemNotifyChange(IEvent *ev)
+void IEventFileSystem::SendEventFileSystemNotifyChange(EventFileSystem *ev)
 {
 	IEventFileSystemListenerVector listeners = vFileSystemListeners;
 	for (IEventFileSystemListener *each: listeners)

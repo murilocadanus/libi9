@@ -14,45 +14,35 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "interface/IApp.hpp"
+#ifndef IUPDATABLE_HPP
+#define IUPDATABLE_HPP
 
-#define TAG "[App] "
+#include "Defines.hpp"
 
 namespace Sascar {
 
-IApp::IApp()
-	: bIsFinished(false)
-{
-}
+//! Updatable interface
 
-IApp::~IApp()
+class IUpdatable
 {
-}
+	public:
+		IUpdatable() = default;
+		virtual ~IUpdatable() {}
 
-bool IApp::Shutdown()
+		//! Method to be called each frame.
+		/*!
+			\return If update was sucessful
+		 */
+		virtual bool Update(float dt);
+};
+
+inline bool IUpdatable::Update(float dt)
 {
-	Log(TAG "Shutting down...");
-
+	//UNUSED(dt);
 	return true;
 }
 
-void IApp::WriteOut(const char *msg)
-{
-	fprintf(stdout, "%s\n", msg);
-	//Log(msg);
-}
-
-void IApp::WriteErr(const char *msg)
-{
-	fprintf(stderr, "%s\n", msg);
-	//Error(msg);
-}
-
-void IApp::WriteDbg(const char *msg)
-{
-	fprintf(stdout, "%s\n", msg);
-	//Dbg(msg);
-}
-
 } // namespace
+
+#endif // IUPDATABLE_HPP
 

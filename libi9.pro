@@ -1,7 +1,6 @@
 SOURCES +=	source/File.cpp \
 			source/Reader.cpp \
 			source/I9Init.cpp \
-			source/EventFileSystem.cpp \
 			source/util/Resolver.cpp \
 			source/util/Log.cpp \
 			source/interface/IApp.cpp \
@@ -11,14 +10,17 @@ SOURCES +=	source/File.cpp \
 			source/api/curl/CurlWrapper.cpp \
 			source/Configuration.cpp \
 			source/api/mysql/MySQLConnector.cpp \
-			source/interface/IEventFileSystem.cpp
+			source/interface/IEventFileSystem.cpp \
+			source/Manager.cpp \
+			source/FileSystem.cpp \
+			source/EventFileSystem.cpp \
+			source/Updater.cpp
 
 HEADERS +=	include/File.hpp \
 			include/Reader.hpp \
 			include/Config.hpp \
 			include/I9Init.hpp \
 			include/Enum.hpp \
-			include/EventFileSystem.hpp \
 			include/Defines.hpp \
 			include/util/Resolver.hpp \
 			include/util/String.hpp \
@@ -36,7 +38,12 @@ HEADERS +=	include/File.hpp \
 			include/interface/IEventFileSystemListener.hpp \
 			include/interface/IEventListener.hpp \
 			include/interface/IEventFileSystem.hpp \
-			include/Container.hpp
+			include/Container.hpp \
+			include/Updater.hpp \
+			include/interface/IUpdatable.hpp \
+			include/Manager.hpp \
+			include/FileSystem.hpp \
+			include/EventFileSystem.hpp
 
 include("lib.pri")
 include("compiler.pri")

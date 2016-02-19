@@ -17,51 +17,36 @@
 #ifndef EVENTFILESYSTEM_HPP
 #define EVENTFILESYSTEM_HPP
 
-#include <sys/inotify.h>
-#include <dirent.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <iostream>
-#include <thread>
-#include <map>
 #include "interface/IEvent.hpp"
 #include "Defines.hpp"
-#define EVENT_BUFFER_LENGTH 100000
 
 namespace Sascar {
 
 class EventFileSystem : public IEvent
 {
 	public:
-		enum listenerParam {LOCAL_PATH, RECURSIVE_PATH};
-
-		EventFileSystem(listenerParam param, std::string path);
 		EventFileSystem();
 		virtual ~EventFileSystem();
-		virtual void setListenerParam(listenerParam param);
-		virtual void setPath(std::string path);
-		virtual std::string getPath();
-		virtual void setListnerEventFileSystem(void (*function)(std::string));
-		virtual void start();
-		virtual void stop();
+
+		inline void SetDirName(const std::string &dirName)
+		{
+			sDirName = dirName;
+		}
+
+		inline void SetEventType(const unsigned char eventType)
+		{
+			eEventType = eventType;
+		}
+
+		inline const std::string &GetDirName() { return sDirName; }
+		inline const unsigned char &GetEventType() { return eEventType; }
 
 	private:
-		listenerParam param;
-		std::string path;
-		int notify_fd;
-		bool processing;
-		void (*notifica)(std::string path);
-		std::map<int,std::string> listPath;
-		void init();
-		void listDir(std::string directory);
-		void listenPath(std::string path);
-		void process();
-		void processEvent(struct inotify_event *event);
-
+		std::string sDirName;
+		unsigned char eEventType;
 };
 
-} // namespace
+} // end namespace
 
 #endif // EVENTFILESYSTEM_HPP
 

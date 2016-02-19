@@ -13,16 +13,14 @@ int I9Run(int argc, char **argv, const char*config = "app.config")
 	Sascar::SetApp(&app, argc, argv, config);
 
 	// Init lib modules
-	Sascar::Initialize();
-
-	// Process until not is finished
-	while(app.Initialize())
+	if(Sascar::Initialize())
 	{
-		// Run the process
-		app.Process();
-
-		// Shutdown app
-		app.Shutdown();
+		// Process until not is finished
+		while(1)
+		{
+			Sascar::Update();
+			//sleep(1);
+		}
 	}
 
 	// Shutdown lib modules

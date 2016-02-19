@@ -17,7 +17,6 @@
 #ifndef IEVENTFILESYSTEMLISTENER
 #define IEVENTFILESYSTEMLISTENER
 
-#include "IEvent.hpp"
 #include "IEventListener.hpp"
 #include "Defines.hpp"
 
@@ -39,7 +38,8 @@ class IEventFileSystemListener : public IEventListener
 		virtual void OnFileSystemOperationResumed(const EventFileSystem *ev)	I9_PURE_VIRTUAL_EVENT
 		virtual void OnFileSystemLoadCompleted(const EventFileSystem *ev)		I9_PURE_VIRTUAL_EVENT*/
 
-		virtual void OnFileSystemNotifyChange(const IEvent *ev)					I9_PURE_VIRTUAL_EVENT
+		virtual void OnFileSystemNotifyChange(const EventFileSystem *ev){ (void) ev; }			// I9_PURE_VIRTUAL_EVENT
+
 };
 
 } // namespace

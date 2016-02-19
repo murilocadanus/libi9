@@ -2,6 +2,7 @@
 #define IEVENTFILESYSTEM
 
 #include "interface/IEvent.hpp"
+#include "EventFileSystem.hpp"
 #include "Container.hpp"
 
 namespace Sascar {
@@ -20,7 +21,7 @@ class IEventFileSystem
 		virtual void RemoveFileSystemListener(IEventFileSystemListener *listener);
 
 	protected:
-		void SendEventFileSystemNotifyChange(IEvent *ev);
+		void SendEventFileSystemNotifyChange(EventFileSystem *ev);
 
 	protected:
 		IEventFileSystemListenerVector vFileSystemListeners;

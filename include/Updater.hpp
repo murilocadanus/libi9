@@ -14,45 +14,45 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "interface/IApp.hpp"
+#ifndef UPDATER_HPP
+#define UPDATER_HPP
 
-#define TAG "[App] "
+#include "Container.hpp"
+#include "Defines.hpp"
 
 namespace Sascar {
 
-IApp::IApp()
-	: bIsFinished(false)
+class IUpdatable;
+
+/// Updater Runner
+class Updater
 {
+	I9_DECLARE_CONTAINER(Vector, IUpdatable)
+
+	public:
+		Updater();
+		virtual ~Updater();
+
+		static Updater instance;
+
+		static inline Updater *GetInstance()
+		{
+			return &Updater::instance;
+		}
+
+		static inline void DestroyInstance(){}
+
+		void Run(Seconds dt);
+		void Add(IUpdatable *obj);
+		void Remove(IUpdatable *obj);
+
+	private:
+		IUpdatableVector vUpdatable;
+};
+
+#define pUpdater Updater::GetInstance()
+
 }
 
-IApp::~IApp()
-{
-}
-
-bool IApp::Shutdown()
-{
-	Log(TAG "Shutting down...");
-
-	return true;
-}
-
-void IApp::WriteOut(const char *msg)
-{
-	fprintf(stdout, "%s\n", msg);
-	//Log(msg);
-}
-
-void IApp::WriteErr(const char *msg)
-{
-	fprintf(stderr, "%s\n", msg);
-	//Error(msg);
-}
-
-void IApp::WriteDbg(const char *msg)
-{
-	fprintf(stdout, "%s\n", msg);
-	//Dbg(msg);
-}
-
-} // namespace
+#endif // UPDATER_HPP
 

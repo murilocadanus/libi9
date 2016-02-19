@@ -18,11 +18,13 @@
 #define IAPP_HPP
 
 #include "interface/IManager.hpp"
+#include "interface/IUpdatable.hpp"
 
 namespace Sascar {
 
-class IApp : public IManager
+class IApp : public IManager, public IUpdatable
 {
+	I9_DECLARE_MANAGER(IApp)
 	public:
 		IApp();
 		virtual ~IApp();
@@ -40,7 +42,6 @@ class IApp : public IManager
 		//ResourceManager *GetResourceManager();
 
 		// IManager
-		virtual bool Process() override;
 		virtual bool Shutdown() override;
 
 	public:

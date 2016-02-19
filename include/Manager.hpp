@@ -14,45 +14,55 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "interface/IApp.hpp"
 
-#define TAG "[App] "
+#ifndef MANAGER_HPP
+#define MANAGER_HPP
+
+#include "Defines.hpp"
+#include "Container.hpp"
 
 namespace Sascar {
 
-IApp::IApp()
-	: bIsFinished(false)
-{
-}
+class IManager;
 
-IApp::~IApp()
+/// Module Manager
+class Manager
 {
-}
+	I9_DECLARE_CONTAINER(Vector, IManager)
 
-bool IApp::Shutdown()
-{
-	Log(TAG "Shutting down...");
+	public:
+		Manager();
+		virtual ~Manager();
 
-	return true;
-}
+		static Manager instance;
 
-void IApp::WriteOut(const char *msg)
-{
-	fprintf(stdout, "%s\n", msg);
-	//Log(msg);
-}
+		static inline Manager *GetInstance()
+		{
+			return &Manager::instance;
+		}
 
-void IApp::WriteErr(const char *msg)
-{
-	fprintf(stderr, "%s\n", msg);
-	//Error(msg);
-}
+		static inline void DestroyInstance(){}
 
-void IApp::WriteDbg(const char *msg)
-{
-	fprintf(stdout, "%s\n", msg);
-	//Dbg(msg);
-}
+		bool Add(IManager *obj);
+		bool Remove(IManager *obj);
+
+		void Disable(const char *managerName);
+		void Enable(const char *managerName);
+		bool IsEnabled(const char *managerName);
+
+		bool Initialize();
+		bool Reset();
+		bool Shutdown();
+
+		void Print();
+
+	private:
+		IManagerVector vManager;
+};
+
+#define pManager Manager::GetInstance()
 
 } // namespace
+
+#endif // MANAGER_HPP
 

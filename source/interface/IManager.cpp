@@ -43,11 +43,6 @@ bool IManager::Reset()
 	return true;
 }
 
-bool IManager::Process()
-{
-	return true;
-}
-
 bool IManager::Shutdown()
 {
 	bInitialized = false;
