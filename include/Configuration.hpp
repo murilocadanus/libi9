@@ -74,6 +74,9 @@ class Configuration
 		inline void SetMySQLPassword(const string mysqlPassword){ sMySQLPassword = mysqlPassword; }
 		inline const string &GetMySQLPassword() const { return sMySQLPassword; }
 
+		inline void SetMySQLScheme(const string mysqlScheme){ sMySQLScheme = mysqlScheme; }
+		inline const string &GetMySQLScheme() const { return sMySQLScheme; }
+
 		inline void SetAppListeningPath(const string appListeningPath){ sAppListeningPath = appListeningPath; }
 		inline const string &GetAppListeningPath() const { return sAppListeningPath; }
 
@@ -91,6 +94,7 @@ class Configuration
 		string sMySQLHost;
 		string sMySQLUser;
 		string sMySQLPassword;
+		string sMySQLScheme;
 		string sAppListeningPath;
 
 		eReaderType nReaderType;

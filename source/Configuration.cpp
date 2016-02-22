@@ -38,6 +38,7 @@ void Configuration::Load(const string &file)
 		sMySQLHost = r.ReadString("sMySQLHost", "");
 		sMySQLUser = r.ReadString("sMySQLUser", "");
 		sMySQLPassword = r.ReadString("sMySQLPassword", "");
+		sMySQLScheme = r.ReadString("sMySQLScheme", "");
 		sAppListeningPath = r.ReadString("sAppListeningPath", "");
 	}
 

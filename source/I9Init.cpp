@@ -129,11 +129,11 @@ bool Initialize()
 	pConfiguration->Load(Private::sConfigFile);
 	pFileSystem->SetPath(pConfiguration->GetAppListeningPath());
 
-	ret = ret && pManager->Add(pFileSystem);
 	ret = ret && pManager->Add(Private::pApplication);
+	ret = ret && pManager->Add(pFileSystem);
 
-	pUpdater->Add(pFileSystem);
 	pUpdater->Add(Private::pApplication);
+	pUpdater->Add(pFileSystem);
 
 	Private::bInitialized = true;
 

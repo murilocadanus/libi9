@@ -1,28 +1,23 @@
 #include "api/mysql/MySQLConnector.hpp"
+#include "util/Log.hpp"
+
+#define TAG "[MySQL Connector] "
 
 namespace Sascar {
 
 MysqlConnector::MysqlConnector()
-	: sHost("tcp://127.0.0.1:3306")
-	, sUser("root")
-	, sPassword("")
 {
-}
-
-MysqlConnector::MysqlConnector(const string &host, const string &user, const string &password)
-{
-	sHost = host; sUser = user; sPassword = password;
 }
 
 MysqlConnector::~MysqlConnector()
 {
-	delete pRes;
+	/*delete pRes;
 	delete pPrepStmt;
 	delete pStmt;
-	delete pCon;
+	delete pCon;*/
 }
 
-void MysqlConnector::ManageException(sql::SQLException& e)
+/*void MysqlConnector::ManageException(sql::SQLException& e)
 {
 	if (e.getErrorCode() != 0)
 	{
@@ -32,11 +27,26 @@ void MysqlConnector::ManageException(sql::SQLException& e)
 		cout << " (MySQL error code: " << e.getErrorCode();
 		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 	}
+}*/
+
+void MysqlConnector::Initialize()
+{
+	mysql_init(&dbConnection);
 }
 
-void MysqlConnector::Connect()
+void MysqlConnector::Connect(const string &host, const string &user, const string &password, const string &scheme)
 {
 	try
+	{
+		mysql_real_connect(&dbConnection, host.c_str(), user.c_str(), password.c_str(), scheme.c_str(), 0, NULL, 0);
+	}
+	catch (int e)
+	{
+		e = mysql_errno(&dbConnection);
+		Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
+	}
+
+	/*try
 	{
 		pDriver = get_driver_instance();
 		pCon = pDriver->connect(sHost, sUser, sPassword);
@@ -44,25 +54,26 @@ void MysqlConnector::Connect()
 	catch (sql::SQLException &e)
 	{
 		ManageException(e);
-	}
+	}*/
 }
 
 void MysqlConnector::Disconnect()
 {
 	try
 	{
-		pCon->close();
+		mysql_close(&dbConnection);
 	}
-	catch (sql::SQLException &e)
+	catch (int e)
 	{
-		ManageException(e);
+		e = mysql_errno(&dbConnection);
+		Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
 	}
 }
 
 
 void MysqlConnector::SwitchDb(const string& dbName)
 {
-	try
+	/*try
 	{
 		pCon->setSchema(dbName);
 		pStmt = pCon->createStatement();
@@ -70,29 +81,30 @@ void MysqlConnector::SwitchDb(const string& dbName)
 	catch (sql::SQLException &e)
 	{
 		ManageException(e);
-	}
+	}*/
 }
 
 void MysqlConnector::Prepare(const string& query)
 {
 	try
 	{
-		pPrepStmt = pCon->prepareStatement(query);
+		mysql_stmt_prepare(&stmt, query.c_str(), query.length());
 	}
-	catch (sql::SQLException &e)
+	catch (int e)
 	{
-		ManageException(e);
+		e = mysql_stmt_errno(&stmt);
+		Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
 	}
 }
 
 void MysqlConnector::SetInt(const int& num, const int& data)
 {
-	pPrepStmt->setInt(num, data);
+	//pPrepStmt->setInt(num, data);
 }
 
 void MysqlConnector::SetString(const int& num, const string& data)
 {
-	pPrepStmt->setString(num, data);
+	//pPrepStmt->setString(num, data);
 }
 
 void MysqlConnector::Execute(const string& query)
@@ -101,33 +113,35 @@ void MysqlConnector::Execute(const string& query)
 	{
 		if (query != "")
 		{
-			pRes = pStmt->executeQuery(query);
+			mysql_query(&dbConnection, query.c_str());
+			//pRes = pStmt->executeQuery(query);
 		}
-		else
+		/*else
 		{
 			pRes = pPrepStmt->executeQuery();
 			pPrepStmt->close();
-		}
+		}*/
 	}
-	catch (sql::SQLException &e)
+	catch (int e)
 	{
-		ManageException(e);
+		e = mysql_stmt_errno(&stmt);
+		Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
 	}
 }
 
 bool MysqlConnector::Fetch()
 {
-	return pRes->next();
+	return 0;//pRes->next();
 }
 
 string MysqlConnector::Print(const string& field)
 {
-	return pRes->getString(field);
+	return "";//pRes->getString(field);
 }
 
 string MysqlConnector::Print(const int& index)
 {
-	return pRes->getString(index);
+	return "";//pRes->getString(index);
 }
 
 }

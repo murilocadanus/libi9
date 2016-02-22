@@ -28,13 +28,16 @@ bool FileSystem::Initialize()
 	if(!sPath.empty())
 	{
 		// Set to start listening only 1 directory
-		eWatchType = WatchType::LOCAL_PATH;
+		eWatchType = WatchType::RECURSIVE_PATH;
 
 		// Start the notify listener
 		iNotifier = inotify_init();
 
 		// Add path to notify listener
 		AddPath(sPath);
+
+		// Watch path
+		WatchPath(sPath);
 
 		return true;
 	}
@@ -47,9 +50,6 @@ bool FileSystem::Update(float dt)
 	char *readPtr;
 	char buffer[EVENT_BUFFER_LENGTH];
 	struct inotify_event *event;
-
-	// Watch path
-	WatchPath(sPath);
 
 	// Read from notifier
 	long inputLen = read(iNotifier, buffer, EVENT_BUFFER_LENGTH);
@@ -68,12 +68,25 @@ bool FileSystem::Update(float dt)
 		{
 			if( (event->mask & IN_CREATE) && (event->mask & IN_ISDIR))
 			{
-				// Watch new folder to process
-				Log(TAG "Created folder %s%s", mWatchingPaths[event->wd].c_str(), event->name);
+				std::string folder;
+
+				// Set the new folder path to be notified
+				folder = mWatchingPaths[event->wd];
+				folder += event->name;
+				folder += "/";
+
+				// Add path to notify listener
+				AddPath(folder);
 			}
 			else if ((event->mask & IN_CLOSE_WRITE) && !(event->mask & IN_ISDIR))
 			{
-				Log(TAG "Created file %s%s", mWatchingPaths[event->wd].c_str(), event->name);
+				EventFileSystem ev;
+				ev.SetDirName(mWatchingPaths[event->wd]);
+				ev.SetFileName(event->name);
+				ev.SetEventType(DT_REG);
+
+				Log(TAG "Processing file %s%s", ev.GetDirName().c_str(), ev.GetFileName().c_str());
+				this->SendEventFileSystemNotifyChange(&ev);
 			}
 		}
 
@@ -107,19 +120,20 @@ void FileSystem::WatchPath(const std::string &path)
 
 	if(openedDir)
 	{
-		if((dir = readdir(openedDir)) != NULL)
+		while((dir = readdir(openedDir)) != NULL)
 		{
 			// Ignore hidden files
 			if(dir->d_name[0] != '.')
 			{
 				if(dir->d_type == DT_REG)
 				{
-					/*EventFileSystem ev;
+					EventFileSystem ev;
 					ev.SetDirName(path);
+					ev.SetFileName(dir->d_name);
 					ev.SetEventType(DT_REG);
 
-					Info(TAG "Processing directory listening");
-					this->SendEventFileSystemNotifyChange(&ev);*/
+					Log(TAG "Processing file %s%s", path.c_str(), dir->d_name);
+					this->SendEventFileSystemNotifyChange(&ev);
 				}
 				else if(dir->d_type == DT_DIR && this->eWatchType == WatchType::RECURSIVE_PATH)
 				{

@@ -28,6 +28,11 @@ class EventFileSystem : public IEvent
 		EventFileSystem();
 		virtual ~EventFileSystem();
 
+		inline void SetFileName(const std::string &fileName)
+		{
+			sFileName = fileName;
+		}
+
 		inline void SetDirName(const std::string &dirName)
 		{
 			sDirName = dirName;
@@ -38,10 +43,12 @@ class EventFileSystem : public IEvent
 			eEventType = eventType;
 		}
 
-		inline const std::string &GetDirName() { return sDirName; }
-		inline const unsigned char &GetEventType() { return eEventType; }
+		inline const std::string &GetFileName() const { return sFileName; }
+		inline const std::string &GetDirName() const { return sDirName; }
+		inline const unsigned char &GetEventType() const { return eEventType; }
 
 	private:
+		std::string sFileName;
 		std::string sDirName;
 		unsigned char eEventType;
 };

@@ -17,11 +17,8 @@
 #ifndef MYSQLCONNECTOR_HPP
 #define MYSQLCONNECTOR_HPP
 
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
-#include <cppconn/prepared_statement.h>
+#include <string>
+#include <mysql/mysql.h>
 
 using namespace std;
 
@@ -31,11 +28,11 @@ class MysqlConnector
 {
 	public:
 		MysqlConnector();
-		MysqlConnector(const string &host, const string &user, const string &password);
 		~MysqlConnector();
 
-		void ManageException(sql::SQLException& e);
-		void Connect();
+		//void ManageException(sql::SQLException& e);
+		void Initialize();
+		void Connect(const string &host, const string &user, const string &password, const string &scheme);
 		void Disconnect();
 		void SwitchDb(const string& dbName);
 		void Prepare(const string& query);
@@ -47,14 +44,14 @@ class MysqlConnector
 		string Print(const int& index);
 
 	private:
-		string sHost;
-		string sUser;
-		string sPassword;
-		sql::Driver *pDriver;
+		MYSQL dbConnection;
+		MYSQL_STMT stmt;
+
+		/*sql::Driver *pDriver;
 		sql::Connection *pCon;
 		sql::Statement *pStmt;
 		sql::PreparedStatement *pPrepStmt;
-		sql::ResultSet *pRes;
+		sql::ResultSet *pRes;*/
 };
 
 } // namespace
