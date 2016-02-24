@@ -5,6 +5,8 @@
 
 namespace Sascar {
 
+MysqlConnector MysqlConnector::instance;
+
 MysqlConnector::MysqlConnector()
 {
 }
@@ -107,13 +109,14 @@ void MysqlConnector::SetString(const int& num, const string& data)
 	//pPrepStmt->setString(num, data);
 }
 
-void MysqlConnector::Execute(const string& query)
+bool MysqlConnector::Execute(const string& query)
 {
 	try
 	{
 		if (query != "")
 		{
 			mysql_query(&dbConnection, query.c_str());
+			return true;
 			//pRes = pStmt->executeQuery(query);
 		}
 		/*else
@@ -124,14 +127,60 @@ void MysqlConnector::Execute(const string& query)
 	}
 	catch (int e)
 	{
-		e = mysql_stmt_errno(&stmt);
+		e = mysql_errno(&dbConnection);
 		Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
 	}
+
+	return false;
+}
+
+MYSQL_RES* MysqlConnector::Result()
+{
+	MYSQL_RES* retCmd = NULL;
+
+	try
+	{
+		retCmd = mysql_store_result(&dbConnection);
+	}
+	catch(int e)
+	{
+		e = mysql_errno(&dbConnection);
+		Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
+	}
+
+	return retCmd;
+}
+
+void MysqlConnector::FreeResult(MYSQL_RES *result)
+{
+	mysql_free_result(result);
 }
 
 bool MysqlConnector::Fetch()
 {
 	return 0;//pRes->next();
+}
+
+int MysqlConnector::InsertedID()
+{
+	return mysql_insert_id(&dbConnection);
+}
+
+MYSQL_ROW MysqlConnector::FetchRow(MYSQL_RES *result)
+{
+	MYSQL_ROW retCmd = NULL;
+
+	try
+	{
+		retCmd = mysql_fetch_row(result);
+	}
+	catch(int e)
+	{
+		e = mysql_errno(&dbConnection);
+		Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
+	}
+
+	return retCmd;
 }
 
 string MysqlConnector::Print(const string& field)

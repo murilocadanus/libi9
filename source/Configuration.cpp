@@ -40,6 +40,7 @@ void Configuration::Load(const string &file)
 		sMySQLPassword = r.ReadString("sMySQLPassword", "");
 		sMySQLScheme = r.ReadString("sMySQLScheme", "");
 		sAppListeningPath = r.ReadString("sAppListeningPath", "");
+		iProjectId = r.ReadU32("iProjectId", 0);
 	}
 
 	if (f)

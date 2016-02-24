@@ -18,6 +18,14 @@
 
 #define TAG "[App] "
 
+#define ANSI_COLOR_RED		"\x1b[31m"
+#define ANSI_COLOR_GREEN	"\x1b[32m"
+#define ANSI_COLOR_YELLOW	"\x1b[33m"
+#define ANSI_COLOR_BLUE		"\x1b[34m"
+#define ANSI_COLOR_MAGENTA	"\x1b[35m"
+#define ANSI_COLOR_CYAN		"\x1b[36m"
+#define ANSI_COLOR_RESET	"\x1b[0m"
+
 namespace Sascar {
 
 IApp::IApp()
@@ -38,20 +46,22 @@ bool IApp::Shutdown()
 
 void IApp::WriteOut(const char *msg)
 {
-	fprintf(stdout, "%s\n", msg);
-	//Log(msg);
+	fprintf(stdout, "[" ANSI_COLOR_CYAN "LOG" ANSI_COLOR_RESET "] %s\n", msg);
+}
+
+void IApp::WriteInfo(const char *msg)
+{
+	fprintf(stdout, "[" ANSI_COLOR_GREEN "INFO" ANSI_COLOR_RESET "] %s\n", msg);
 }
 
 void IApp::WriteErr(const char *msg)
 {
-	fprintf(stderr, "%s\n", msg);
-	//Error(msg);
+	fprintf(stderr, "[" ANSI_COLOR_RED "ERROR" ANSI_COLOR_RESET "] %s\n", msg);
 }
 
 void IApp::WriteDbg(const char *msg)
 {
-	fprintf(stdout, "%s\n", msg);
-	//Dbg(msg);
+	fprintf(stdout, "[" ANSI_COLOR_YELLOW "DEBUG" ANSI_COLOR_RESET "] %s\n", msg);
 }
 
 } // namespace

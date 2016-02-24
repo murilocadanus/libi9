@@ -56,14 +56,14 @@ class Configuration
 		inline void SetServiceKey(const string serviceKey){ sServiceKey = serviceKey; }
 		inline const string &GetServiceKey() const { return sServiceKey; }
 
-		inline void SetServiceTimeOut(const u_int32_t serviceTimeOut){ iServiceTimeOut = serviceTimeOut; }
-		inline const u_int32_t &GetServiceTimeOut() const { return iServiceTimeOut; }
+		inline void SetServiceTimeOut(const uint32_t serviceTimeOut){ iServiceTimeOut = serviceTimeOut; }
+		inline const uint32_t &GetServiceTimeOut() const { return iServiceTimeOut; }
 
-		inline void SetSleepProcessInterval(const u_int32_t sleepProcessInterval){ iSleepProcessInterval = sleepProcessInterval; }
-		inline const u_int32_t &GetSleepProcessInterval() const { return iSleepProcessInterval; }
+		inline void SetSleepProcessInterval(const uint32_t sleepProcessInterval){ iSleepProcessInterval = sleepProcessInterval; }
+		inline const uint32_t &GetSleepProcessInterval() const { return iSleepProcessInterval; }
 
-		inline void SetQueryLimit(const u_int32_t queryLimit){ iQueryLimit = queryLimit; }
-		inline const u_int32_t &GetQueryLimit() const { return iQueryLimit; }
+		inline void SetQueryLimit(const uint32_t queryLimit){ iQueryLimit = queryLimit; }
+		inline const uint32_t &GetQueryLimit() const { return iQueryLimit; }
 
 		inline void SetMySQLHost(const string mysqlHost){ sMySQLHost = mysqlHost; }
 		inline const string &GetMySQLHost() const { return sMySQLHost; }
@@ -80,6 +80,9 @@ class Configuration
 		inline void SetAppListeningPath(const string appListeningPath){ sAppListeningPath = appListeningPath; }
 		inline const string &GetAppListeningPath() const { return sAppListeningPath; }
 
+		inline void SetProjectId(const uint32_t projectId){ iProjectId = projectId; }
+		inline const uint32_t &GetProjectId() const { return iProjectId; }
+
 		inline eReaderType GetReaderType() const { return nReaderType; }
 
 	private:
@@ -88,14 +91,15 @@ class Configuration
 		string sMongoDBCollection;
 		string sServiceURL;
 		string sServiceKey;
-		u_int32_t iServiceTimeOut;
-		u_int32_t iSleepProcessInterval;
-		u_int32_t iQueryLimit;
+		uint32_t iServiceTimeOut;
+		uint32_t iSleepProcessInterval;
+		uint32_t iQueryLimit;
 		string sMySQLHost;
 		string sMySQLUser;
 		string sMySQLPassword;
 		string sMySQLScheme;
 		string sAppListeningPath;
+		uint32_t iProjectId;
 
 		eReaderType nReaderType;
 };

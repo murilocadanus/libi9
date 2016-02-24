@@ -33,6 +33,9 @@ class IApp : public IManager, public IUpdatable
 		virtual void WriteOut(const char *msg);
 
 		/// Print error level string
+		virtual void WriteInfo(const char *msg);
+
+		/// Print error level string
 		virtual void WriteErr(const char *msg);
 
 		/// Print debug level string

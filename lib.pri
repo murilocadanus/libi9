@@ -7,7 +7,8 @@ CONFIG -= qt
 INCLUDEPATH += include/
 
 unix {
-	DEFINES	+= DEBUG I9_USE_JSON
+	DEFINES	+= DEBUG
+	DEFINES	+= I9_USE_JSON
 	CONFIG += staticlib
 	#LIBS	+= -lcurl
 	target.path = ./lib

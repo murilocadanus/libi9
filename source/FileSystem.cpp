@@ -23,7 +23,7 @@ FileSystem::~FileSystem()
 
 bool FileSystem::Initialize()
 {
-	Log(TAG "Initialize");
+	Info(TAG "Initialize");
 
 	if(!sPath.empty())
 	{
@@ -85,7 +85,7 @@ bool FileSystem::Update(float dt)
 				ev.SetFileName(event->name);
 				ev.SetEventType(DT_REG);
 
-				Log(TAG "Processing file %s%s", ev.GetDirName().c_str(), ev.GetFileName().c_str());
+				Dbg(TAG "Processing file %s%s", ev.GetDirName().c_str(), ev.GetFileName().c_str());
 				this->SendEventFileSystemNotifyChange(&ev);
 			}
 		}
@@ -102,12 +102,12 @@ void FileSystem::AddPath(const std::string &path)
 
 	if (watchFd < 0)
 	{
-		Log(TAG "It was not possible to watch path: %s", path.c_str());
+		Error(TAG "It was not possible to watch path: %s", path.c_str());
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		Log(TAG "Watching path: %s", path.c_str());
+		Dbg(TAG "Watching path: %s", path.c_str());
 		mWatchingPaths[watchFd] = path;
 	}
 }
@@ -132,7 +132,7 @@ void FileSystem::WatchPath(const std::string &path)
 					ev.SetFileName(dir->d_name);
 					ev.SetEventType(DT_REG);
 
-					Log(TAG "Processing file %s%s", path.c_str(), dir->d_name);
+					Dbg(TAG "Processing file %s%s", path.c_str(), dir->d_name);
 					this->SendEventFileSystemNotifyChange(&ev);
 				}
 				else if(dir->d_type == DT_DIR && this->eWatchType == WatchType::RECURSIVE_PATH)
@@ -155,7 +155,7 @@ void FileSystem::WatchPath(const std::string &path)
 
 bool FileSystem::Shutdown()
 {
-	Log(TAG "Shutdown");
+	Info(TAG "Shutdown");
 	return true;
 }
 

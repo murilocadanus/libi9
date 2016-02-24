@@ -27,8 +27,18 @@ namespace Sascar {
 class MysqlConnector
 {
 	public:
+
 		MysqlConnector();
-		~MysqlConnector();
+		virtual ~MysqlConnector();
+
+		static MysqlConnector instance;
+
+		static inline MysqlConnector *GetInstance()
+		{
+			return &MysqlConnector::instance;
+		}
+
+		static inline void DestroyInstance(){}
 
 		//void ManageException(sql::SQLException& e);
 		void Initialize();
@@ -38,8 +48,12 @@ class MysqlConnector
 		void Prepare(const string& query);
 		void SetInt(const int& num, const int& data);
 		void SetString(const int& num, const string& data);
-		void Execute(const string& query = "");
+		bool Execute(const string& query = "");
+		MYSQL_RES* Result();
+		void FreeResult(MYSQL_RES *result);
 		bool Fetch();
+		int InsertedID();
+		MYSQL_ROW FetchRow(MYSQL_RES *result);
 		string Print(const string& field);
 		string Print(const int& index);
 
@@ -53,6 +67,8 @@ class MysqlConnector
 		sql::PreparedStatement *pPrepStmt;
 		sql::ResultSet *pRes;*/
 };
+
+#define pMysqlConnector MysqlConnector::GetInstance()
 
 } // namespace
 

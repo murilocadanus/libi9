@@ -29,11 +29,10 @@ void Info(const char *pMessage, ...)
 	va_end(ap);
 
 	if (Sascar::Private::pApplication)
-		Sascar::Private::pApplication->WriteOut(t);
+		Sascar::Private::pApplication->WriteInfo(t);
 }
 
 #if defined(DEBUG)
-
 void Log(const char *pMessage, ...)
 {
 	char t[2048];
@@ -59,6 +58,7 @@ void Dbg(const char *pMessage, ...)
 	if (Sascar::Private::pApplication)
 		Sascar::Private::pApplication->WriteDbg(t);
 }
+#endif // DEBUG
 
 void Error(const char *pMessage, ...)
 {
@@ -73,5 +73,4 @@ void Error(const char *pMessage, ...)
 		Sascar::Private::pApplication->WriteErr(t);
 }
 
-#endif // DEBUG
 
