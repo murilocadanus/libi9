@@ -46,22 +46,22 @@ bool IApp::Shutdown()
 
 void IApp::WriteOut(const char *msg)
 {
-	fprintf(stdout, "[" ANSI_COLOR_CYAN "LOG" ANSI_COLOR_RESET "] %s\n", msg);
+	fprintf(stdout, "[" ANSI_COLOR_CYAN "LOG" ANSI_COLOR_RESET "]\t%s\n", msg);
 }
 
 void IApp::WriteInfo(const char *msg)
 {
-	fprintf(stdout, "[" ANSI_COLOR_GREEN "INFO" ANSI_COLOR_RESET "] %s\n", msg);
+	fprintf(stdout, "[" ANSI_COLOR_GREEN "INFO" ANSI_COLOR_RESET "]\t%s\n", msg);
 }
 
 void IApp::WriteErr(const char *msg)
 {
-	fprintf(stderr, "[" ANSI_COLOR_RED "ERROR" ANSI_COLOR_RESET "] %s\n", msg);
+	fprintf(stderr, "[" ANSI_COLOR_RED "ERROR" ANSI_COLOR_RESET "]\t%s\n", msg);
 }
 
 void IApp::WriteDbg(const char *msg)
 {
-	fprintf(stdout, "[" ANSI_COLOR_YELLOW "DEBUG" ANSI_COLOR_RESET "] %s\n", msg);
+	fprintf(stdout, "[" ANSI_COLOR_YELLOW "DEBUG" ANSI_COLOR_RESET "]\t%s\n", msg);
 }
 
 } // namespace
