@@ -20,6 +20,8 @@
 #include "FileSystem.hpp"
 #include "Updater.hpp"
 #include "Manager.hpp"
+#include "Timer.hpp"
+#include "System.hpp"
 
 extern "C" {
 
@@ -34,6 +36,7 @@ namespace Private
 	bool	bDisableThread;
 	bool	bDisableResourceLoader;
 	String	sConfigFile;
+	Seconds	fCurrentTime;
 }
 
 //ResourceManager *pResourceManager = nullptr;
@@ -116,7 +119,6 @@ bool Initialize()
 
 	Info(I9_BANNER, I9_VERSION_MAJOR, I9_VERSION_MIDDLE, I9_VERSION_MINOR);
 
-	Info("");
 	Info(I9_TAG "Build Configuration:");
 
 	Info(I9_TAG "\tThreading: %s", I9_USE_THREAD ? "Yes" : "No");
@@ -125,6 +127,7 @@ bool Initialize()
 	Info(I9_TAG "Initializing...");
 
 	bool ret = true;
+	ret = ret && pManager->Add(pSystem);
 
 	pConfiguration->Load(Private::sConfigFile);
 	pFileSystem->SetPath(pConfiguration->GetAppListeningPath());
@@ -145,7 +148,9 @@ void Update()
 	if (!Private::bInitialized)
 		return;
 
-	Seconds dt				= 1;//Private::fCurrentTime;
+	Seconds newTime			= pTimer->GetSeconds();
+	Seconds dt				= newTime - Private::fCurrentTime;
+	Private::fCurrentTime	= newTime;
 
 	pUpdater->Run(dt);
 }

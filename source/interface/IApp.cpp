@@ -15,6 +15,7 @@
 */
 
 #include "interface/IApp.hpp"
+#include "System.hpp"
 
 #define TAG "[App] "
 
@@ -46,22 +47,38 @@ bool IApp::Shutdown()
 
 void IApp::WriteOut(const char *msg)
 {
-	fprintf(stdout, "[" ANSI_COLOR_CYAN "LOG" ANSI_COLOR_RESET "]\t%s\n", msg);
+	char time[20];
+	time_t now = pTimer->GetCurrentTime();
+	strftime(time, 20, pTimer->GetDateTimeFormat().c_str(), localtime(&now));
+
+	fprintf(stdout, "[%s]\t[" ANSI_COLOR_CYAN "LOG" ANSI_COLOR_RESET "]\t%s\n", time, msg);
 }
 
 void IApp::WriteInfo(const char *msg)
 {
-	fprintf(stdout, "[" ANSI_COLOR_GREEN "INFO" ANSI_COLOR_RESET "]\t%s\n", msg);
+	char time[20];
+	time_t now = pTimer->GetCurrentTime();
+	strftime(time, 20, pTimer->GetDateTimeFormat().c_str(), localtime(&now));
+
+	fprintf(stdout, "[%s]\t[" ANSI_COLOR_GREEN "INFO" ANSI_COLOR_RESET "]\t%s\n", time, msg);
 }
 
 void IApp::WriteErr(const char *msg)
 {
-	fprintf(stderr, "[" ANSI_COLOR_RED "ERROR" ANSI_COLOR_RESET "]\t%s\n", msg);
+	char time[20];
+	time_t now = pTimer->GetCurrentTime();
+	strftime(time, 20, pTimer->GetDateTimeFormat().c_str(), localtime(&now));
+
+	fprintf(stderr, "[%s]\t[" ANSI_COLOR_RED "ERROR" ANSI_COLOR_RESET "]\t%s\n", time, msg);
 }
 
 void IApp::WriteDbg(const char *msg)
 {
-	fprintf(stdout, "[" ANSI_COLOR_YELLOW "DEBUG" ANSI_COLOR_RESET "]\t%s\n", msg);
+	char time[20];
+	time_t now = pTimer->GetCurrentTime();
+	strftime(time, 20, pTimer->GetDateTimeFormat().c_str(), localtime(&now));
+
+	fprintf(stdout, "[%s]\t[" ANSI_COLOR_YELLOW "DEBUG" ANSI_COLOR_RESET "]\t%s\n", time, msg);
 }
 
 } // namespace

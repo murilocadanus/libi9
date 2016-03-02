@@ -43,7 +43,7 @@
 
 #define I9_PLATFORM_NAME		"Cloud - C/C++"
 
-#define I9_BANNER					I9_NAME " " I9_VERSION_STRING " [" I9_PLATFORM_NAME " " I9_TYPE " " I9_LICENSE "]\n" I9_COPYRIGHT
+#define I9_BANNER					I9_NAME " " I9_VERSION_STRING " [" I9_PLATFORM_NAME " " I9_TYPE " " I9_LICENSE "] " I9_COPYRIGHT "\n"
 
 #if defined(DEBUG)
 	#define I9_TYPE "Debug"

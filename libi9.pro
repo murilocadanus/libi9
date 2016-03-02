@@ -14,7 +14,9 @@ SOURCES +=	source/File.cpp \
 			source/Manager.cpp \
 			source/FileSystem.cpp \
 			source/EventFileSystem.cpp \
-			source/Updater.cpp
+			source/Updater.cpp \
+    source/interface/ISystem.cpp \
+    source/System.cpp
 
 HEADERS +=	include/File.hpp \
 			include/Reader.hpp \
@@ -43,7 +45,10 @@ HEADERS +=	include/File.hpp \
 			include/interface/IUpdatable.hpp \
 			include/Manager.hpp \
 			include/FileSystem.hpp \
-			include/EventFileSystem.hpp
+			include/EventFileSystem.hpp \
+    include/Timer.hpp \
+    include/interface/ISystem.hpp \
+    include/System.hpp
 
 include("lib.pri")
 include("compiler.pri")

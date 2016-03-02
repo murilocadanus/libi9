@@ -28,6 +28,7 @@ typedef signed int 				s32;
 typedef signed short int 		s16;
 typedef signed char 			s8;
 typedef float 					f32;
+typedef float					Seconds;
 
 extern "C" {
 
@@ -106,6 +107,9 @@ namespace Sascar {
 		extern bool		bDisableThread;
 		extern bool		bDisableResourceLoader;
 		extern String	sConfigFile;
+
+		/// Last frame time
+		extern Seconds	fCurrentTime;
 
 	} // namespace
 
