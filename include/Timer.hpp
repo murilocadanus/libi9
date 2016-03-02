@@ -8,6 +8,12 @@
 
 namespace Sascar {
 
+typedef std::chrono::high_resolution_clock Clock;
+typedef long long Milliseconds; // we use the raw numbers directly internally, no conversions needed.
+typedef float Seconds; // same here
+typedef std::chrono::duration<Milliseconds, std::milli> Duration;
+typedef std::chrono::time_point<std::chrono::high_resolution_clock> TimePoint;
+
 class Timer
 {
 	public:
