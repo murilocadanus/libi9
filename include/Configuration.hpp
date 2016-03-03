@@ -18,6 +18,7 @@
 #define CONFIGURATION_HPP
 
 #include <string>
+#include <vector>
 #include "Enum.hpp"
 
 using namespace std;
@@ -47,8 +48,8 @@ class Configuration
 		inline void SetMongoDBHost(const string mongoDBHost){ sMongoDBHost = mongoDBHost; }
 		inline const string &GetMongoDBHost() const { return sMongoDBHost; }
 
-		inline void SetMongoDBCollection(const string mongoDBCollection){ sMongoDBCollection = mongoDBCollection; }
-		inline const string &GetMongoDBCollection() const { return sMongoDBCollection; }
+		inline void SetMongoDBCollections(const std::vector<std::string> mongoDBCollections){ sMongoDBCollections = mongoDBCollections; }
+		inline const std::vector<std::string> &GetMongoDBCollections() const { return sMongoDBCollections; }
 
 		inline void SetServiceURL(const string serviceURL){ sServiceURL = serviceURL; }
 		inline const string &GetServiceURL() const { return sServiceURL; }
@@ -88,7 +89,7 @@ class Configuration
 	private:
 		string sTitle;
 		string sMongoDBHost;
-		string sMongoDBCollection;
+		std::vector<std::string> sMongoDBCollections;
 		string sServiceURL;
 		string sServiceKey;
 		uint32_t iServiceTimeOut;

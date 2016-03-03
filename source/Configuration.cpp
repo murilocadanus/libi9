@@ -1,6 +1,7 @@
 #include "Configuration.hpp"
 #include "File.hpp"
 #include "util/Log.hpp"
+#include "util/String.hpp"
 #include "Reader.hpp"
 
 namespace Sascar {
@@ -10,7 +11,7 @@ Configuration Configuration::instance;
 Configuration::Configuration()
 	: sTitle("")
 	, sMongoDBHost("")
-	, sMongoDBCollection("")
+	, sMongoDBCollections()
 	, nReaderType(eReaderType::Default)
 {
 }
@@ -29,7 +30,7 @@ void Configuration::Load(const string &file)
 
 		sTitle = r.ReadString("sTitle", "");
 		sMongoDBHost = r.ReadString("sMongoDBHost", "");
-		sMongoDBCollection = r.ReadString("sMongoDBCollection", "");
+		sMongoDBCollections = StringUtil::split(r.ReadString("sMongoDBCollections", ""), '|');
 		sServiceURL = r.ReadString("sServiceURL", "");
 		sServiceKey = r.ReadString("sServiceKey", "");
 		iServiceTimeOut = r.ReadU32("lServiceTimeOut", 5L);

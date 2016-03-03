@@ -19,6 +19,8 @@
 
 #include <string>
 #include <strings.h>
+#include <vector>
+#include <sstream>
 
 typedef std::string String;
 
@@ -39,6 +41,18 @@ struct StringUtil
 	inline static bool Equals(const char *a, const char *b)
 	{
 		return (REVGEO_strcasecmp(a, b) == 0);
+	}
+
+	inline std::vector<String> static split(const String &s, char delim)
+	{
+		std::stringstream ss(s);
+		String item;
+		std::vector<String> tokens;
+		while (getline(ss, item, delim))
+		{
+			tokens.push_back(item);
+		}
+		return tokens;
 	}
 };
 
