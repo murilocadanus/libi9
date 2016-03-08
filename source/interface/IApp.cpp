@@ -16,6 +16,7 @@
 
 #include "interface/IApp.hpp"
 #include "System.hpp"
+#include <unistd.h>
 
 #define TAG "[App] "
 
@@ -51,7 +52,11 @@ void IApp::WriteOut(const char *msg)
 	time_t now = pTimer->GetCurrentTime();
 	strftime(time, 20, pTimer->GetDateTimeFormat().c_str(), localtime(&now));
 
-	fprintf(stdout, "[%s]\t[" ANSI_COLOR_CYAN "LOG" ANSI_COLOR_RESET "]\t%s\n", time, msg);
+	// Verify if the output is poiting to terminal
+	if (isatty(fileno(stdout)))
+		fprintf(stdout, "[%s]\t[" ANSI_COLOR_CYAN "LOG" ANSI_COLOR_RESET "]\t%s\n", time, msg);
+	else
+		fprintf(stdout, "[%s]\t[LOG]\t%s\n", time, msg);
 }
 
 void IApp::WriteInfo(const char *msg)
@@ -60,7 +65,11 @@ void IApp::WriteInfo(const char *msg)
 	time_t now = pTimer->GetCurrentTime();
 	strftime(time, 20, pTimer->GetDateTimeFormat().c_str(), localtime(&now));
 
-	fprintf(stdout, "[%s]\t[" ANSI_COLOR_GREEN "INFO" ANSI_COLOR_RESET "]\t%s\n", time, msg);
+	// Verify if the output is poiting to terminal
+	if (isatty(fileno(stdout)))
+		fprintf(stdout, "[%s]\t[" ANSI_COLOR_GREEN "INFO" ANSI_COLOR_RESET "]\t%s\n", time, msg);
+	else
+		fprintf(stdout, "[%s]\t[INFO]\t%s\n", time, msg);
 }
 
 void IApp::WriteErr(const char *msg)
@@ -69,7 +78,11 @@ void IApp::WriteErr(const char *msg)
 	time_t now = pTimer->GetCurrentTime();
 	strftime(time, 20, pTimer->GetDateTimeFormat().c_str(), localtime(&now));
 
-	fprintf(stderr, "[%s]\t[" ANSI_COLOR_RED "ERROR" ANSI_COLOR_RESET "]\t%s\n", time, msg);
+	// Verify if the output is poiting to terminal
+	if (isatty(fileno(stdout)))
+		fprintf(stderr, "[%s]\t[" ANSI_COLOR_RED "ERROR" ANSI_COLOR_RESET "]\t%s\n", time, msg);
+	else
+		fprintf(stderr, "[%s]\t[ERROR]\t%s\n", time, msg);
 }
 
 void IApp::WriteDbg(const char *msg)
@@ -78,7 +91,11 @@ void IApp::WriteDbg(const char *msg)
 	time_t now = pTimer->GetCurrentTime();
 	strftime(time, 20, pTimer->GetDateTimeFormat().c_str(), localtime(&now));
 
-	fprintf(stdout, "[%s]\t[" ANSI_COLOR_YELLOW "DEBUG" ANSI_COLOR_RESET "]\t%s\n", time, msg);
+	// Verify if the output is poiting to terminal
+	if (isatty(fileno(stdout)))
+		fprintf(stdout, "[%s]\t[" ANSI_COLOR_YELLOW "DEBUG" ANSI_COLOR_RESET "]\t%s\n", time, msg);
+	else
+		fprintf(stdout, "[%s]\t[DEBUG]\t%s\n", time, msg);
 }
 
 } // namespace
