@@ -42,6 +42,11 @@ void Configuration::Load(const string &file)
 		sMySQLScheme = r.ReadString("sMySQLScheme", "");
 		sAppListeningPath = r.ReadString("sAppListeningPath", "");
 		iProjectId = r.ReadU32("iProjectId", 0);
+		sActiveMQTarget = r.ReadString("sActiveMQTarget", "");
+		sActiveMQUser = r.ReadString("sActiveMQUser", "");
+		sActiveMQPassword = r.ReadString("sActiveMQPassword", "");
+		sActiveMQQueue = r.ReadString("sActiveMQQueue", "");
+		iActiveMQTimeout = r.ReadU32("iActiveMQTimeout", 30000L);
 	}
 
 	if (f)

@@ -22,6 +22,7 @@
 #include "Manager.hpp"
 #include "Timer.hpp"
 #include "System.hpp"
+//#include "MessageQueue.hpp"
 
 extern "C" {
 
@@ -130,13 +131,22 @@ bool Initialize()
 	ret = ret && pManager->Add(pSystem);
 
 	pConfiguration->Load(Private::sConfigFile);
-	pFileSystem->SetPath(pConfiguration->GetAppListeningPath());
+
+	if(pConfiguration->GetAppListeningPath() != "")
+		pFileSystem->SetPath(pConfiguration->GetAppListeningPath());
 
 	ret = ret && pManager->Add(Private::pApplication);
-	ret = ret && pManager->Add(pFileSystem);
+
+	if(pFileSystem->GetPath() != "")
+		ret = ret && pManager->Add(pFileSystem);
+
+//	ret = ret && pManager->Add(pMessageQueue);
 
 	pUpdater->Add(Private::pApplication);
-	pUpdater->Add(pFileSystem);
+
+	if(pFileSystem->GetPath() != "")
+		pUpdater->Add(pFileSystem);
+//	pUpdater->Add(pMessageQueue);
 
 	Private::bInitialized = true;
 

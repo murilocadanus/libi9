@@ -16,7 +16,10 @@ SOURCES +=	source/File.cpp \
 			source/EventFileSystem.cpp \
 			source/Updater.cpp \
 			source/interface/ISystem.cpp \
-			source/System.cpp
+			source/System.cpp \
+    source/MessageQueue.cpp \
+    source/interface/IEventMessageQueue.cpp \
+    source/EventMessageQueue.cpp
 
 HEADERS +=	include/File.hpp \
 			include/Reader.hpp \
@@ -48,7 +51,11 @@ HEADERS +=	include/File.hpp \
 			include/EventFileSystem.hpp \
 			include/Timer.hpp \
 			include/interface/ISystem.hpp \
-			include/System.hpp
+			include/System.hpp \
+    include/EventQueue.hpp \
+    include/interface/IEventMessageQueue.hpp \
+    include/interface/IEventMessageQueueListener.hpp \
+    include/MessageQueue.hpp
 
 include("lib.pri")
 include("compiler.pri")

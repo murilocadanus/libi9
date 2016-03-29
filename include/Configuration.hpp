@@ -86,6 +86,21 @@ class Configuration
 
 		inline eReaderType GetReaderType() const { return nReaderType; }
 
+		inline void SetActiveMQTarget(const uint32_t activeMQTarget){ sActiveMQTarget = activeMQTarget; }
+		inline const string &GetActiveMQTarget() const { return sActiveMQTarget; }
+
+		inline void SetActiveMQUser(const uint32_t activeMQUser){ sActiveMQUser = activeMQUser; }
+		inline const string &GetActiveMQUser() const { return sActiveMQUser; }
+
+		inline void SetActiveMQPassword(const uint32_t activeMQPassword){ sActiveMQPassword = activeMQPassword; }
+		inline const string &GetActiveMQPassword() const { return sActiveMQPassword; }
+
+		inline void SetActiveMQQueue(const uint32_t activeMQQueue){ sActiveMQQueue = activeMQQueue; }
+		inline const string &GetActiveMQQueue() const { return sActiveMQQueue; }
+
+		inline void SetActiveMQTimeout(const uint32_t activeMQTimeout){ iActiveMQTimeout = activeMQTimeout; }
+		inline const uint32_t &GetActiveMQTimeout() const { return iActiveMQTimeout; }
+
 	private:
 		string sTitle;
 		string sMongoDBHost;
@@ -101,8 +116,13 @@ class Configuration
 		string sMySQLScheme;
 		string sAppListeningPath;
 		uint32_t iProjectId;
-
 		eReaderType nReaderType;
+		string sActiveMQTarget;
+		string sActiveMQUser;
+		string sActiveMQPassword;
+		string sActiveMQQueue;
+		uint32_t iActiveMQTimeout;
+
 };
 
 #define pConfiguration Configuration::GetInstance()
