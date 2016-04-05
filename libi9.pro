@@ -8,8 +8,10 @@ SOURCES +=	source/File.cpp \
 			source/interface/IReader.cpp \
 			source/api/yajl/JsonReader.cpp \
 			source/api/curl/CurlWrapper.cpp \
-			source/Configuration.cpp \
 			source/api/mysql/MySQLConnector.cpp \
+			source/api/net/Address.cpp \
+			source/api/net/UDPSocket.cpp \
+			source/Configuration.cpp \
 			source/interface/IEventFileSystem.cpp \
 			source/Manager.cpp \
 			source/FileSystem.cpp \
@@ -17,9 +19,9 @@ SOURCES +=	source/File.cpp \
 			source/Updater.cpp \
 			source/interface/ISystem.cpp \
 			source/System.cpp \
-    source/MessageQueue.cpp \
-    source/interface/IEventMessageQueue.cpp \
-    source/EventMessageQueue.cpp
+			source/MessageQueue.cpp \
+			source/interface/IEventMessageQueue.cpp \
+			source/EventMessageQueue.cpp
 
 HEADERS +=	include/File.hpp \
 			include/Reader.hpp \
@@ -36,10 +38,12 @@ HEADERS +=	include/File.hpp \
 			include/interface/IReader.hpp \
 			include/api/yajl/JsonReader.hpp \
 			include/api/curl/CurlWrapper.hpp \
+			include/api/mysql/MySQLConnector.hpp \
+			include/api/net/Address.hpp \
+			include/api/net/UDPSocket.hpp \
 			include/I9Run.hpp \
 			include/I9.hpp \
 			include/Configuration.hpp \
-			include/api/mysql/MySQLConnector.hpp \
 			include/interface/IEventFileSystemListener.hpp \
 			include/interface/IEventListener.hpp \
 			include/interface/IEventFileSystem.hpp \
@@ -52,10 +56,10 @@ HEADERS +=	include/File.hpp \
 			include/Timer.hpp \
 			include/interface/ISystem.hpp \
 			include/System.hpp \
-    include/EventQueue.hpp \
-    include/interface/IEventMessageQueue.hpp \
-    include/interface/IEventMessageQueueListener.hpp \
-    include/MessageQueue.hpp
+			include/EventQueue.hpp \
+			include/interface/IEventMessageQueue.hpp \
+			include/interface/IEventMessageQueueListener.hpp \
+			include/MessageQueue.hpp
 
 include("lib.pri")
 include("compiler.pri")
