@@ -21,7 +21,8 @@ SOURCES +=	source/File.cpp \
 			source/System.cpp \
 			source/MessageQueue.cpp \
 			source/interface/IEventMessageQueue.cpp \
-			source/EventMessageQueue.cpp
+			source/EventMessageQueue.cpp \
+    source/api/net/TCPSocket.cpp
 
 HEADERS +=	include/File.hpp \
 			include/Reader.hpp \
@@ -59,7 +60,8 @@ HEADERS +=	include/File.hpp \
 			include/EventQueue.hpp \
 			include/interface/IEventMessageQueue.hpp \
 			include/interface/IEventMessageQueueListener.hpp \
-			include/MessageQueue.hpp
+			include/MessageQueue.hpp \
+    include/api/net/TCPSocket.hpp
 
 include("lib.pri")
 include("compiler.pri")

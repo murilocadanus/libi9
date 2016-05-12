@@ -14,8 +14,8 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef SOCKET_HPP
-#define SOCKET_HPP
+#ifndef UDP_SOCKET_HPP
+#define UDP_SOCKET_HPP
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -48,4 +48,4 @@ class UDPSocket
 
 }} // namespace
 
-#endif // SOCKET_HPP
+#endif // UDP_SOCKET_HPP

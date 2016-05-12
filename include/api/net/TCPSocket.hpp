@@ -14,38 +14,41 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ADDRESS_HPP
-#define ADDRESS_HPP
+#ifndef TCP_SOCKET_HPP
+#define TCP_SOCKET_HPP
 
-#include "Defines.hpp"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include "Address.hpp"
 
 namespace Sascar { namespace Net
 {
 
-class Address
+class TCPSocket
 {
 	public:
-		Address();
-		Address(u32 a, u32 b, u32 c, u32 d, u32 port);
-		Address(u32 address, u16 port);
-		Address(const Address &) = default;
+		TCPSocket();
+		~TCPSocket();
 
-		u32 GetAddress() const;
-		std::string GetAddress();
-		u32 GetA() const;
-		u32 GetB() const;
-		u32 GetC() const;
-		u32 GetD() const;
-		u32 GetPort() const;
+		bool Open(u32 port);
+		void Close();
+		bool IsOpen() const;
+		int Accept();
 
-		bool operator==(const Address &other) const;
-		bool operator!=(const Address &other) const;
+		inline const char *GetServerName() const { return inet_ntoa(cAddress.sin_addr); }
+		inline u32 GetSocketHandler() { return iHandle; }
+		inline sockaddr_in GetAddress() { return cAddress; }
 
 	private:
-		u32 iAddress;
-		u16 iPort;
+		sockaddr_in cAddress;
+		u32 iHandle;
+		bool bIsOpen : 1;
 };
 
 }} // namespace
 
-#endif // ADDRESS_HPP
+#endif // TCP_SOCKET_HPP
+

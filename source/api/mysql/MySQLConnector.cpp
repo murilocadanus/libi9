@@ -111,27 +111,21 @@ void MysqlConnector::SetString(const int& num, const string& data)
 
 bool MysqlConnector::Execute(const string& query)
 {
-	try
+	if (query != "")
 	{
-		if (query != "")
+		try
 		{
 			mysql_query(&dbConnection, query.c_str());
 			return true;
-			//pRes = pStmt->executeQuery(query);
 		}
-		/*else
+		catch (int e)
 		{
-			pRes = pPrepStmt->executeQuery();
-			pPrepStmt->close();
-		}*/
+			e = mysql_errno(&dbConnection);
+			Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
+			return false;
+		}
 	}
-	catch (int e)
-	{
-		e = mysql_errno(&dbConnection);
-		Error(TAG "FATAL ERROR: %d: %s", e, mysql_error(&dbConnection));
-	}
-
-	return false;
+	else return false;
 }
 
 MYSQL_RES* MysqlConnector::Result()

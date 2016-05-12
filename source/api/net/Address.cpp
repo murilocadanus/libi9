@@ -15,7 +15,7 @@ Address::Address(u32 a, u32 b, u32 c, u32 d, u32 port)
 	iPort = port;
 }
 
-Address::Address(u32 address, u32 port)
+Address::Address(u32 address, u16 port)
 {
 	iAddress = address;
 	iPort = port;
@@ -24,6 +24,14 @@ Address::Address(u32 address, u32 port)
 u32 Address::GetAddress() const
 {
 	return iAddress;
+}
+
+std::string Address::GetAddress()
+{
+	return String().append(std::to_string(GetA())).append(".")
+			.append(std::to_string(GetB())).append(".")
+			.append(std::to_string(GetC())).append(".")
+			.append(std::to_string(GetD()));
 }
 
 u32 Address::GetA() const

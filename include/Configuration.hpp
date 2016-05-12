@@ -122,7 +122,6 @@ class Configuration
 		string sActiveMQPassword;
 		string sActiveMQQueue;
 		uint32_t iActiveMQTimeout;
-
 };
 
 #define pConfiguration Configuration::GetInstance()
