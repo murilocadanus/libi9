@@ -39,6 +39,7 @@ class IUpdatable
 inline bool IUpdatable::Update(float dt)
 {
 	//UNUSED(dt);
+	(void)dt;
 	return true;
 }
 
