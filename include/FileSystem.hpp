@@ -21,7 +21,7 @@
 #include "interface/IUpdatable.hpp"
 #include "interface/IEventFileSystem.hpp"
 
-#define EVENT_BUFFER_LENGTH 100000
+#define EVENT_BUFFER_LENGTH 200000
 
 namespace Sascar {
 

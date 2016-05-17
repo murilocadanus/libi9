@@ -78,7 +78,7 @@ bool FileSystem::Update(float dt)
 				// Add path to notify listener
 				AddPath(folder);
 			}
-			else if ((event->mask & IN_CLOSE_WRITE) && !(event->mask & IN_ISDIR))
+			else if ((event->mask & (IN_CLOSE_WRITE | IN_ATTRIB | IN_MODIFY | IN_CREATE)) && !(event->mask & IN_ISDIR))
 			{
 				EventFileSystem ev;
 				ev.SetDirName(mWatchingPaths[event->wd]);
@@ -92,6 +92,29 @@ bool FileSystem::Update(float dt)
 
 		readPtr += sizeof (struct inotify_event) +event->len;
 	}
+
+	/*for(int i=0;i<mWatchingPaths.size();++i)
+	{
+		DIR *dir;
+		struct dirent *ent;
+
+		if((dir = opendir(((std::string)mWatchingPaths[i]).c_str())) != NULL)
+		{
+			while((ent = readdir(dir)) != NULL)
+			{
+				if(ent->d_name.substr(0, 3) == "BT4")
+				{
+					EventFileSystem ev;
+					ev.SetDirName(mWatchingPaths[i]);
+					ev.SetFileName(ent->d_name);
+					ev.SetEventType(DT_REG);
+
+					this->SendEventFileSystemNotifyChange(&ev);
+				}
+			}
+			closedir (dir);
+		}
+	}*/
 
 	return true;
 }
