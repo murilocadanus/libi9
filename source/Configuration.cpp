@@ -41,7 +41,7 @@ void Configuration::Load(const string &file)
 		sMySQLPassword = r.ReadString("sMySQLPassword", "");
 		sMySQLScheme = r.ReadString("sMySQLScheme", "");
 		sAppListeningPath = r.ReadString("sAppListeningPath", "");
-		iProjectId = r.ReadU32("iProjectId", 0);
+		iProjectId = r.ReadU32("iProjectId", 1);
 		sActiveMQTarget = r.ReadString("sActiveMQTarget", "");
 		sActiveMQUser = r.ReadString("sActiveMQUser", "");
 		sActiveMQPassword = r.ReadString("sActiveMQPassword", "");

@@ -94,7 +94,7 @@ bool FileSystem::Update(float dt)
 		readPtr += sizeof (struct inotify_event) +event->len;
 	}
 
-	for(unsigned int i = 0;i<mWatchingPaths.size();++i)
+	/*for(unsigned int i = 0;i<mWatchingPaths.size();++i)
 	{
 		DIR *dir;
 		struct dirent *ent;
@@ -118,7 +118,7 @@ bool FileSystem::Update(float dt)
 			}
 			closedir (dir);
 		}
-	}
+	}*/
 
 	return true;
 }
