@@ -103,6 +103,8 @@ bool FileSystem::Update(float dt)
 		{
 			while((ent = readdir(dir)) != NULL)
 			{
+				Error(TAG "FOR -> File to process: %s", ((std::string)ent->d_name).c_str());
+
 				if(((std::string)ent->d_name).substr(0, 3) == "BT4")
 				{
 					EventFileSystem ev;
@@ -110,6 +112,7 @@ bool FileSystem::Update(float dt)
 					ev.SetFileName(ent->d_name);
 					ev.SetEventType(DT_REG);
 
+					Error(TAG "FOR -> Processing: %s", ((std::string)ent->d_name).c_str());
 					this->SendEventFileSystemNotifyChange(&ev);
 				}
 			}
