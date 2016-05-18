@@ -79,7 +79,7 @@ bool FileSystem::Update(float dt)
 				// Add path to notify listener
 				AddPath(folder);
 			}
-			else if ((event->mask & (IN_CLOSE_WRITE /*| IN_ATTRIB | IN_MODIFY | IN_CREATE*/)) && !(event->mask & IN_ISDIR))
+			else if ((event->mask & (IN_CLOSE_WRITE)) && !(event->mask & IN_ISDIR))
 			{
 				EventFileSystem ev;
 				ev.SetDirName(mWatchingPaths[event->wd]);

@@ -21,7 +21,8 @@
 #include "interface/IUpdatable.hpp"
 #include "interface/IEventFileSystem.hpp"
 
-#define EVENT_BUFFER_LENGTH 200000
+#define EVENT_SIZE				(sizeof(struct inotify_event))
+#define EVENT_BUFFER_LENGTH		(1024 * (EVENT_SIZE + 16))
 
 namespace Sascar {
 
