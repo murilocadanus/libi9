@@ -17,6 +17,10 @@
 #ifndef FILESYSTEM_HPP
 #define FILESYSTEM_HPP
 
+#include <iostream>
+#include <stdint.h>
+#include <dirent.h>
+
 #include "interface/IManager.hpp"
 #include "interface/IUpdatable.hpp"
 #include "interface/IEventFileSystem.hpp"
@@ -28,11 +32,47 @@ namespace Sascar {
 
 enum WatchType { LOCAL_PATH, RECURSIVE_PATH };
 
-class FileSystem : public IManager, public IUpdatable, public IEventFileSystem
+class FileSystem : public IManager, public IEventFileSystem
 {
 	I9_DECLARE_MANAGER(EventFileSystem)
 
 	public:
+
+		/** \class FileNotFoundException
+		 *  \brief Specialized exception class.
+		 */
+		class FileNotFoundException{};
+
+		/** \class PathNotFoundException
+		 *  \brief Specialized exception class.
+		 */
+		class PathNotFoundException{};
+
+		/** \class FileReadException
+		 *  \brief Specialized exception class.
+		 */
+		class FileReadException{};
+
+		/** \class FileWriteException
+		 *  \brief Specialized exception class.
+		 */
+		class FileWriteException{};
+
+		/** \class PathCreateException
+		 *  \brief Specialized exception class.
+		 */
+		class PathCreateException{};
+
+		/** \class PathNotDefinedException
+		 *  \brief Specialized exception class.
+		 */
+		class PathNotDefinedException{};
+
+		/** \class NotSpaceAvaiableException
+		 *  \brief Specialized exception class.
+		 */
+		class NotSpaceAvaiableException{};
+
 		FileSystem();
 		virtual ~FileSystem();
 
@@ -49,11 +89,11 @@ class FileSystem : public IManager, public IUpdatable, public IEventFileSystem
 		virtual bool Initialize() override;
 		virtual bool Shutdown() override;
 
-		// IUpdatable
-		virtual bool Update(float dt) override;
-
-		void SetPath(const std::string &path) { sPath = path; }
+		//void SetPath(const std::string &path) { sPath = path; }
+		void SetPath(std::string path);
 		inline const std::string &GetPath() { return sPath; }
+
+		virtual void SaveFile(std::string pathClient, std::string pathPlate, std::string pathFile, const uint8_t *bufferFile, uint32_t sizeBufferFile);
 
 	private:
 		void AddPath(const std::string &path);
@@ -64,6 +104,9 @@ class FileSystem : public IManager, public IUpdatable, public IEventFileSystem
 		std::string sPath;
 		uint32_t iNotifier;
 		WatchType eWatchType;
+
+		DIR *pDirPath;
+		int iDirFd;
 };
 
 #define pFileSystem FileSystem::GetInstance()

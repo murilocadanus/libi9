@@ -3,6 +3,13 @@
 #include <sys/inotify.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <sstream>
+#include <iomanip>
+#include <fcntl.h>
+#include <errno.h>
 
 #define TAG "[FileSystem] "
 
@@ -12,6 +19,8 @@ FileSystem FileSystem::instance;
 
 FileSystem::FileSystem()
 	: sPath("")
+	, pDirPath(NULL)
+	, iDirFd(0)
 {
 
 }
@@ -45,82 +54,92 @@ bool FileSystem::Initialize()
 		return false;
 }
 
-bool FileSystem::Update(float dt)
+void FileSystem::SetPath(std::string path)
 {
-	(void)dt;
-	char *readPtr;
-	char buffer[EVENT_BUFFER_LENGTH];
-	struct inotify_event *event;
+	this->sPath = path;
 
-	// Read from notifier
-	long inputLen = read(iNotifier, buffer, EVENT_BUFFER_LENGTH);
-
-	if(inputLen <= 0)
+	if(this->iDirFd)
 	{
-		Error(TAG "Can't read from notifier listener");
-		exit(EXIT_FAILURE);
+		close(this->iDirFd);
+		this->iDirFd = 0;
 	}
 
-	readPtr = buffer;
-	while(readPtr < buffer + inputLen)
+	if(this->pDirPath)
 	{
-		event = (struct inotify_event *) readPtr;
-		if(event->name[0] != '.' && event->len > 0)
-		{
-			if( (event->mask & IN_CREATE) && (event->mask & IN_ISDIR))
-			{
-				std::string folder;
-
-				// Set the new folder path to be notified
-				folder = mWatchingPaths[event->wd];
-				folder += event->name;
-				folder += "/";
-
-				// Add path to notify listener
-				AddPath(folder);
-			}
-			else if ((event->mask & (IN_CLOSE_WRITE)) && !(event->mask & IN_ISDIR))
-			{
-				EventFileSystem ev;
-				ev.SetDirName(mWatchingPaths[event->wd]);
-				ev.SetFileName(event->name);
-				ev.SetEventType(DT_REG);
-
-				Dbg(TAG "Processing file %s%s", ev.GetDirName().c_str(), ev.GetFileName().c_str());
-				this->SendEventFileSystemNotifyChange(&ev);
-			}
-		}
-
-		readPtr += sizeof (struct inotify_event) +event->len;
+		closedir(this->pDirPath);
+		this->pDirPath = NULL;
 	}
 
-	/*for(unsigned int i = 0;i<mWatchingPaths.size();++i)
+	if(access(this->sPath.c_str(), R_OK | W_OK) != 0)
 	{
-		DIR *dir;
-		struct dirent *ent;
+		std::cout << strerror( errno ) << " - " << this->sPath << std::endl;
+		abort();
+	}
 
-		if((dir = opendir(((std::string)mWatchingPaths[i]).c_str())) != NULL)
+	this->pDirPath = opendir(this->sPath.c_str());
+
+	if(!this->pDirPath)
+	{
+		throw PathNotFoundException();
+	}
+
+	this->iDirFd = dirfd(this->pDirPath);
+
+	if(!this->iDirFd)
+	{
+		throw PathNotFoundException();
+	}
+}
+
+void FileSystem::SaveFile(std::string pathClient, std::string pathPlate, std::string pathFile, const uint8_t *bufferFile, uint32_t sizeBufferFile)
+{
+	if(this->pDirPath == NULL) throw PathNotDefinedException();
+	std::string pathClientPlateFile = pathClient + "/" + pathPlate + "/" + pathFile;
+
+	int fd = openat(this->iDirFd, pathClientPlateFile.c_str(), O_CREAT | O_RDWR | O_TRUNC, 0666);
+	Dbg(TAG "Status of open file: %s, openat handler: %d", strerror(errno), fd);
+
+	if(fd != -1)
+	{
+		Info(TAG "Writing: %s", pathClientPlateFile.c_str());
+
+		int escrito = write(fd, bufferFile, sizeBufferFile);
+		Dbg(TAG "Status of write file: %s, size buffer file to write: %d, wrote size buffer: %d", strerror(errno), bufferFile, escrito);
+
+		close(fd);
+
+		if(escrito < sizeBufferFile)
 		{
-			while((ent = readdir(dir)) != NULL)
-			{
-				Error(TAG "FOR -> File to process: %s", ((std::string)ent->d_name).c_str());
-
-				if(((std::string)ent->d_name).substr(0, 3) == "BT4")
-				{
-					EventFileSystem ev;
-					ev.SetDirName(mWatchingPaths[i]);
-					ev.SetFileName(ent->d_name);
-					ev.SetEventType(DT_REG);
-
-					Error(TAG "FOR -> Processing: %s", ((std::string)ent->d_name).c_str());
-					this->SendEventFileSystemNotifyChange(&ev);
-				}
-			}
-			closedir (dir);
+			Error(TAG "Can't write file.");
+			throw FileWriteException();
 		}
-	}*/
+		else
+		{
+			EventFileSystem ev;
+			ev.SetDirName(pathClientPlateFile);
+			ev.SetEventType(DT_REG);
 
-	return true;
+			Dbg(TAG "Processing file %s", ev.GetDirName().c_str());
+			this->SendEventFileSystemNotifyChange(&ev);
+		}
+	}
+	else
+	{
+		Info(TAG "File do not exist: %s", pathFile.c_str());
+
+		if( errno == ENOSPC)
+		{
+			throw NotSpaceAvaiableException();
+		}
+
+		std::string pathClientPlate = pathClient + "/" + pathPlate;
+		mkdirat(this->iDirFd, pathClient.c_str(),  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+		mkdirat(this->iDirFd, pathClientPlate.c_str(),  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+
+		this->SaveFile(pathClient, pathPlate, pathFile, bufferFile, sizeBufferFile);
+
+		throw PathNotDefinedException();
+	}
 }
 
 void FileSystem::AddPath(const std::string &path)
