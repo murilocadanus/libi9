@@ -33,25 +33,7 @@ FileSystem::~FileSystem()
 bool FileSystem::Initialize()
 {
 	Info(TAG "Initialize");
-
-	if(!sPath.empty())
-	{
-		// Set to start listening only 1 directory
-		eWatchType = WatchType::RECURSIVE_PATH;
-
-		// Start the notify listener
-		iNotifier = inotify_init();
-
-		// Add path to notify listener
-		AddPath(sPath);
-
-		// Watch path
-		WatchPath(sPath);
-
-		return true;
-	}
-	else
-		return false;
+	return true;
 }
 
 void FileSystem::SetPath(std::string path)
@@ -91,9 +73,11 @@ void FileSystem::SetPath(std::string path)
 	}
 }
 
-void FileSystem::SaveFile(std::string pathClient, std::string pathPlate, std::string pathFile, const uint8_t *bufferFile, uint32_t sizeBufferFile)
+bool FileSystem::SaveFile(std::string pathClient, std::string pathPlate, std::string pathFile, const uint8_t *bufferFile, uint32_t sizeBufferFile)
 {
 	if(this->pDirPath == NULL) throw PathNotDefinedException();
+
+	bool written = false;
 	std::string pathClientPlateFile = pathClient + "/" + pathPlate + "/" + pathFile;
 
 	int fd = openat(this->iDirFd, pathClientPlateFile.c_str(), O_CREAT | O_RDWR | O_TRUNC, 0666);
@@ -120,7 +104,8 @@ void FileSystem::SaveFile(std::string pathClient, std::string pathPlate, std::st
 			ev.SetEventType(DT_REG);
 
 			Dbg(TAG "Processing file %s", ev.GetDirName().c_str());
-			this->SendEventFileSystemNotifyChange(&ev);
+			written = true;
+			//this->SendEventFileSystemNotifyChange(&ev);
 		}
 	}
 	else
@@ -136,67 +121,10 @@ void FileSystem::SaveFile(std::string pathClient, std::string pathPlate, std::st
 		mkdirat(this->iDirFd, pathClient.c_str(),  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 		mkdirat(this->iDirFd, pathClientPlate.c_str(),  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
-		this->SaveFile(pathClient, pathPlate, pathFile, bufferFile, sizeBufferFile);
-
-		throw PathNotDefinedException();
+		written = this->SaveFile(pathClient, pathPlate, pathFile, bufferFile, sizeBufferFile);
 	}
-}
 
-void FileSystem::AddPath(const std::string &path)
-{
-	int watchFd = inotify_add_watch(iNotifier, path.c_str(), IN_CLOSE | IN_CREATE);
-
-	if (watchFd < 0)
-	{
-		Error(TAG "It was not possible to watch path: %s", path.c_str());
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		Dbg(TAG "Watching path: %s", path.c_str());
-		mWatchingPaths[watchFd] = path;
-	}
-}
-
-void FileSystem::WatchPath(const std::string &path)
-{
-	struct dirent *dir;
-	DIR *openedDir = opendir(path.c_str());
-	std::string folder;
-
-	if(openedDir)
-	{
-		while((dir = readdir(openedDir)) != NULL)
-		{
-			// Ignore hidden files
-			if(dir->d_name[0] != '.')
-			{
-				if(dir->d_type == DT_REG)
-				{
-					EventFileSystem ev;
-					ev.SetDirName(path);
-					ev.SetFileName(dir->d_name);
-					ev.SetEventType(DT_REG);
-
-					Dbg(TAG "Processing file %s%s", path.c_str(), dir->d_name);
-					this->SendEventFileSystemNotifyChange(&ev);
-				}
-				else if(dir->d_type == DT_DIR && this->eWatchType == WatchType::RECURSIVE_PATH)
-				{
-					folder = path;
-					folder += dir->d_name;
-					folder += "/";
-
-					// Add folder path to watch
-					AddPath(folder);
-
-					// Recursively watch
-					WatchPath(folder);
-				}
-			}
-		}
-		closedir(openedDir);
-	}
+	return written;
 }
 
 bool FileSystem::Shutdown()

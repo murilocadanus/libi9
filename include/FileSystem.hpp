@@ -93,7 +93,7 @@ class FileSystem : public IManager, public IEventFileSystem
 		void SetPath(std::string path);
 		inline const std::string &GetPath() { return sPath; }
 
-		virtual void SaveFile(std::string pathClient, std::string pathPlate, std::string pathFile, const uint8_t *bufferFile, uint32_t sizeBufferFile);
+		virtual bool SaveFile(std::string pathClient, std::string pathPlate, std::string pathFile, const uint8_t *bufferFile, uint32_t sizeBufferFile);
 
 	private:
 		void AddPath(const std::string &path);

@@ -57,7 +57,7 @@ class IManager
 		/// If this module is mandatory (it is a base subsystem or critical one)
 		virtual bool IsRequired() const;
 
-		virtual const String GetName() const = 0;
+		virtual const std::string GetName() const = 0;
 
 	protected:
 		bool bInitialized : 1;

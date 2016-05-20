@@ -28,12 +28,12 @@ typedef std::string String;
 
 struct StringUtil
 {
-	inline static bool Equals(String a, String b)
+	inline static bool Equals(std::string a, std::string b)
 	{
 		return (REVGEO_strcasecmp(a.c_str(), b.c_str()) == 0);
 	}
 
-	inline static bool Equals(String a, const char *b)
+	inline static bool Equals(std::string a, const char *b)
 	{
 		return (REVGEO_strcasecmp(a.c_str(), b) == 0);
 	}
@@ -43,11 +43,11 @@ struct StringUtil
 		return (REVGEO_strcasecmp(a, b) == 0);
 	}
 
-	inline std::vector<String> static split(const String &s, char delim)
+	inline std::vector<std::string> static split(const std::string &s, char delim)
 	{
 		std::stringstream ss(s);
-		String item;
-		std::vector<String> tokens;
+		std::string item;
+		std::vector<std::string> tokens;
 		while (getline(ss, item, delim))
 		{
 			tokens.push_back(item);
