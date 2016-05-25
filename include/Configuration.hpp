@@ -48,6 +48,18 @@ class Configuration
 		inline void SetMongoDBHost(const string mongoDBHost){ sMongoDBHost = mongoDBHost; }
 		inline const string &GetMongoDBHost() const { return sMongoDBHost; }
 
+		inline void SetMongoDBUser(const string mongoDBUser){ sMongoDBUser = mongoDBUser; }
+		inline const string &GetMongoDBUser() const { return sMongoDBUser; }
+
+		inline void SetMongoDBPassword(const string mongoDBPassword){ sMongoDBPassword = mongoDBPassword; }
+		inline const string &GetMongoDBPassword() const { return sMongoDBPassword; }
+
+		inline void SetMongoDBAuthMechanism(const string mongoDBAuthMechanism){ sMongoDBAuthMechanism = mongoDBAuthMechanism; }
+		inline const string &GetMongoDBAuthMechanism() const { return sMongoDBAuthMechanism; }
+
+		inline void SetMongoDBDatabase(const string mongoDBDatabase){ sMongoDBDatabase = mongoDBDatabase; }
+		inline const string &GetMongoDBDatabase() const { return sMongoDBDatabase; }
+
 		inline void SetMongoDBCollections(const std::vector<std::string> mongoDBCollections){ sMongoDBCollections = mongoDBCollections; }
 		inline const std::vector<std::string> &GetMongoDBCollections() const { return sMongoDBCollections; }
 
@@ -104,6 +116,10 @@ class Configuration
 	private:
 		string sTitle;
 		string sMongoDBHost;
+		string sMongoDBUser;
+		string sMongoDBPassword;
+		string sMongoDBDatabase;
+		string sMongoDBAuthMechanism;
 		std::vector<std::string> sMongoDBCollections;
 		string sServiceURL;
 		string sServiceKey;

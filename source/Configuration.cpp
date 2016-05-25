@@ -30,6 +30,10 @@ void Configuration::Load(const string &file)
 
 		sTitle = r.ReadString("sTitle", "");
 		sMongoDBHost = r.ReadString("sMongoDBHost", "");
+		sMongoDBUser = r.ReadString("sMongoDBUser", "");
+		sMongoDBPassword = r.ReadString("sMongoDBPassword", "");
+		sMongoDBAuthMechanism = r.ReadString("sMongoDBAuthMechanism", "");
+		sMongoDBDatabase = r.ReadString("sMongoDBDatabase", "");
 		sMongoDBCollections = StringUtil::split(r.ReadString("sMongoDBCollections", ""), '|');
 		sServiceURL = r.ReadString("sServiceURL", "");
 		sServiceKey = r.ReadString("sServiceKey", "");
