@@ -12,6 +12,7 @@ Configuration::Configuration()
 	: sTitle("")
 	, sMongoDBHost("")
 	, sMongoDBCollections()
+	, vCollectionClients()
 	, nReaderType(eReaderType::Default)
 {
 }
@@ -51,6 +52,8 @@ void Configuration::Load(const string &file)
 		sActiveMQPassword = r.ReadString("sActiveMQPassword", "");
 		sActiveMQQueue = r.ReadString("sActiveMQQueue", "");
 		iActiveMQTimeout = r.ReadU32("iActiveMQTimeout", 30000L);
+
+		vCollectionClients = StringUtil::split(r.ReadString("vCollectionClients", ""), ',');
 	}
 
 	if (f)

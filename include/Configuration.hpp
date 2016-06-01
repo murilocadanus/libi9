@@ -113,6 +113,9 @@ class Configuration
 		inline void SetActiveMQTimeout(const uint32_t activeMQTimeout){ iActiveMQTimeout = activeMQTimeout; }
 		inline const uint32_t &GetActiveMQTimeout() const { return iActiveMQTimeout; }
 
+		inline void SetCollectionClients(const std::vector<std::string> collectionClients){ vCollectionClients = collectionClients; }
+		inline const std::vector<std::string> &GetCollectionClients() const { return vCollectionClients; }
+
 	private:
 		string sTitle;
 		string sMongoDBHost;
@@ -121,6 +124,7 @@ class Configuration
 		string sMongoDBDatabase;
 		string sMongoDBAuthMechanism;
 		std::vector<std::string> sMongoDBCollections;
+		std::vector<std::string> vCollectionClients;
 		string sServiceURL;
 		string sServiceKey;
 		uint32_t iServiceTimeOut;
