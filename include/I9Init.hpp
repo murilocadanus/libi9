@@ -109,7 +109,7 @@ namespace Sascar {
 		extern std::string	sConfigFile;
 
 		/// Last frame time
-		extern Seconds	fCurrentTime;
+		extern float	fCurrentTime;
 
 	} // namespace
 
