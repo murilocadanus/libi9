@@ -63,7 +63,7 @@ class Timer
 
 		time_t GetCurrentTime() const
 		{
-			return Clock::to_time_t(Clock::now() - std::chrono::hours(24));
+			return Clock::to_time_t(Clock::now());
 		}
 
 		std::string GetDateTimeFormat() const

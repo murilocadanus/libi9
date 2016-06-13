@@ -144,8 +144,8 @@ bool Initialize()
 
 	pUpdater->Add(Private::pApplication);
 
-	if(pFileSystem->GetPath() != "")
-		pUpdater->Add(pFileSystem);
+	/*if(pFileSystem->GetPath() != "")
+		pUpdater->Add(pFileSystem);*/
 //	pUpdater->Add(pMessageQueue);
 
 	Private::bInitialized = true;

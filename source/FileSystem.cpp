@@ -3,6 +3,13 @@
 #include <sys/inotify.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <sstream>
+#include <iomanip>
+#include <fcntl.h>
+#include <errno.h>
 
 #define TAG "[FileSystem] "
 
@@ -12,6 +19,8 @@ FileSystem FileSystem::instance;
 
 FileSystem::FileSystem()
 	: sPath("")
+	, pDirPath(NULL)
+	, iDirFd(0)
 {
 
 }
@@ -24,160 +33,98 @@ FileSystem::~FileSystem()
 bool FileSystem::Initialize()
 {
 	Info(TAG "Initialize");
-
-	if(!sPath.empty())
-	{
-		// Set to start listening only 1 directory
-		eWatchType = WatchType::RECURSIVE_PATH;
-
-		// Start the notify listener
-		iNotifier = inotify_init();
-
-		// Add path to notify listener
-		AddPath(sPath);
-
-		// Watch path
-		WatchPath(sPath);
-
-		return true;
-	}
-	else
-		return false;
-}
-
-bool FileSystem::Update(float dt)
-{
-	(void)dt;
-	char *readPtr;
-	char buffer[EVENT_BUFFER_LENGTH];
-	struct inotify_event *event;
-
-	// Read from notifier
-	long inputLen = read(iNotifier, buffer, EVENT_BUFFER_LENGTH);
-
-	if(inputLen <= 0)
-	{
-		Error(TAG "Can't read from notifier listener");
-		exit(EXIT_FAILURE);
-	}
-
-	readPtr = buffer;
-	while(readPtr < buffer + inputLen)
-	{
-		event = (struct inotify_event *) readPtr;
-		if(event->name[0] != '.' && event->len > 0)
-		{
-			if( (event->mask & IN_CREATE) && (event->mask & IN_ISDIR))
-			{
-				std::string folder;
-
-				// Set the new folder path to be notified
-				folder = mWatchingPaths[event->wd];
-				folder += event->name;
-				folder += "/";
-
-				// Add path to notify listener
-				AddPath(folder);
-			}
-			else if ((event->mask & (IN_CLOSE_WRITE)) && !(event->mask & IN_ISDIR))
-			{
-				EventFileSystem ev;
-				ev.SetDirName(mWatchingPaths[event->wd]);
-				ev.SetFileName(event->name);
-				ev.SetEventType(DT_REG);
-
-				Dbg(TAG "Processing file %s%s", ev.GetDirName().c_str(), ev.GetFileName().c_str());
-				this->SendEventFileSystemNotifyChange(&ev);
-			}
-		}
-
-		readPtr += sizeof (struct inotify_event) +event->len;
-	}
-
-	/*for(unsigned int i = 0;i<mWatchingPaths.size();++i)
-	{
-		DIR *dir;
-		struct dirent *ent;
-
-		if((dir = opendir(((std::string)mWatchingPaths[i]).c_str())) != NULL)
-		{
-			while((ent = readdir(dir)) != NULL)
-			{
-				Error(TAG "FOR -> File to process: %s", ((std::string)ent->d_name).c_str());
-
-				if(((std::string)ent->d_name).substr(0, 3) == "BT4")
-				{
-					EventFileSystem ev;
-					ev.SetDirName(mWatchingPaths[i]);
-					ev.SetFileName(ent->d_name);
-					ev.SetEventType(DT_REG);
-
-					Error(TAG "FOR -> Processing: %s", ((std::string)ent->d_name).c_str());
-					this->SendEventFileSystemNotifyChange(&ev);
-				}
-			}
-			closedir (dir);
-		}
-	}*/
-
 	return true;
 }
 
-void FileSystem::AddPath(const std::string &path)
+void FileSystem::SetPath(std::string path)
 {
-	int watchFd = inotify_add_watch(iNotifier, path.c_str(), IN_CLOSE | IN_CREATE);
+	this->sPath = path;
 
-	if (watchFd < 0)
+	if(this->iDirFd)
 	{
-		Error(TAG "It was not possible to watch path: %s", path.c_str());
-		exit(EXIT_FAILURE);
+		close(this->iDirFd);
+		this->iDirFd = 0;
 	}
-	else
+
+	if(this->pDirPath)
 	{
-		Dbg(TAG "Watching path: %s", path.c_str());
-		mWatchingPaths[watchFd] = path;
+		closedir(this->pDirPath);
+		this->pDirPath = NULL;
+	}
+
+	if(access(this->sPath.c_str(), R_OK | W_OK) != 0)
+	{
+		std::cout << strerror( errno ) << " - " << this->sPath << std::endl;
+		abort();
+	}
+
+	this->pDirPath = opendir(this->sPath.c_str());
+
+	if(!this->pDirPath)
+	{
+		throw PathNotFoundException();
+	}
+
+	this->iDirFd = dirfd(this->pDirPath);
+
+	if(!this->iDirFd)
+	{
+		throw PathNotFoundException();
 	}
 }
 
-void FileSystem::WatchPath(const std::string &path)
+bool FileSystem::SaveFile(std::string pathClient, std::string pathPlate, std::string pathFile, const uint8_t *bufferFile, uint32_t sizeBufferFile)
 {
-	struct dirent *dir;
-	DIR *openedDir = opendir(path.c_str());
-	std::string folder;
+	if(this->pDirPath == NULL) throw PathNotDefinedException();
 
-	if(openedDir)
+	bool written = false;
+	std::string pathClientPlateFile = pathClient + "/" + pathPlate + "/" + pathFile;
+
+	int fd = openat(this->iDirFd, pathClientPlateFile.c_str(), O_CREAT | O_RDWR | O_TRUNC, 0666);
+	Dbg(TAG "Status of open file: %s, openat handler: %d", strerror(errno), fd);
+
+	if(fd != -1)
 	{
-		while((dir = readdir(openedDir)) != NULL)
+		Info(TAG "Writing: %s", pathClientPlateFile.c_str());
+
+		int escrito = write(fd, bufferFile, sizeBufferFile);
+		Dbg(TAG "Status of write file: %s, size buffer file to write: %d, wrote size buffer: %d", strerror(errno), bufferFile, escrito);
+
+		close(fd);
+
+		if(escrito < sizeBufferFile)
 		{
-			// Ignore hidden files
-			if(dir->d_name[0] != '.')
-			{
-				if(dir->d_type == DT_REG)
-				{
-					EventFileSystem ev;
-					ev.SetDirName(path);
-					ev.SetFileName(dir->d_name);
-					ev.SetEventType(DT_REG);
-
-					Dbg(TAG "Processing file %s%s", path.c_str(), dir->d_name);
-					this->SendEventFileSystemNotifyChange(&ev);
-				}
-				else if(dir->d_type == DT_DIR && this->eWatchType == WatchType::RECURSIVE_PATH)
-				{
-					folder = path;
-					folder += dir->d_name;
-					folder += "/";
-
-					// Add folder path to watch
-					AddPath(folder);
-
-					// Recursively watch
-					WatchPath(folder);
-				}
-			}
+			Error(TAG "Can't write file.");
+			throw FileWriteException();
 		}
-		closedir(openedDir);
+		else
+		{
+			EventFileSystem ev;
+			ev.SetDirName(pathClientPlateFile);
+			ev.SetEventType(DT_REG);
+
+			Dbg(TAG "Processing file %s", ev.GetDirName().c_str());
+			written = true;
+			//this->SendEventFileSystemNotifyChange(&ev);
+		}
 	}
+	else
+	{
+		Info(TAG "File do not exist: %s", pathFile.c_str());
+
+		if( errno == ENOSPC)
+		{
+			throw NotSpaceAvaiableException();
+		}
+
+		std::string pathClientPlate = pathClient + "/" + pathPlate;
+		mkdirat(this->iDirFd, pathClient.c_str(),  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+		mkdirat(this->iDirFd, pathClientPlate.c_str(),  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+
+		written = this->SaveFile(pathClient, pathPlate, pathFile, bufferFile, sizeBufferFile);
+	}
+
+	return written;
 }
 
 bool FileSystem::Shutdown()

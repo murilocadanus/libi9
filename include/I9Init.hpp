@@ -106,7 +106,7 @@ namespace Sascar {
 
 		extern bool		bDisableThread;
 		extern bool		bDisableResourceLoader;
-		extern String	sConfigFile;
+		extern std::string	sConfigFile;
 
 		/// Last frame time
 		extern Seconds	fCurrentTime;
