@@ -113,8 +113,8 @@ class Configuration
 		inline void SetActiveMQTimeout(const uint32_t activeMQTimeout){ iActiveMQTimeout = activeMQTimeout; }
 		inline const uint32_t &GetActiveMQTimeout() const { return iActiveMQTimeout; }
 
-		inline void SetCollectionClients(const std::vector<std::string> collectionClients){ vCollectionClients = collectionClients; }
-		inline const std::vector<std::string> &GetCollectionClients() const { return vCollectionClients; }
+		inline void SetActiveMQTotal(const uint32_t activeMQTotal){ iActiveMQTotal = activeMQTotal; }
+		inline const uint32_t &GetActiveMQTotal() const { return iActiveMQTotal; }
 
 	private:
 		string sTitle;
@@ -124,7 +124,6 @@ class Configuration
 		string sMongoDBDatabase;
 		string sMongoDBAuthMechanism;
 		std::vector<std::string> sMongoDBCollections;
-		std::vector<std::string> vCollectionClients;
 		string sServiceURL;
 		string sServiceKey;
 		uint32_t iServiceTimeOut;
@@ -142,6 +141,7 @@ class Configuration
 		string sActiveMQPassword;
 		string sActiveMQQueue;
 		uint32_t iActiveMQTimeout;
+		uint32_t iActiveMQTotal;
 };
 
 #define pConfiguration Configuration::GetInstance()
